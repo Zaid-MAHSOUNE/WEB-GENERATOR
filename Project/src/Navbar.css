@@ -1,0 +1,65 @@
+*{
+  margin: 0;
+  padding: 0;
+}
+nav{
+  background-Color : #24252A;
+  display : flex;
+  justify-Content :space-between;
+  height : 77px;
+}
+.pages{
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-right: 15px;
+
+}
+.pages ul{
+  display : flex;
+  justify-Content :space-between;
+  width : 370px;
+  margin-Right : 25px;
+  list-Style : none;
+  font-Family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+  text-Decoration : none;
+ 
+}
+.pages ul li a{
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+}
+.pages ul li a img{
+  width: 23.5px;
+  margin-right: 7px;
+
+}
+.pages ul li a:hover{
+  transform: scale(1.07);
+  color: #0088a9;
+}
+.logo {
+  font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
+  margin-left: 15px;
+  color: white;
+  display: flex;
+  align-items: center;
+}
+.snp{
+  font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+  text-align: center;
+  height: 29px;
+   background-color: #0088a9;
+   width: 100px;
+   border-radius: 8px;
+}
+.snp a{
+  text-decoration: none;
+  color: white;
+}
+.snp:hover{
+  background-color: #05acd6;
+}

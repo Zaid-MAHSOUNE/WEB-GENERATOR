@@ -1,0 +1,63 @@
+.Service{
+    background-color: rgb(228, 228, 228);
+    height: 28px;
+    display: flex;
+    justify-content: space-between;
+    padding-left: 20px;
+    padding-right: 20px;
+}
+.Service .Left > ul {
+   
+    width: 300px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    list-style: none;
+}
+.Left ul li{
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+  
+}
+.Left ul li img{
+    width: 20px;
+    margin-left: 5px;
+
+}
+.Service .Right{
+    width: 100px;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.Service .Right img{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+}
+.Dropdown{
+    position: absolute;
+    background-color: white;
+    margin-top: 182px;
+    box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    display: none;
+    list-style: none;
+    width: 130px;
+
+}
+.Dropdown li{
+    height: 30px;
+    padding-top: 5px;
+    padding-bottom:  5px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+   padding-left: 30px;
+}
+.Left ul li:hover .Dropdown{
+    cursor: pointer;
+    display: block;
+}
+.Dropdown li:hover {
+    background-color: #0088a9;
+}

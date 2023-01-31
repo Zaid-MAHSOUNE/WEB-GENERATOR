@@ -6,7 +6,8 @@ nav{
   background-Color : #24252A;
   display : flex;
   justify-Content :space-between;
-  height : 77px;
+  height : 8vh;
+  width: 100%;
 }
 .pages{
   display: flex;

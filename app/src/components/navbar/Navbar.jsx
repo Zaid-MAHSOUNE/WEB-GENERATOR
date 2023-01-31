@@ -1,8 +1,7 @@
-import React ,{useState,useEffect} from "react";
-import "./Navbar.css";
-import  home from './pictures/home-icon-silhouette.png'
-import  project from './pictures/complete.png'
-import  contact from './pictures/communicate.png'
+import "../../assets/css/Navbar.css";
+import  home from '../../assets/img/home-icon-silhouette.png';
+import  project from '../../assets/img/complete.png';
+import  contact from '../../assets/img/communicate.png';
 function Navbar(){
     return (
         <>

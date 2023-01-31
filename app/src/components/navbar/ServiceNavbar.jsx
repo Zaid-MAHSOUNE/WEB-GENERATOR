@@ -1,8 +1,7 @@
-import React from "react";
-import './ServiceNavbar.css';
-import Sidebar from './pictures/sidebar.png'
-import Fullscreen from './pictures/expand.png'
-import down from './pictures/down.png'
+import '../../assets/css/ServiceNavbar.css';
+import Sidebar from '../../assets/img/sidebar.png'
+import Fullscreen from '../../assets/img/expand.png'
+import down from '../../assets/img/down.png'
 
 function ServiceNavbar(){
     return(

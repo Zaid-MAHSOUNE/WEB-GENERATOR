@@ -1,6 +1,33 @@
 .container{
-    border : 1px solid black;
-    height: 86.7vh;
+    border : 1px solid #899499;
+    height: 88vh;
     width: 20%;
-    border-radius: 8px;
+    border-radius: 5px;
+}
+
+.title{
+    text-align: center;
+    border-bottom: 1px solid #899499;
+    background-color: #eee;
+}
+
+.header{
+    height: 20vh;
+    border-bottom: 1px solid #899499;
+    text-align: center;
+    line-height: 20vh;
+}
+
+.body{
+    height: 45vh;
+    border-bottom: 1px solid #899499;
+    text-align: center;
+    line-height: 44vh;
+}
+
+.footer{
+    height: 20vh;
+    border-bottom: 1px solid #899499;
+    text-align: center;
+    line-height: 20vh;
 }

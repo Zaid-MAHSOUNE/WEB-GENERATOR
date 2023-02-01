@@ -1,11 +1,12 @@
 .Service{
     background-color: rgb(228, 228, 228);
-    height: 28px;
+    height: 3vh;
     display: flex;
     justify-content: space-between;
     padding-left: 20px;
     padding-right: 20px;
     width: 100%;
+    margin-bottom: 0.6vh;
 }
 .Service .Left > ul {
    

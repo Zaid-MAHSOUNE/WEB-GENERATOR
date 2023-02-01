@@ -1,5 +1,8 @@
 import styles from '../../assets/css/palette.module.css';
-
+import HmImg from '../../assets/img/main.png';
+import HdrImg from '../../assets/img/header.png';
+import FtImg from '../../assets/img/footer.png';
+import rtrn from '../../assets/img/undo.png';
 export const Palette = (props) => {
 
 
@@ -7,9 +10,11 @@ export const Palette = (props) => {
         return (
             <div className={styles.container}>
                 <div className={styles.title}>Container</div>
-                <div onClick={() => props.setType("Header")} className={styles.header}>Header</div>
-                <div onClick={() => props.setType("Body")} className={styles.body}>Body</div>
-                <div onClick={() => props.setType("Footer")} className={styles.footer}>Footer</div>
+                <div className={styles.pages}>
+                <div onClick={() => props.setType("Header")} className={styles.header}><img src={HdrImg} alt='Header'></img><h2>Header</h2></div>
+                <div onClick={() => props.setType("Body")} className={styles.body}><img src={HmImg} alt='Body' ></img><h2>Body</h2></div>
+                <div onClick={() => props.setType("Footer")} className={styles.footer}><img src={FtImg} alt='Footer' ></img> <h2>Footer</h2></div>
+                </div>
             </div>
         );
     }
@@ -17,7 +22,9 @@ export const Palette = (props) => {
         return(
             <div className={styles.container}>
                 <div className={styles.title}>{props.type}</div>
-                
+                <div className={styles.tools}>
+                        <button onClick={() => props.setType("Containers")} ><img src={rtrn}></img></button>
+                </div>
             </div>
         );
     }

@@ -3,6 +3,16 @@
     height: 88vh;
     width: 20%;
     border-radius: 5px;
+    
+}
+.container > .pages > div >img{
+    width: 38px;
+    margin-right: 8px;
+}
+.pages div:hover{
+   background-color: #05acd6;
+   color: white;
+   cursor: pointer;
 }
 
 .title{
@@ -14,20 +24,34 @@
 .header{
     height: 20vh;
     border-bottom: 1px solid #899499;
-    text-align: center;
-    line-height: 20vh;
+   display: flex;
+   justify-content: center;
+   align-items: center;
 }
 
 .body{
     height: 45vh;
     border-bottom: 1px solid #899499;
-    text-align: center;
-    line-height: 44vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .footer{
     height: 20vh;
     border-bottom: 1px solid #899499;
-    text-align: center;
-    line-height: 20vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.tools{
+    padding: 5px;
+}
+.tools > button{
+    background-color: transparent;
+    cursor: pointer;
+    border: none;
+}
+.tools > button > img{
+    width: 30px;
 }

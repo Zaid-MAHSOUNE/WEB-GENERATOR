@@ -61,5 +61,6 @@
     display: block;
 }
 .Dropdown li:hover {
-    background-color: #0088a9;
+    background-color: #05acd6;
+    color: white;
 }

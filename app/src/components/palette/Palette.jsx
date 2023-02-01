@@ -3,6 +3,7 @@ import HmImg from '../../assets/img/main.png';
 import HdrImg from '../../assets/img/header.png';
 import FtImg from '../../assets/img/footer.png';
 import rtrn from '../../assets/img/undo.png';
+import data from '../../data/tools';
 export const Palette = (props) => {
 
 
@@ -19,11 +20,17 @@ export const Palette = (props) => {
         );
     }
     else{
+        let allTools = data.map(e => <button key={e.balise}><img src={e.src} ></img></button> )
         return(
             <div className={styles.container}>
                 <div className={styles.title}>{props.type}</div>
                 <div className={styles.tools}>
                         <button onClick={() => props.setType("Containers")} ><img src={rtrn}></img></button>
+                            <section>
+                            {allTools}
+                            </section>
+                           
+                        
                 </div>
             </div>
         );

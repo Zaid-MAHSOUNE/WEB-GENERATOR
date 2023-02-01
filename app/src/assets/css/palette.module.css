@@ -47,7 +47,7 @@
 .tools{
     padding: 5px;
 }
-.tools > button{
+.tools  button{
     background-color: transparent;
     cursor: pointer;
     border: none;
@@ -55,3 +55,12 @@
 .tools > button > img{
     width: 30px;
 }
+
+.tools > section{
+    margin-top: 15px;
+    display: grid;
+    grid-template-columns: repeat(4,1fr);
+    grid-gap: 10px;
+}
+
+

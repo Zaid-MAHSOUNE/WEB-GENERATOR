@@ -1,11 +1,13 @@
+import { useState } from 'react';
 import styles from '../../assets/css/palette.module.css';
 import HmImg from '../../assets/img/main.png';
 import HdrImg from '../../assets/img/header.png';
 import FtImg from '../../assets/img/footer.png';
 import rtrn from '../../assets/img/undo.png';
 import data from '../../data/tools';
+import down from '../../assets/img/down.png';
 export const Palette = (props) => {
-
+    const[Dropped,setDropped] = useState(false);
 
     if(props.type==="Containers"){
         return (
@@ -27,7 +29,13 @@ export const Palette = (props) => {
                 <div className={styles.tools}>
                         <button onClick={() => props.setType("Containers")} ><img src={rtrn}></img></button>
                             <section>
-                            {allTools}
+                                <button onClick={(e) => setDropped(!Dropped)} >Text <img src={down} ></img></button>
+                               {Dropped && (
+                                    <div className={styles.items}>
+                                    {allTools}
+                                     </div> 
+                                )}
+                                
                             </section>
                            
                         

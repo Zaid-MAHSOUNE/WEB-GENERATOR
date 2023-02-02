@@ -54,13 +54,35 @@
 }
 .tools > button > img{
     width: 30px;
+    margin-bottom: 15px;
 }
 
-.tools > section{
+.items{
     margin-top: 15px;
     display: grid;
     grid-template-columns: repeat(4,1fr);
     grid-gap: 10px;
+    background-color: white;
+    padding-top: 15px;
+    padding-bottom: 15px;
+    border-radius: 8px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+}
+.tools > section button img{
+    width: 18px;
+}
+.tools > section > button{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    padding: 8px;
+    width: 100%;
+    background-color:#05acd6;
+    color: white;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 16px;
+    border-radius: 5px;
 }
 
 

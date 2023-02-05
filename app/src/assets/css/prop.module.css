@@ -2,5 +2,52 @@
     border : 1px solid black;
     height: 88vh;
     width: 20%;
-    border-radius: 8px;
+    border-radius: 2px;
+}
+
+.title{
+    text-align: center;
+    border-bottom: 1px solid #899499;
+    background-color: #eee;
+}
+
+.container_sm{
+    border-bottom: 1px solid #d3d3d3;
+    padding: 5px;
+}
+
+.title_sm{
+    margin-right: 1vw;
+    font-size: 13px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+}
+
+.select {
+    width: 70%;
+    border: 1px solid #d3d3d3;
+    border-radius: 6px;
+    padding: 4px;
+    font-size: small;
+    cursor: pointer;
+    background-color: #fff;
+    background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+  }
+
+.input{
+    width: 70%;
+    border: 1px solid #d3d3d3;
+    border-radius: 6px;
+    padding: 5px;
+    cursor: pointer;
+    background-color: #fff;
+    background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+}
+
+.class_title{
+    margin-bottom: 5%;
+    font-size: 13px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-weight: bold;
+    display: block;
 }

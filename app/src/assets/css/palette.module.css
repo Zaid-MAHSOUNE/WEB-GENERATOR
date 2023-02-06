@@ -67,6 +67,16 @@
     padding-bottom: 15px;
     border-radius: 8px;
     box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+   
+}
+.dragging{
+    cursor: hand;
+}
+.notdragging{
+    cursor: hand;
+}
+.tools > section {
+    margin-bottom: 20px;
 }
 .tools > section button img{
     width: 18px;

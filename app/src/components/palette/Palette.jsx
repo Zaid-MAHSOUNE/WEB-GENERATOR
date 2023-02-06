@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Item from './Item';
 import styles from '../../assets/css/palette.module.css';
 import HmImg from '../../assets/img/main.png';
 import HdrImg from '../../assets/img/header.png';
@@ -8,8 +9,10 @@ import data from '../../data/tools';
 import down from '../../assets/img/down.png';
 export const Palette = (props) => {
     const[Dropped,setDropped] = useState(false);
+   
+    
 
-    if(props.type==="Containers"){
+       if(props.type==="Containers"){
         return (
             <div className={styles.container}>
                 <div className={styles.title}>Container</div>
@@ -22,18 +25,20 @@ export const Palette = (props) => {
         );
     }
     else{
-        let allTools = data.map(e => <button key={e.balise}><img src={e.src} ></img></button> )
+        let allTools = data.map(e => <Item key={e.balise}  balise={e.balise}  src={e.src} ></Item>)
         return(
             <div className={styles.container}>
-                <div className={styles.title}>{props.type}</div>
+                <div className={styles.title} >{props.type}</div>
                 <div className={styles.tools}>
-                        <button onClick={() => props.setType("Containers")} ><img src={rtrn}></img></button>
+                        <button onClick={() => props.setType("Containers")} ><img  alt='img' src={rtrn}></img></button>
                             <section>
-                                <button onClick={(e) => setDropped(!Dropped)} >Text <img src={down} ></img></button>
+                                <button onClick={(e) => setDropped(!Dropped)} >Text <img  alt='img' src={down} ></img></button>
                                {Dropped && (
-                                    <div className={styles.items}>
-                                    {allTools}
+                                     
+                                    <div  className={styles.items} >
+                                             {allTools}
                                      </div> 
+                                   
                                 )}
                                 
                             </section>

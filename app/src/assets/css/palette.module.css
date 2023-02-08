@@ -47,6 +47,14 @@
 .tools{
     padding: 5px;
 }
+
+.tool{
+    width: 10%;
+    height: 2vh;
+    border: 1px solid black;
+    margin : 10px;
+}
+
 .tools  button{
     background-color: transparent;
     cursor: pointer;

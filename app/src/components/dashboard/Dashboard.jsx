@@ -1,22 +1,31 @@
+import { useState } from 'react';
+import { useDrop } from 'react-dnd';
 import styles from '../../assets/css/dashboard.module.css';
+import { DropItem } from './DropItem';
+import '../../assets/css/dropItem.css';
 export const Dashboard = () => {
 
-   
-    const Dragover =(e) =>{
-        e.preventDefault();
-        let frm = document.getElementById('frm');
-        console.log("you are in the iframe");
-        let save = document.querySelector('.dragging');
-        frm.style.cursor = 'move';
-        frm.contentDocument.body.innerHTML += save.value;
-        //case of css style
-        //  frm.contentDocument.body.innerHTML += save.value + "<styles>"+ htl+"</styles>";
-    }
-    return (
-        <div  onDragOver={Dragover} id="container" className={styles.container}>
-            <iframe  className='iframe' id='frm' >
+    const [itemList, setItemList] = useState([]);
+    
+    const [{isOver}, drop] = useDrop(()=>({
+        accept:"item",
+        drop:(item) => dropHandler(item.tag),
+        collect: (monitor) => ({
+            isOver: !!monitor.isOver(),
+        })
+    })); 
 
-            </iframe>
+    const dropHandler = (tag)=>{
+        setItemList((previousState)=>{
+            return [...previousState,tag];
+        });
+    }
+
+    return (
+        <div ref={drop}  id="Drop" className={styles.container}>
+            {
+                itemList.map((element)=><DropItem tag={element}/>)
+            }
         </div>
     );
 }

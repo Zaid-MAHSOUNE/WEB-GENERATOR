@@ -5,9 +5,10 @@ export const DraggableItem = (props) => {
         type:"item",
         item:{tag:props.tag}
     }));
+    
     return (
-        <div ref={drag}  className={styles.tool}>
-            
+        <div ref={drag}  className={styles.ctnr}>
+            <img src={props.src}  title={props.tag} ></img>
         </div>
     );
     

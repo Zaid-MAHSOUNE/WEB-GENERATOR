@@ -8,7 +8,6 @@ export const Dashboard = () => {
     const refItems = useRef();
 
     const [itemList, setItemList] = useState([]);
-    
     const [{isOver}, drop] = useDrop(()=>({
         accept:"item",
         drop:(item,monitor) => dropHandler(item.tag,monitor),

@@ -7,10 +7,12 @@ import { Properties } from './components/props/Properties';
 import { useContainer } from './hooks/useContainer';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
+import { GeneralContext } from './context/GeneralContext';
 
 function App() {
   const { type, typeChanger } = useContainer();
   return (
+    <GeneralContext>
     <DndProvider backend={HTML5Backend}>
     <div className='App'>
     <Navbar />
@@ -20,6 +22,7 @@ function App() {
     <Properties />
     </div>
     </DndProvider>
+    </GeneralContext>
   );
 }
 

@@ -12,7 +12,6 @@ import { GeneralContext } from './context/GeneralContext';
 function App() {
   const { type, typeChanger } = useContainer();
   return (
-    <GeneralContext>
     <DndProvider backend={HTML5Backend}>
     <div className='App'>
     <Navbar />
@@ -22,7 +21,6 @@ function App() {
     <Properties />
     </div>
     </DndProvider>
-    </GeneralContext>
   );
 }
 

@@ -5,7 +5,7 @@ export const GeneralContext = () => {
 const AppContext = createContext();
 
 return (
-    <AppContext.Provider value={}>
+    <AppContext.Provider >
     </AppContext.Provider>
 );
 

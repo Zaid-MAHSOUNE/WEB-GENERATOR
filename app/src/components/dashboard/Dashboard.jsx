@@ -6,7 +6,6 @@ import '../../assets/css/dropItem.css';
 export const Dashboard = () => {
 
     const [itemList, setItemList] = useState([]);
-    
     const [{isOver}, drop] = useDrop(()=>({
         accept:"item",
         drop:(item) => dropHandler(item.tag),
@@ -24,7 +23,7 @@ export const Dashboard = () => {
     return (
         <div ref={drop}  id="Drop" className={styles.container}>
             {
-                itemList.map((element)=><DropItem tag={element}/>)
+                itemList.map((element)=><DropItem key={element} tag={element}/>)
             }
         </div>
     );

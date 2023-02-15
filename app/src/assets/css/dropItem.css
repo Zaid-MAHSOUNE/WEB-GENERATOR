@@ -2,4 +2,5 @@
     border: 1px solid black;
     width: 40%;
     height: 20vh;
+    overflow: hidden;
 }

@@ -1,0 +1,113 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+body{
+    background-image: url('../../../public/bg.svg');
+    background-size: cover;
+}
+.main{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 11%;
+    opacity: 98%;
+}
+.code{
+    position: absolute;
+    width: 80px;
+    top: 10px;
+    left: 20px;
+
+}
+.main .part1 ,.part2{
+    width: 350px;
+    height: 400px;
+    text-align: center;
+    font-size: 18px;
+    background-color: white;
+    border-radius: 8px;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 10px 36px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+.part1{
+    margin-right: 20px;
+    
+}
+.part1 h2{
+    padding-top: 6px;
+    text-align: center;
+    background-color: #2cbade;
+    height: 50px;
+    color: white;
+    border-radius: 8px;
+    cursor: default;
+    margin-bottom:65px;
+}
+.part1 input{
+    border: black solid;
+    text-align: center;
+    width: 300px;
+    height: 30px;
+    margin-bottom: 30px;
+    border-radius: 6px;
+}
+.part1 p{
+    position: absolute;
+    font-size: 15px;
+    margin-left: 30px;
+    background-color: white;
+    margin-top: -13px;
+    padding: 2px;
+}
+.part1 button{
+    cursor: pointer;
+    width: 300px;
+    height: 35px;
+    margin-bottom: 10px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: #2cbade;
+    font-size: 15px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+.part1 h4{
+    font-size: 13px;
+}
+::placeholder{
+    color: black;
+}
+.part2{
+    display: block;
+}
+.part2 h3{
+    margin-bottom: 20px;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+}
+.part2 img{
+    width: 65%;
+    margin-top: 25px;
+  
+}
+.part2 section  img{
+   width: 28px;
+   margin-right: 10px;
+   margin-top: -2px;
+}
+.pp section{
+    cursor: pointer;
+    margin-bottom: 4px;
+    margin-left: 10px;
+    width: 322px;
+    height: 50px;
+    color: white;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+    padding-left: 8px;
+    border-radius: 7px;
+    background-color: #34414D;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}

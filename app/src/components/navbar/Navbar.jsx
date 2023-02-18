@@ -2,6 +2,7 @@ import "../../assets/css/Navbar.css";
 import  home from '../../assets/img/home-icon-silhouette.png';
 import  project from '../../assets/img/complete.png';
 import  contact from '../../assets/img/communicate.png';
+import { NavLink } from "react-router-dom";
 function Navbar(){
     return (
         <>
@@ -11,11 +12,11 @@ function Navbar(){
                 </div>
                 <div  className="pages">
                     <ul  >
-                        <li><a> <img src={home} ></img>Home</a></li>
-                        <li><a><img src={project} ></img>My Projects</a></li>
-                        <li><a><img src={contact} ></img>Contact Us</a></li>
+                        <li><NavLink to='/' ><a> <img src={home} ></img>Home</a></NavLink></li>
+                        <li><NavLink to='/Projects' ><a><img src={project} ></img> My Projects</a></NavLink></li>
+                        <li><NavLink to='/Contact' ><a><img src={contact} ></img> Contact Us</a></NavLink></li>
                     </ul>
-                    <button className="snp"  ><a>Sign Up</a></button>
+                    <button className="snp"  ><NavLink to='/Login' ><a>Sign Up / Register</a></NavLink></button>
                 </div>
            </nav>
         </>

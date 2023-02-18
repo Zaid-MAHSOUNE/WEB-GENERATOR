@@ -1,9 +1,10 @@
 .container{
-    height: 87.6vh;
-    width: 57%;
+    height: 87.9vh;
+    width: 59.4%;
     padding: 2px;
     border : 1px solid #111; 
-    border-radius: 8px;
+    background-color: white;
+    overflow: scroll;
 }
 .container  iframe{
     width: 100%;

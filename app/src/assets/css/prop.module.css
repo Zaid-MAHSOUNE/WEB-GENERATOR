@@ -1,8 +1,8 @@
 .container{
     border : 1px solid black;
-    height: 88vh;
+    height: 88.5vh;
     width: 20%;
-    border-radius: 2px;
+    background-color: white;
 }
 
 .title{

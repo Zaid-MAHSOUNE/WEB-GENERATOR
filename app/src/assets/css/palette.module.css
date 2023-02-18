@@ -1,9 +1,8 @@
 .container{
     border : 1px solid #899499;
-    height: 88vh;
+    height: 88.5vh;
     width: 20%;
-    border-radius: 5px;
-    
+    background-color: white;
 }
 .container > .pages > div >img{
     width: 38px;

@@ -1,8 +1,8 @@
-import '../../assets/css/login.css';
-import DragAndDrop from '../../assets/img/dad.jpeg';
-import facebook from '../../assets/img/facebook.png';
-import google from '../../assets/img/google.png';
-import code from '../../assets/img/code.png';
+import '../../src/assets/css/login.css';
+import DragAndDrop from '../../src/assets/img/dad.jpeg';
+import facebook from '../../src/assets/img/facebook.png';
+import google from '../../src/assets/img/google.png';
+import code from '../../src/assets/img/code.png';
 import { NavLink } from "react-router-dom";
 
 export const Login = () => {
@@ -23,7 +23,7 @@ return(
                          <input ></input>
                     </div>
                     <NavLink to='/' ><button type='submit'>Login</button></NavLink>
-                    <h4>Don't have an account ? <NavLink to='/Register' ><a>register</a></NavLink></h4>
+                    <h4>Don't have an account ? <NavLink to='/Register' >register</NavLink></h4>
                    
             </div>
             <div className='part2' >

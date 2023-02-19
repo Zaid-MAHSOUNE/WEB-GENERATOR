@@ -5,6 +5,7 @@
     border : 1px solid #111; 
     background-color: white;
     overflow: scroll;
+    overflow-x: hidden;
 }
 .container  iframe{
     width: 100%;

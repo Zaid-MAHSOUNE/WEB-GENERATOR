@@ -12,11 +12,11 @@ function Navbar(){
                 </div>
                 <div  className="pages">
                     <ul  >
-                        <li><NavLink to='/' ><a> <img src={home} ></img>Home</a></NavLink></li>
-                        <li><NavLink to='/Projects' ><a><img src={project} ></img> My Projects</a></NavLink></li>
-                        <li><NavLink to='/Contact' ><a><img src={contact} ></img> Contact Us</a></NavLink></li>
+                        <li><NavLink to='/' > <img src={home} ></img>Home</NavLink></li>
+                        <li><NavLink to='/Projects' ><img src={project} ></img> My Projects</NavLink></li>
+                        <li><NavLink to='/Contact' ><img src={contact} ></img> Contact Us</NavLink></li>
                     </ul>
-                    <button className="snp"  ><NavLink to='/Login' ><a>Sign Up / Register</a></NavLink></button>
+                    <button className="snp"  ><NavLink to='/Login' >Sign Up / Register</NavLink></button>
                 </div>
            </nav>
         </>

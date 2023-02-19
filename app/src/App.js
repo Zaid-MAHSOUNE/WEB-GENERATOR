@@ -7,12 +7,16 @@ import { Properties } from './components/props/Properties';
 import { useContainer } from './hooks/useContainer';
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
-import { GeneralContext } from './context/GeneralContext';
 import {Route ,Routes} from 'react-router-dom';
 import { Login } from './components/authentification/Login';
+import { useState } from 'react';
+import { AppContext } from './context/AppContext';
 
  
 function App() {
+
+  const [selectedItem,setSelectedItem] = useState({});  
+
   const { type, typeChanger } = useContainer();
   return (
     <Routes>
@@ -27,8 +31,10 @@ function App() {
               <Navbar />
               <ServiceNavbar />
               <Palette type={type} setType={typeChanger}/>
+              <AppContext.Provider value={{selectedItem,setSelectedItem}}>
               <Dashboard />
               <Properties />
+              </AppContext.Provider>
               </div>
               </DndProvider>
       }  />

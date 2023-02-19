@@ -1,9 +1,10 @@
-import { useRef, useState } from 'react';
+import { useContext, useRef, useState } from 'react';
 import { useDrop } from 'react-dnd';
 import styles from '../../assets/css/dashboard.module.css';
 import { DropItem } from './DropItem';
 import '../../assets/css/dropItem.css';
 export const Dashboard = () => {
+
 
     const refItems = useRef();
 

@@ -1,7 +1,10 @@
 import '../../assets/css/dropItem.css';
-import { useState,useRef } from 'react';
+import { useState,useRef,useContext } from 'react';
 import { useDrop } from 'react-dnd';
+import { AppContext } from '../../context/AppContext';
 export const DropItem = (props) =>  {
+
+    const {selectedItem,setSelectedItem} = useContext(AppContext);
 
     const parentIndex = useRef(props.id);
 
@@ -28,7 +31,10 @@ export const DropItem = (props) =>  {
 
     if(props.tag !== "div"){
         return (
-            <props.tag id={props.id} className='container'/>
+            <props.tag id={props.id} className='container' onClick={(e)=>{
+                setSelectedItem(e.target);
+                console.log(selectedItem);
+            }}/>
         );
     }else{
         return (

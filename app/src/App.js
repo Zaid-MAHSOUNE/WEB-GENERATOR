@@ -1,10 +1,11 @@
 import './assets/css/App.css';
-import { GeneralContext } from './context/GeneralContext';
 import {Route ,Routes} from 'react-router-dom';
 import { Login } from './pages/Login';
-import Contact from './pages/Contact';
-import Projects from './pages/Projects'; 
 import Main from './pages/Main';
+import Projects from './pages/Projects';
+import Contact from './pages/Contact';
+
+ 
 function App() {
  
   return (
@@ -15,7 +16,7 @@ function App() {
       }  />
      
        <Route path='/' element={
-             <Main></Main>
+            <Main></Main>
       }  />
 
         <Route path='/Projects' element={

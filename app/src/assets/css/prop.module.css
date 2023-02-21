@@ -44,6 +44,17 @@
     background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
 }
 
+.input_color{
+    width: 10%;
+    height: 20px;
+    border: 1px solid #d3d3d3;
+    border-radius: 2px;
+    cursor: pointer;
+    background-color: #fff;
+    margin-right: 20px;
+}
+
+
 .input_class{
     width: 90%;
     border: 1px solid #d3d3d3;

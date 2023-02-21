@@ -16,7 +16,7 @@ export const TxtForm = () => {
 
     const schema = yup.object().shape({
         value: yup.string().required(),
-        indefined_class: yup.string().notOneOf(json.map((element)=>element.class)).required().matches(/^[a-zA-Z][a-zA-Z0-9_-]*/gi),
+        indefined_class: yup.string().notOneOf(json.map((element)=>element.class)).required().matches(/^[a-z][A-Za-z0-9_-]*$/i),
         defined_class: yup.string().oneOf(json.map((element)=>element.class)).required(), 
     });
 
@@ -61,6 +61,12 @@ export const TxtForm = () => {
             </div>
             )
         }
+        <div className={styles.container_sm}>
+            <label className={styles.title_sm}>Color :</label>
+            <input className={styles.input_color} type="color" {...register("color")}/>
+            <label className={styles.title_sm}>Background Color :</label>
+            <input className={styles.input_color} type="color" {...register("background-color")}/>
+        </div>
         <button type="submit">HHH</button>
         </form>
     );

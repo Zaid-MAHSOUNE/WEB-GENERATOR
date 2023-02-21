@@ -1,7 +1,6 @@
 import { useContext } from 'react';
 import styles from '../../assets/css/prop.module.css';
 import { AppContext } from '../../context/AppContext';
-import { DynamicInput } from './DynamicInput';
 import { TxtForm } from './TxtForm';
 export const Properties = () => {
     

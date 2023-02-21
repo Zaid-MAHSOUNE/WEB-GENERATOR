@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import styles from '../../assets/css/palette.module.css';
 import Text from '../../data/Text';
 import Container from '../../data/Container';
@@ -6,6 +6,7 @@ import Media from '../../data/Media';
 import Others from '../../data/Others';
 import down from '../../assets/img/down.png';
 import { DraggableItem } from './DraggableItem';
+import { LoadingContext } from '../../pages/Main';
 
 export const Palette = () => {
 
@@ -13,6 +14,9 @@ export const Palette = () => {
     const[Dropped2,setDropped2] = useState(false);
     const[Dropped3,setDropped3] = useState(false);
     const[Dropped4,setDropped4] = useState(false);
+    //const [loading,setLoading] = useContext(LoadingContext);
+    
+          
         return(
             <div className={styles.container}>
                 <div className={styles.title} >Tools</div>

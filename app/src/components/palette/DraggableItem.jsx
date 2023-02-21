@@ -8,7 +8,7 @@ export const DraggableItem = (props) => {
     
     return (
         <div ref={drag}  className={styles.ctnr}>
-            <img src={props.src}  title={props.tag} ></img>
+            <img  loading="lazy"   src={props.src}  title={props.tag} ></img>
         </div>
     );
     

@@ -73,3 +73,9 @@
     font-weight: bold;
     display: block;
 }
+
+.icons{
+    position: absolute;
+    margin-left: 5px;
+    cursor: pointer;
+}

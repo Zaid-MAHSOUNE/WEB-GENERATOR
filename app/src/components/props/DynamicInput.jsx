@@ -1,4 +1,5 @@
-import styles from '../../assets/css/prop.module.css';
+/*
+
 export const DynamicInput = (props) => {
     if(props.type === "txt"){
         return (
@@ -22,3 +23,4 @@ export const DynamicInput = (props) => {
         );
     }
 }
+*/

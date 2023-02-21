@@ -6,8 +6,6 @@ export const DropItem = (props) =>  {
 
     const {selectedItem,setSelectedItem} = useContext(AppContext);
 
-    const parentIndex = useRef(props.id);
-
     const [itemLists, setItemList] = useState([]);
     
     const [{isOver}, drop] = useDrop(()=>({
@@ -33,14 +31,15 @@ export const DropItem = (props) =>  {
         return (
             <props.tag id={props.id} className='container' onClick={(e)=>{
                 setSelectedItem(e.target);
-                console.log(selectedItem);
             }}/>
         );
     }else{
         return (
-            <div ref={drop} id={props.id} className='container'> 
+            <div ref={drop} id={props.id} className='container' onClick={(e)=>{
+                setSelectedItem(e.target);
+            }}>
                 {
-                    itemLists.map((element,index)=><DropItem id={parentIndex.current+"-"+index} tag={element}/>)
+                    itemLists.map((element)=><DropItem tag={element}/>)
                 }
             </div>
         );

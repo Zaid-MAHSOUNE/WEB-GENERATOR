@@ -3,6 +3,8 @@
     height: 88.5vh;
     width: 20%;
     background-color: white;
+    overflow: scroll;
+    overflow-x: hidden;
 }
 
 .title{
@@ -14,6 +16,7 @@
 .container_sm{
     border-bottom: 1px solid #d3d3d3;
     padding: 5px;
+    display: flex;
 }
 
 .title_sm{
@@ -24,7 +27,7 @@
 }
 
 .select {
-    width: 70%;
+    width: 60%;
     border: 1px solid #d3d3d3;
     border-radius: 6px;
     padding: 4px;
@@ -35,7 +38,7 @@
   }
 
 .input{
-    width: 70%;
+    width: 60%;
     border: 1px solid #d3d3d3;
     border-radius: 6px;
     padding: 5px;
@@ -86,7 +89,103 @@
 }
 
 .icons{
-    position: absolute;
     margin-left: 5px;
+    position: relative;
     cursor: pointer;
 }
+.txtStyle div {
+    font-size: 14.9px;
+    padding: 5px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    border-bottom: 1px solid #899499;
+    
+}
+.txtStyle label {
+    margin-right: 1vw;
+}
+.txtStyle input,select{
+    width: 52%;
+    border: 1px solid #d3d3d3;
+    border-radius: 6px;
+    padding: 5px;
+    cursor: pointer;
+    background-color: #fff;
+    background-image: linear-gradient(to top, #f9f9f9, #fff 33%);
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+
+}
+.txtStyle .colors{
+    width: 40px ;
+    height: 28px;
+    border: none;
+    margin-top: 5px;
+}
+
+.checkArea{
+    display: flex;
+    justify-content: space-between;
+    padding: 5px;
+}
+.checkArea section{
+    width: 142px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
+}
+.checkArea input{
+    width: 20px;
+    font-family:'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+}
+.MarginArea{
+    align-items: center;
+    display: flex;
+    justify-content: space-between;
+}
+.MarginArea input{
+    width: 45.5px;
+    height: 18px;
+}
+.submit {
+    display: flex;
+    justify-content: space-around;
+    padding-bottom: 10px;
+
+}
+.submit button{
+    margin-top: 10px;
+    width: 40%;
+    height: 27px;
+    border-radius: 5px;
+    background-color: #05acd6;
+    border: none;
+    color: white;
+    font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    font-size: 18px;
+}
+.submit button:hover{
+    background-color: #0088a9;
+    cursor: pointer;
+}
+.sizeArea{
+    display: flex;
+    align-items: center;
+}
+.sizeArea label{
+    margin-right: 30px;
+}
+.sizeArea input {
+    width: 60px;
+}
+::-webkit-file-upload-button{
+    background-color: #05acd6;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    color: white;
+    height: 20px;
+}
+.fileArea input{
+    border: none;
+    width: 190px;
+}
+

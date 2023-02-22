@@ -5,19 +5,17 @@ import json from "../../data/CSSjson.json";
 import styles from '../../assets/css/prop.module.css';
 import {FiPlusSquare,FiMinusSquare} from "react-icons/fi";
 import {yupResolver} from "@hookform/resolvers/yup";
+import {CompilerFn} from "../../utils/compiler";
 
 
 export const TxtForm = () => {
 
-
     const [switchInput,setSwitch] = useState(false);
-
- 
 
     const schema = yup.object().shape({
         value: yup.string().required(),
         indefined_class: yup.string().notOneOf(json.map((element)=>element.class)).required().matches(/^[a-z][A-Za-z0-9_-]*$/i),
-        defined_class: yup.string().oneOf(json.map((element)=>element.class)).required(), 
+        defined_class: yup.string().oneOf(json.map((element)=>element.class)).required(),
     });
 
     const {register,handleSubmit} = useForm({

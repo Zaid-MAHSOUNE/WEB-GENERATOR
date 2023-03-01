@@ -1,0 +1,75 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+
+.ctrn{
+    width: 206vh;
+    height: 88.6vh;
+}
+
+.CTN{
+    transform: translate(21%,23%);
+    width: 140vh;   
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    opacity: 95%;
+}
+.CTN .prt2{
+    text-align: center;
+    border-left: solid black;
+    width: 450px;
+    height: 50vh;
+    padding: 15px;
+}
+.CTN .prt1 p{
+    position: absolute;
+    text-align: center;
+    margin-left: 3%;
+    margin-top: -80px;
+    border-radius: 7px;
+    padding: 10px;
+    width: 400px;
+    background-color: lightgreen;
+}
+.CTN .prt2 input{
+    width: 400px;
+    height: 30px;
+    text-align: center;
+    border: none;
+    border-bottom: solid black;
+    margin-bottom: 20px;
+}
+.CTN .prt2 textarea{
+    border: black solid;
+    border-radius: 5px;
+    width: 382px;
+    height: 150px;
+    margin-bottom: 15px;
+    resize: none;
+    padding: 6px;
+}
+.CTN .prt2 button{
+    width: 400px;
+    height: 35px;
+    background-color:#2cbade ;
+    border: none;
+    border-radius: 5px;
+    color: white;
+    font-weight: bolder;
+}
+.CTN .prt2 button:hover{
+    transform: scale(1.01);
+    cursor: pointer;
+}
+
+::placeholder{
+    color: black;
+}
+*:focus {
+    outline: none;
+}

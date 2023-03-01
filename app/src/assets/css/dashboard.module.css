@@ -7,6 +7,12 @@
     overflow: scroll;
     overflow-x: hidden;
 }
+.container::-webkit-scrollbar{
+    width: 30px;
+}
+.container::-webkit-scrollbar-thumb{
+    background-color:#2cbade ;
+}
 .ZAID{
 background-color:red;
 }

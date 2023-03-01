@@ -9,6 +9,8 @@ body{
   
 }
 .UpDown{
+    padding-top: 20px;
+    padding-bottom: 20px;
     margin-top: 45%;
     padding-top: 15px;
     background-color: white;
@@ -20,7 +22,7 @@ body{
     width: 180px;
 }
 .UpDown .Up{
-    margin-bottom: 15px;
+    margin-bottom: 17px;
     justify-content: center;
     align-items: center;
     display: flex;

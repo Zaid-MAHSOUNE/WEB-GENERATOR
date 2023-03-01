@@ -8,7 +8,7 @@ import { NavLink } from "react-router-dom";
 export const Login = () => {
 
 return(
-        <div className='main'>
+        <div className='mainn'>
                 <img className='code' src={code} ></img>
 
             <div className='part1'>

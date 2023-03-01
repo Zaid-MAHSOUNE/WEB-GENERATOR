@@ -6,7 +6,7 @@ body{
     background-image: url('../../../public/bg.svg');
     background-size: cover;
 }
-.main{
+.mainn{
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,9 +20,9 @@ body{
     left: 20px;
 
 }
-.main .part1 ,.part2{
+.mainn .part1 ,.part2{
     width: 350px;
-    height: 400px;
+    height: 425px;
     text-align: center;
     font-size: 18px;
     background-color: white;
@@ -42,7 +42,7 @@ body{
     color: white;
     border-radius: 8px;
     cursor: default;
-    margin-bottom:65px;
+    margin-bottom:55px;
 }
 .part1 input{
     border: black solid;
@@ -97,7 +97,7 @@ body{
 }
 .pp section{
     cursor: pointer;
-    margin-bottom: 4px;
+    margin-bottom: 6px;
     margin-left: 10px;
     width: 322px;
     height: 50px;

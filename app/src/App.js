@@ -4,6 +4,7 @@ import { Login } from './pages/Login';
 import Main from './pages/Main';
 import Projects from './pages/Projects';
 import Contact from './pages/Contact';
+import { Register } from './pages/Register';
 
  
 function App() {
@@ -12,6 +13,11 @@ function App() {
     <Routes>
       <Route path='/Login' element={
           <Login></Login>
+           
+      }  />
+
+    <Route path='/Register' element={
+          <Register></Register>
            
       }  />
      

@@ -1,10 +1,13 @@
 import Navbar from "../components/navbar/Navbar";
-import ServiceNavbar from "../components/navbar/ServiceNavbar";
+import '../assets/css/ContactPage.css';
+import ContactForm from "../components/ContactPageComponent/ContactForm";
 export default function Contact(){
     return (
-        <>
-        <Navbar />
-        <ServiceNavbar />
-        </>
+        <div className="ctrn">
+             <Navbar />
+             <ContactForm/>
+        </div>    
+       
+       
     )
 }

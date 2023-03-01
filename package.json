@@ -1,6 +1,9 @@
 {
   "dependencies": {
+    "@emailjs/browser": "^3.10.0",
     "@hookform/resolvers": "^2.9.11",
-    "react-beautiful-dnd": "^13.1.1"
+    "fs-react": "^0.0.4",
+    "react-beautiful-dnd": "^13.1.1",
+    "react-hook-form": "^7.43.2"
   }
 }

@@ -6,6 +6,13 @@
     overflow: scroll;
     overflow-x: hidden;
 }
+.container::-webkit-scrollbar{
+    width: 7px;
+}
+.container::-webkit-scrollbar-thumb{
+    background-color:#2cbade ;
+    opacity: 95%;
+}
 
 .title{
     text-align: center;

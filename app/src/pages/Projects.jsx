@@ -1,12 +1,12 @@
-
+import '../assets/css/ProjectPage.css'
 import Navbar from "../components/navbar/Navbar";
-import ServiceNavbar from "../components/navbar/ServiceNavbar";
+import ProjetDashboard from "../components/ProjectPageComponent/ProjectDashboard";
 
 export default function Projects() {
     return (
-        <>
+       <div className="ctrn">
         <Navbar />
-        <ServiceNavbar />
-        </>
+        <ProjetDashboard />
+       </div>
     )
 }

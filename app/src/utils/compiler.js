@@ -1,4 +1,4 @@
-export default CompilerFn = (json) => {
+/*export default CompilerFn = (json) => {
     const fs = require('fs');
     let finalData = "";
     try {
@@ -24,4 +24,4 @@ export default CompilerFn = (json) => {
       },err =>{
         if(err) throw err;
     })
-}
+}*/

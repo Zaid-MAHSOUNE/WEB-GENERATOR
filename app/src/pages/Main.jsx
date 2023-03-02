@@ -10,13 +10,14 @@ import LoadingPage from "../components/Loading/LoadingPage";
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useContainer } from '../hooks/useContainer';
-import { AppContext } from '../context/AppContext';
+import { Provider } from "react-redux";
 import DragAndDrop from '../../src/assets/img/dad.jpeg';
+import { store } from "../context/itemListContext";
 
 
 export const LoadingContext = createContext();
 export default function Main(){
-    const [selectedItem,setSelectedItem] = useState({}); 
+    
     const [loading,setLoading] = useState(false);
     useEffect(() => {
        setTimeout(()=>{
@@ -33,10 +34,10 @@ export default function Main(){
                           <Navbar />
                           <ServiceNavbar />
                           <Palette />
-                          <AppContext.Provider value={{selectedItem,setSelectedItem}}>
+                          <Provider store={store}>
                           <Dashboard />
                           <Properties />
-                          </AppContext.Provider>
+                          </Provider>
                           </div>
                           </DndProvider>
                         //  </LoadingContext.Provider>

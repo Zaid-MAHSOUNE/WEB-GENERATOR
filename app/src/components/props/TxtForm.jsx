@@ -5,7 +5,6 @@ import json from "../../data/CSSjson.json";
 import styles from '../../assets/css/prop.module.css';
 import {FiPlusSquare,FiMinusSquare} from "react-icons/fi";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {CompilerFn} from "../../utils/compiler";
 
 
 export const TxtForm = () => {

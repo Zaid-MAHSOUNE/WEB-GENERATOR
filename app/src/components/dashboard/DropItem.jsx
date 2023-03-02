@@ -1,10 +1,11 @@
 import '../../assets/css/dropItem.css';
 import { useState,useRef,useContext } from 'react';
 import { useDrop } from 'react-dnd';
-import { AppContext } from '../../context/AppContext';
+import { useDispatch } from 'react-redux';
+import { setSelected } from '../../context/itemListContext';
 export const DropItem = (props) =>  {
 
-    const {selectedItem,setSelectedItem} = useContext(AppContext);
+    const dispatch = useDispatch();
 
     const [itemLists, setItemList] = useState([]);
     
@@ -30,13 +31,13 @@ export const DropItem = (props) =>  {
     if(props.tag !== "div"){
         return (
             <props.tag id={props.id} className='container' onClick={(e)=>{
-                setSelectedItem(e.target);
+                dispatch(setSelected(e.target))
             }}/>
         );
     }else{
         return (
             <div ref={drop} id={props.id} className='container' onClick={(e)=>{
-                setSelectedItem(e.target);
+                dispatch(setSelected(e.target))
             }}>
                 {
                     itemLists.map((element)=><DropItem tag={element}/>)

@@ -5,7 +5,6 @@ import json from "../../data/CSSjson.json";
 import styles from '../../assets/css/prop.module.css';
 import {FiPlusSquare,FiMinusSquare} from "react-icons/fi";
 import {yupResolver} from "@hookform/resolvers/yup";
-import {CompilerFn} from "../../utils/compiler";
 import { useSelector } from 'react-redux';
 
 
@@ -167,13 +166,14 @@ export const TxtForm =({obj,class: classes,value}) => {
            <div>
                     <label for="Border">Border :</label>
                     <select {...register("border-style")} onChange={ (e) => {  e.target.value !="none"?  setBrd(true):setBrd(false)  } } >
+                    <option value="ridge ">solid </option>
                         <option value="none">none</option>
                         <option value="dotted ">dotted </option>
                         <option value="dashed ">dashed </option>
                         <option value="double ">double </option>
                         <option value="groove ">groove </option>
                         <option value="hidden ">hidden </option>
-                        <option value="ridge ">solid </option>
+                        
                         <option value="ridge ">ridge </option>
                     </select> 
             </div>

@@ -2,9 +2,9 @@ import { useContext } from 'react';
 import styles from '../../assets/css/prop.module.css';
 import { TxtForm } from './TxtForm';
 import { ImgForm } from './ImgForm';
-import { BodyForm } from './BodyForm';
 import { ContainerForm } from './ContainerForm';
 import { useSelector } from 'react-redux';
+import { PartsForm } from './PartsForm';
 export const Properties = () => {
     
     const selected = useSelector(((state) => state.selected.value))
@@ -21,8 +21,11 @@ export const Properties = () => {
             else if(obj.tagName == "IMG"){
                 return <ImgForm obj={obj} class={obj.getAttribute("class")}/>
             }
-            else if( obj.tagName == "DIV" || obj.tagName == "BUTTON" || obj.tagName == "INPUT"){
+            else if( obj.tagName == "DIV" || obj.tagName == "BUTTON" || obj.tagName == "INPUT" ){
                 return <ContainerForm obj={obj} class={obj.getAttribute("class")} value={obj.textContent}/>;
+            }
+            else if( obj.tagName == "BODY" || obj.tagName == "HEADER" || obj.tagName == "FOOTER" ){
+                return <PartsForm obj={obj} class={obj.getAttribute("class")} value={obj.textContent}/>;
             }
         }
     }

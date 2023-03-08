@@ -10,7 +10,7 @@ import { useSelector } from 'react-redux';
 
 export const ImgForm =({obj,class: classes,value}) => {
 
-
+    const [Flx,setFlx]=useState(false);
     const [Brd,setBrd]=useState(false);
 
     const [newClass,setNewClass] = useState();
@@ -86,8 +86,8 @@ export const ImgForm =({obj,class: classes,value}) => {
            </div>
            <div className={styles.sizeArea} >
                     <label>Size :   </label>
-                    <input type="number" placeholder='width' {...register("width")} ></input>
-                    <input type="number" placeholder='Height' {...register("height")} ></input>
+                    <input  placeholder='width' {...register("width")} ></input>
+                    <input placeholder='Height' {...register("height")} ></input>
             </div>
             <div>
                     <label>Opacity:   </label>
@@ -95,15 +95,57 @@ export const ImgForm =({obj,class: classes,value}) => {
            </div>
            <div>
                     <label for="Display">Display :</label>
-                    <select  {...register("display")} >
+                    <select {...register("display")} onChange={ (e) => {  e.target.value==="flex"?  setFlx(true):setFlx(false)  } }  >
                         <option value="block">block</option>
                         <option value="none">none</option>
                         <option value="inline">inline</option>
-                        <option value="flex">flex</option>
+                        <option value="flex">flex  </option>
                         <option value="inline-block">inline-block</option>
                         <option value="manualy">manualy</option>
                     </select>
-           </div>
+                    </div>
+                    {Flx && (
+                        <>
+                         <div>
+                         <label for="Justify-Content">Justify-Content :</label>
+                         <select {...register("justify-content")}>
+                             <option value="baseline">baseline</option>
+                             <option value="center">center</option>
+                             <option value="end">end</option>
+                             <option value="flex-end">flex-end</option>
+                             <option value="left">left</option>
+                             <option value="right">right</option>
+                             <option value="space-around">space-around</option>
+                             <option value="space-between">space-between</option>
+                         </select>
+                        </div>
+                         <div>
+                         <label for="align-items">align-items :</label>
+                         <select {...register("align-items")}>
+                             <option value="normal" >normal</option>
+                             <option value="baseline">baseline</option>
+                             <option value="center">center</option>
+                             <option value="end">end</option>
+                             <option value="flex-end">flex-end</option>
+                             <option value="flex-start">flex-start</option>
+                             <option value="start">start</option>
+                             <option value="normal" >normal</option>
+                         </select>
+                        </div>
+                        <div>
+                         <label for="flex-wrap">flex-wrap:</label>
+                         <select {...register("flex-wrap")}>
+                             <option value="nowrap" >nowrap</option>
+                             <option value="wrap">wrap</option>
+                             <option value="wrap-reverse">wrap-reverse</option>
+                             <option value="inherit">inherit</option>
+                             <option value="initial">initial</option>
+                             <option value="unset">unset</option>
+                         </select>
+                        </div>
+                        </>
+                    )}
+            
            <div>
                     <label for="Position">Position :</label>
                     <select  {...register("position")} >
@@ -131,13 +173,14 @@ export const ImgForm =({obj,class: classes,value}) => {
            <div>
                     <label for="Border">Border :</label>
                     <select {...register("border-style")} onChange={ (e) => {  e.target.value !="none"?  setBrd(true):setBrd(false)  } } >
-                        <option value="none">none</option>
+                    <option value="ridge ">solid </option>
+                         <option value="none">none</option>
                         <option value="dotted ">dotted </option>
                         <option value="dashed ">dashed </option>
                         <option value="double ">double </option>
                         <option value="groove ">groove </option>
                         <option value="hidden ">hidden </option>
-                        <option value="ridge ">solid </option>
+                        
                         <option value="ridge ">ridge </option>
                     </select> 
             </div>

@@ -30,10 +30,12 @@ export const Dashboard = () => {
     }
 
     return (
+        
         <div ref={drop} className={styles.container}>
             {
                 itemList.map((element)=><DropItem tag={element}/>)
             }
         </div>
+    
     );
 }

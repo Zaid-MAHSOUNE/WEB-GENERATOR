@@ -42,6 +42,27 @@ nav{
   transform: scale(1.07);
   color: #0088a9;
 }
+.account{
+  background-color: transparent;
+  font-Family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+  text-Decoration : none;
+}
+.account a{
+ 
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: white;
+  font-size: 18px;
+}
+.account img{
+  width: 23.5px;
+  margin-right: 7px;
+}
+.account a:hover{
+  transform: scale(1.07);
+  color: #0088a9;
+}
 .logo {
   font-family:'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
   margin-left: 15px;

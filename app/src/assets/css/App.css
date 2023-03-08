@@ -1,6 +1,7 @@
 .App {
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+  height: 100%;
+  width: 100%;
+flex-wrap: wrap;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }

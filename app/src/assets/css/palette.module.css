@@ -46,7 +46,13 @@
 .tools{
     padding: 5px;
     margin-top: 10px;
+   
 }
+.tools p{
+    text-align: center;
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
 
 .tool{
     width: 10%;
@@ -77,6 +83,19 @@
    
     
 }
+.Imprt{
+    width: 260px;
+    display: flex;
+   justify-content: space-between;
+    background-color: white;
+    padding: 15px;
+    box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+    border-radius: 8px;
+}
+.Imprt img{
+    width: 30px;
+    cursor: pointer;
+}
 .items img{
     width: 30px;
     cursor: pointer;
@@ -103,6 +122,7 @@
     font-size: 16px;
     border-radius: 5px;
     margin-bottom: 10px;
+
 }
 
 

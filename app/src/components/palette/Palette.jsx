@@ -2,6 +2,7 @@ import { useContext, useEffect, useState } from 'react';
 import styles from '../../assets/css/palette.module.css';
 import Text from '../../data/Text';
 import Container from '../../data/Container';
+import WebParts from '../../data/WebParts';
 import Media from '../../data/Media';
 import Others from '../../data/Others';
 import down from '../../assets/img/down.png';
@@ -22,6 +23,12 @@ export const Palette = () => {
                 <div className={styles.title} >Tools</div>
                 <div className={styles.tools}>
                             <section>
+                            <p>- Website Parts -</p>
+                            <div  className={styles.Imprt} >
+                                             {
+                                         WebParts.map((element) => <DraggableItem  key={element.tag} tag={element.tag} src={element.src} >  </DraggableItem>)
+                                            }
+                                     </div> 
                                 <button onClick={(e) =>{ setDropped(!Dropped) }} >Container <img  alt='img' src={down} ></img></button>
                                {Dropped && (
                                      

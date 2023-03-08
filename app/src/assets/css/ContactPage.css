@@ -4,12 +4,14 @@
 }
 
 .ctrn{
+    background-image: url('../../../public/bg.svg');
+    background-size: cover;
     width: 206vh;
-    height: 88.6vh;
+    height: 100vh;
 }
 
 .CTN{
-    transform: translate(21%,23%);
+    transform: translate(22%,24%);
     width: 140vh;   
     display: flex;
     justify-content: space-around;

@@ -2,16 +2,16 @@
     margin: 0;
     padding: 0;
 }
-body{
-    background-image: url('../../../public/bg.svg');
-    background-size: cover;
-}
+
 .mainn{
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 19%;
+    padding-top: 10%;
+    padding-bottom: 10.8%;
     opacity: 98%;
+    background-image: url('../../../public/bg.svg');
+    background-size: cover;
 }
 .code{
     position: absolute;

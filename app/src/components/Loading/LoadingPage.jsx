@@ -5,17 +5,19 @@ import "../../assets/css/LoadingPage.css";
 export default function LoadingPage (){
 
     return(
-         
-        <div className="UpDown">
-        <div className="Up">
-                <img src={DragAndDrop} ></img>
-        </div>
+         <div className="CCTR">
+                 <div className="UpDown">
+                    <div className="Up">
+                            <img src={DragAndDrop} ></img>
+                    </div>
 
-        <div className="Down">
-                 <RiseLoader color="#2cbade" />
-        </div>
+                    <div className="Down">
+                            <RiseLoader color="#2cbade" />
+                    </div>
        
+                </div>
          </div>
+       
     
     )
 

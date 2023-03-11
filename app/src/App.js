@@ -6,7 +6,6 @@ import Projects from './pages/Projects';
 import Contact from './pages/Contact';
 import { Register } from './pages/Register';
 
- 
 function App() {
  
   return (

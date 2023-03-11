@@ -31,7 +31,7 @@ export default function ContactForm(){
                 <div className="prt2">
                     <form autoComplete='off' action=''  onSubmit={sendEmail} >
                         <input placeholder='Full name' type='text' name='from_name' required  ></input><br></br>
-                        <input placeholder='Gmail' type='gmail' name='gmail' required ></input><br></br>
+                        <input placeholder='Gmail' type='gmail'   name='gmail' required ></input><br></br>
                         <input placeholder='Subject' type='text' name='subject' required ></input><br></br>
                         <textarea placeholder='Message' name='message' required ></textarea><br></br>
                         <button type='submit'>Send</button>

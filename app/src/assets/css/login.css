@@ -20,7 +20,7 @@
     left: 20px;
 
 }
-.mainn .part1 ,.part2{
+.mainn .part1 ,.part2,.part3{
     width: 350px;
     height: 425px;
     text-align: center;
@@ -42,13 +42,13 @@
     color: white;
     border-radius: 8px;
     cursor: default;
-    margin-bottom:55px;
+    margin-bottom:50px;
 }
 .part1 input{
     border: black solid;
     text-align: center;
     width: 300px;
-    height: 30px;
+    height: 37px;
     margin-bottom: 30px;
     border-radius: 6px;
 }
@@ -59,6 +59,20 @@
     background-color: white;
     margin-top: -13px;
     padding: 2px;
+}
+.part1 > p{
+    background-color: lightcoral;
+    position: relative;
+    margin-left: 0px;
+    margin-top: 0px;
+    color:  white;
+    width: 300px;
+    margin-left: 22px;
+    padding: 8px 0px 8px 0px;
+    border-radius: 7px;
+    margin-top: 8px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 13px;
 }
 .part1 button{
     cursor: pointer;
@@ -73,10 +87,12 @@
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .part1 h4{
+    margin-bottom: 3px;
     font-size: 13px;
 }
 ::placeholder{
     color: black;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .part2{
     display: block;
@@ -110,4 +126,62 @@
     display: flex;
     align-items: center;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+}
+.back{
+    position: absolute;
+    left: 27.5%;
+    top: 21.7%;
+    width: 38px;
+}
+.part3 {
+    font-size: 16px;
+}
+.part3 input{
+    border: none;
+    border-bottom: black solid;
+    text-align: center;
+    width: 300px;
+    height: 28px;
+    margin-top: 23px;
+}
+.part3 button{
+    cursor: pointer;
+    width: 300px;
+    height: 35px;
+    margin-top: 23px;
+    border-radius: 5px;
+    border: none;
+    color: white;
+    background-color: #2cbade;
+    font-size: 15px;
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
+}
+
+.part3 img{
+    width: 100px;
+    margin-top: 20%;
+}
+.part3 .close{
+    position: absolute;
+    width: 26px;
+    margin-top: 12px;
+    margin-left: 177px;
+    cursor: pointer;
+}
+.part3 h5{
+    margin-top: 25px;
+    background-color: lightgreen;
+    width: 300px;
+    margin-left: 25px;
+    padding: 10px 0 10px 0;
+    border-radius: 6px;
+}
+.part3 h4{
+    margin-top: 25px;
+    background-color: lightcoral;
+    width: 300px;
+    margin-left: 25px;
+    padding: 10px 0 10px 0;
+    border-radius: 6px;
+    font-size: 14px;
 }

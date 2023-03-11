@@ -46,6 +46,7 @@ nav{
   background-color: transparent;
   font-Family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
   text-Decoration : none;
+  border: none;
 }
 .account a{
  
@@ -69,6 +70,15 @@ nav{
   color: white;
   display: flex;
   align-items: center;
+}
+.logo > h1{
+  margin-right: 40px;
+}
+.logo > img{
+ 
+  border-radius: 5px;
+  width: 37px;
+  margin-right: 10px;
 }
 .snp{
   font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;

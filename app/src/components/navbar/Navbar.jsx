@@ -2,16 +2,25 @@ import "../../assets/css/Navbar.css";
 import  home from '../../assets/img/home-icon-silhouette.png';
 import  project from '../../assets/img/complete.png';
 import  contact from '../../assets/img/communicate.png';
-import  user from '../../assets/img/user.png';
-import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import  userid from '../../assets/img/userid.png';
+import  logout from '../../assets/img/logout.png';
+import { NavLink ,useNavigate } from "react-router-dom";
+import { signOut } from 'firebase/auth';
+import { auth } from './../../context/firebase/FirebaseConfig'
 function Navbar(){
-    const [Connect,setConnect] = useState(false);
+    const nav = useNavigate();
+    const signout = async ()=>{
+        await signOut(auth)
+        console.log(localStorage.length)
+        localStorage.clear();
+        nav('/');
+    }
     return (
         <>
            <nav>
                 <div className="logo"> 
                     <h1>WEB GENERATOR</h1>
+                    {localStorage.getItem("pic") ? <img src={localStorage.getItem("pic")} ></img> : <img src={userid} ></img> }   {localStorage.getItem("username") ? <p>welcome :  {localStorage.getItem("username")}</p> : <p>Guest</p> }
                 </div>
                 <div  className="pages">
                     <ul  >
@@ -19,7 +28,7 @@ function Navbar(){
                         <li><NavLink to='/Projects' ><img src={project} ></img> My Projects</NavLink></li>
                         <li><NavLink to='/Contact' ><img src={contact} ></img> Contact Us</NavLink></li>
                     </ul>
-                    {Connect ? (<button className='account' ><NavLink to='/Account' ><img src={user} ></img> Account</NavLink></button>): ( <button className="snp"  ><NavLink to='/Login' >Sign Up / Register</NavLink></button>)}
+                    {localStorage.length > 1 ? (<button className='account' ><NavLink onClick={signout} ><img src={logout} ></img> Logout</NavLink></button>): ( <button className="snp"  ><NavLink to='/Login' >Sign Up / Register</NavLink></button>)}
                    
                 </div>
            </nav>

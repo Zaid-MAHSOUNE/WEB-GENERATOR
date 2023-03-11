@@ -9,21 +9,21 @@ import LoadingPage from "../components/Loading/LoadingPage";
 import { DndProvider } from 'react-dnd';
 import { HTML5Backend } from 'react-dnd-html5-backend';
 import { useContainer } from '../hooks/useContainer';
-import { Provider } from "react-redux";
+import { AppContext } from '../context/AppContext';
 import DragAndDrop from '../../src/assets/img/dad.jpeg';
-import { store } from "../context/itemListContext";
 
 
-//export const LoadingContext = createContext();
+export const LoadingContext = createContext();
 export default function Main(){
-    
-   const [loading,setLoading] = useState(true);
-    /*useEffect(() => {
+    const [itemList,setItemList] = useState([]); 
+    const [loading,setLoading] = useState(false);
+    const [index,setIndex] = useState(-1);
+    useEffect(() => {
        setTimeout(()=>{
             setLoading(true);
        },1500);
         
-    })*/
+    })
     return(
         <>
             { loading ? (
@@ -32,11 +32,11 @@ export default function Main(){
                           <div className='App'>
                           <Navbar />
                           <ServiceNavbar />
+                          <AppContext.Provider value={{itemList,setItemList,index,setIndex}}>
                           <Palette />
-                          <Provider store={store}>
                           <Dashboard />
                           <Properties />
-                          </Provider>
+                          </AppContext.Provider>
                           </div>
                           </DndProvider>
                         //  </LoadingContext.Provider>

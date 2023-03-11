@@ -5,14 +5,12 @@ import json from "../../data/CSSjson.json";
 import styles from '../../assets/css/prop.module.css';
 import {FiPlusSquare,FiMinusSquare} from "react-icons/fi";
 import {yupResolver} from "@hookform/resolvers/yup";
-import { useSelector } from 'react-redux';
 
 
 export const TxtForm =({obj,class: classes,value}) => {
     const [newClass,setNewClass] = useState();
     const [Brd,setBrd]=useState(false);
 
-    const cssClasses = useSelector((state)=>state.itemList.value);
 
     const schema = yup.object();
 
@@ -43,16 +41,7 @@ export const TxtForm =({obj,class: classes,value}) => {
     }
 
     const classHandler = (e) => {
-        let classes = e.target.value;
-        if(cssClasses.includes(classes)){
-            setNewClass(cssClasses.filter((element)=>element === classes));
-        }else{
-            if(classes.matches(/^[a-z][A-Za-z0-9_-]*$/i)){
-                return true;
-            }else{
-                alert("Class naming rules violated");
-            }
-        }   
+       
     }
     
 

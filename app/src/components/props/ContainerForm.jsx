@@ -1,20 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import {useForm} from 'react-hook-form';
 import * as yup from "yup";
 import styles from '../../assets/css/prop.module.css';
 import {FiPlusSquare,FiMinusSquare} from "react-icons/fi";
 import {yupResolver} from "@hookform/resolvers/yup";
-import { useSelector } from 'react-redux';
+import { AppContext } from '../../context/AppContext';
 
 
 export const ContainerForm = ({obj,class: classes,value}) => {
     const [Flx,setFlx]=useState(false);
     const [Brd,setBrd]=useState(false);
     const [PlaceH,setPlaceH]=useState(true);
+    
+    const {itemList,setItemList} = useContext(AppContext);
 
     const [newClass,setNewClass] = useState();
 
-    const cssClasses = useSelector((state)=>state.itemList.value);
 
     const schema = yup.object().shape({
         width: yup.number().integer().min(0).max(100),
@@ -41,29 +42,32 @@ export const ContainerForm = ({obj,class: classes,value}) => {
 
         obj.setAttribute("style",style);
     }
+
+    const contextSetter = (obj) => {
+        let newList = itemList.filter((element) => element.id === obj.id)
+        console.log(itemList);
+    }
+
     const TypeHandler = (e) =>{
         e.preventDefault();
         obj.setAttribute('type',e.target.value);
     }
     const valueHandler = (e) => {
         e.preventDefault();
-        obj.textContent = e.target.value;
+        contextSetter(obj);
     }
     const PlaceHolderHandler = (e) => {
         e.preventDefault();
-        obj.placeholder = e.target.value;
+        obj.value = e.target.value;
     }
     const classHandler = (e) => {
-        let classes = e.target.value;
-        if(cssClasses.includes(classes)){
-            setNewClass(cssClasses.filter((element)=>element === classes));
-        }else{
-            if(classes.matches(/^[a-z][A-Za-z0-9_-]*$/i)){
+        /*classes.matches(/^[a-z][A-Za-z0-9_-]*$/i*/
+            if(0){
                 return true;
             }else{
                 alert("Class naming rules violated");
             }
-        }   
+           
     }
     
 
@@ -80,7 +84,7 @@ export const ContainerForm = ({obj,class: classes,value}) => {
                 (
                         <div className={styles.container_sm}>
                             <label className={styles.title_sm} >Value :</label>
-                            <input className={styles.input} type="text" onChange={(e)=>valueHandler(e)}/>
+                            <input className={styles.input} type="text" value={obj.value} onChange={(e)=>valueHandler(e)}/>
                         </div>
                 )
 
@@ -111,7 +115,7 @@ export const ContainerForm = ({obj,class: classes,value}) => {
             {obj.type && (
 
                     <div>
-                    <label for="Input-Type">Input-Type :</label>
+                    <label htmlFor="Input-Type">Input-Type :</label>
                     <select
                         onChange={(e) => {e.target.value =="text" || e.target.value =="email" || e.target.value =="tel" || e.target.value =="number" || e.target.value =="password" ? setPlaceH(true):setPlaceH(false) ; TypeHandler(e)} }
                         >
@@ -150,7 +154,7 @@ export const ContainerForm = ({obj,class: classes,value}) => {
            </div>
            
            <div>
-                    <label for="Cursor">Cursor :</label>
+                    <label htmlFor="Cursor">Cursor :</label>
                     <select {...register("cursor")}>
                         <option value="default">default</option>
                         <option value="crosshair">crosshair</option>
@@ -162,7 +166,7 @@ export const ContainerForm = ({obj,class: classes,value}) => {
                     </select>
            </div>
            <div>
-                    <label for="Cursor">Text-Align :</label>
+                    <label htmlFor="Cursor">Text-Align :</label>
                     <select {...register("text-align")}>
                         <option value=""></option>
                         <option value="center">center</option>
@@ -174,7 +178,7 @@ export const ContainerForm = ({obj,class: classes,value}) => {
                     </select>
            </div>
            <div>
-                    <label for="Border">Border :</label>
+                    <label htmlFor="Border">Border :</label>
                     <select {...register("border-style")} onChange={ (e) => {  e.target.value !="none"?  setBrd(true):setBrd(false)  } } >
                     <option value="ridge ">solid </option>
                          <option value="none">none</option>
@@ -190,7 +194,7 @@ export const ContainerForm = ({obj,class: classes,value}) => {
                 {Brd && (
                         <>
                          <div>
-                         <label for="Border">Border-Color :</label>
+                         <label htmlFor="Border">Border-Color :</label>
                           <input className={styles.colors} type="color" {...register("border-color")}/>
                           </div>
                           <div>
@@ -206,7 +210,7 @@ export const ContainerForm = ({obj,class: classes,value}) => {
                 )}
                    
                      <div>
-                    <label for="Display">Display :</label>
+                    <label htmlFor="Display">Display :</label>
                     <select {...register("display")} onChange={ (e) => {  e.target.value==="flex"?  setFlx(true):setFlx(false)  } }  >
                         <option value="block">block</option>
                         <option value="none">none</option>
@@ -219,7 +223,7 @@ export const ContainerForm = ({obj,class: classes,value}) => {
                     {Flx && (
                         <>
                          <div>
-                         <label for="Justify-Content">Justify-Content :</label>
+                         <label htmlFor="Justify-Content">Justify-Content :</label>
                          <select {...register("justify-content")}>
                              <option value="baseline">baseline</option>
                              <option value="center">center</option>
@@ -232,7 +236,7 @@ export const ContainerForm = ({obj,class: classes,value}) => {
                          </select>
                         </div>
                          <div>
-                         <label for="align-items">align-items :</label>
+                         <label htmlFor="align-items">align-items :</label>
                          <select {...register("align-items")}>
                              <option value="normal" >normal</option>
                              <option value="baseline">baseline</option>
@@ -245,7 +249,7 @@ export const ContainerForm = ({obj,class: classes,value}) => {
                          </select>
                         </div>
                         <div>
-                         <label for="flex-wrap">flex-wrap:</label>
+                         <label htmlFor="flex-wrap">flex-wrap:</label>
                          <select {...register("flex-wrap")}>
                              <option value="nowrap" >nowrap</option>
                              <option value="wrap">wrap</option>
@@ -260,7 +264,7 @@ export const ContainerForm = ({obj,class: classes,value}) => {
             
           
            <div>
-                    <label for="Position">Position :</label>
+                    <label htmlFor="Position">Position :</label>
                     <select {...register("position")}>
                         <option value="relative">relative</option>
                         <option value="static">static</option>

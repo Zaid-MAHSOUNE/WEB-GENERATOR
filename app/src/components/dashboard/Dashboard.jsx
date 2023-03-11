@@ -3,12 +3,12 @@ import { useDrop } from 'react-dnd';
 import styles from '../../assets/css/dashboard.module.css';
 import { DropItem } from './DropItem';
 import '../../assets/css/dropItem.css';
+import { AppContext } from '../../context/AppContext';
 export const Dashboard = () => {
-
 
     const refItems = useRef();
 
-    const [itemList, setItemList] = useState([]);
+    const {itemList, setItemList} = useContext(AppContext);
     const [{isOver}, drop] = useDrop(()=>({
         accept:"item",
         drop:(item,monitor) => dropHandler(item.tag,monitor),
@@ -25,17 +25,15 @@ export const Dashboard = () => {
           return
         }
         setItemList((previousState)=>{
-            return [...previousState,tag];
+            return [...previousState,{id:previousState.length+1,tag:tag,class:"container",value:"11",style:{},parentId:0}];
         });
     }
 
     return (
-        
         <div ref={drop} className={styles.container}>
             {
-                itemList.map((element)=><DropItem tag={element}/>)
+                itemList.map((element,index)=> element.parentId === 0 ? <DropItem key={index} class={element.class} style={element.style} value={element.value} tag={element.tag} id={element.id} parentId={element.parentId}/> : null )
             }
         </div>
-    
     );
 }

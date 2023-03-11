@@ -1,13 +1,10 @@
 import '../../assets/css/dropItem.css';
 import { useState,useRef,useContext } from 'react';
 import { useDrop } from 'react-dnd';
-import { useDispatch } from 'react-redux';
-import { setSelected } from '../../context/itemListContext';
+import { AppContext } from '../../context/AppContext';
 export const DropItem = (props) =>  {
 
-    const dispatch = useDispatch();
-
-    const [itemLists, setItemList] = useState([]);
+    const {itemList, setItemList,setIndex} = useContext(AppContext);
     
     const [{isOver}, drop] = useDrop(()=>({
         accept:"item",
@@ -24,84 +21,26 @@ export const DropItem = (props) =>  {
           return
         }
         setItemList((previousState)=>{
-            return [...previousState,tag];
+            return [...previousState,{id:previousState.length+1,tag:tag,class:"container",value:"",style:{},parentId:props.id}];
         });
     }
 
-    
-   
-    if( props.tag !== "div" && props.tag === "h1" || props.tag === "p" ){
+    if(props.tag !== "div"){
         return (
-            <props.tag id={props.id} className='text' onClick={(e)=>{
-                dispatch(setSelected(e.target))
-            }}/>
+            <props.tag id={props.id} className={props.class} style={props.style} onClick={(e)=>{
+                setIndex(e.target.getAttribute("id"));console.log("HHHH")
+            }}>{props.value}</props.tag>
         );
-    }
-    else if(  props.tag !=="div" &&  props.tag === "img" ){
-        return(
-            <props.tag id={props.id} className='media' onClick={(e)=>{
-                dispatch(setSelected(e.target))
-            }}  alt='Media' src='' />
-        )
-    }
-    else if(  props.tag !=="div" &&  props.tag === "a" ){
-        return(
-            <props.tag id={props.id} className='text' onClick={(e)=>{
-                dispatch(setSelected(e.target))
-            }}  >its a link</props.tag>
-        )
-    }
-    else if(  props.tag !=="div" &&  props.tag === "input" ){
-        return(
-            <props.tag id={props.id} className='container' type='text' onClick={(e)=>{
-                dispatch(setSelected(e.target))
-            }}  placeholder='clickable item ' />
-        )
-    }
-    else if(  props.tag !=="div" &&  props.tag === "body" ){
-        return(
-            <props.tag  ref={drop} id={props.id} className='container body'  onClick={(e)=>{
-                dispatch(setSelected(e.target))
-            }} >
-            {
-                itemLists.map((element)=><DropItem tag={element}/>)
-            }
-            </props.tag>
-
-        )
-    }
-    else if(  props.tag !=="div" &&  props.tag === "header" ){
-        return(
-            <props.tag  ref={drop} id={props.id} className='container header'  onClick={(e)=>{
-                dispatch(setSelected(e.target))
-            }} >
-            {
-                itemLists.map((element)=><DropItem tag={element}/>)
-            }
-            </props.tag>
-
-        )
-    }
-    else if(  props.tag !=="div" &&  props.tag === "footer" ){
-        return(
-            <props.tag  ref={drop} id={props.id} className='container footer'  onClick={(e)=>{
-                dispatch(setSelected(e.target))
-            }} >
-            {
-                itemLists.map((element)=><DropItem tag={element}/>)
-            }
-            </props.tag>
-
-        )
-    }
-    else{
+    }else{
         return (
-            <div ref={drop} id={props.id} className='container' onClick={(e)=>{
-                dispatch(setSelected(e.target))
+            <div ref={drop} id={props.id} className={props.class} style={props.style} onClick={(e)=>{
+                setIndex(e.target.getAttribute("id"));
             }}>
-                
                 {
-                    itemLists.map((element)=><DropItem tag={element}/>)
+                props.value
+                }
+                {
+                    itemList.map((element,index)=> element.parentId === props.id ? <DropItem key={index} tag={element.tag} class={element.class} style={element.style} value={element.value} id={element.id} parentId={element.parentId}/> : null )
                 }
             </div>
         );

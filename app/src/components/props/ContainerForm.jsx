@@ -8,14 +8,14 @@ import { AppContext } from '../../context/AppContext';
 
 
 export const ContainerForm = ({obj,class: classes,value}) => {
+
+    console.log(obj.value);
+
     const [Flx,setFlx]=useState(false);
     const [Brd,setBrd]=useState(false);
     const [PlaceH,setPlaceH]=useState(true);
     
     const {itemList,setItemList} = useContext(AppContext);
-
-    const [newClass,setNewClass] = useState();
-
 
     const schema = yup.object().shape({
         width: yup.number().integer().min(0).max(100),
@@ -27,26 +27,8 @@ export const ContainerForm = ({obj,class: classes,value}) => {
     });
 
     const onSubmit = (data) => {
-        let keys = Object.keys(data);
-        let values = Object.values(data);
-        let style = "";
-        keys.map((element,index)=>{
-            if(values[index]){
-            if(element === "height" || element === "width" || element === "opacity" || element === "margin-top" || element === "margin-right" || element === "margin-left" || element === "margin-botton" || element === "padding-top" || element === "padding-right" || element === "padding-left" || element === "padding-botton") 
-             style += ""+element+":"+values[index]+"%;\n";
-             else if(element === "border-radius" || element === "border-width" )  style += ""+element+":"+values[index]+"px;\n";
-             else
-             style += ""+element+":"+values[index]+";\n";
-        }
-    })
-
-        obj.setAttribute("style",style);
     }
 
-    const contextSetter = (obj) => {
-        let newList = itemList.filter((element) => element.id === obj.id)
-        console.log(itemList);
-    }
 
     const TypeHandler = (e) =>{
         e.preventDefault();
@@ -54,7 +36,12 @@ export const ContainerForm = ({obj,class: classes,value}) => {
     }
     const valueHandler = (e) => {
         e.preventDefault();
-        contextSetter(obj);
+        setItemList((previousState) => {
+            previousState.splice(previousState.indexOf(obj),1,obj);
+            return previousState;
+        });
+        obj.value = e.target.value;
+        console.log(itemList);
     }
     const PlaceHolderHandler = (e) => {
         e.preventDefault();
@@ -84,7 +71,7 @@ export const ContainerForm = ({obj,class: classes,value}) => {
                 (
                         <div className={styles.container_sm}>
                             <label className={styles.title_sm} >Value :</label>
-                            <input className={styles.input} type="text" value={obj.value} onChange={(e)=>valueHandler(e)}/>
+                            <input className={styles.input} type="text" defaultValue={obj.value} onChange={(e)=>valueHandler(e)}/>
                         </div>
                 )
 

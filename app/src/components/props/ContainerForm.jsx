@@ -53,8 +53,7 @@ export const ContainerForm = ({obj,class: classes,value}) => {
                 return true;
             }else{
                 alert("Class naming rules violated");
-            }
-           
+            }    
     }
     
 

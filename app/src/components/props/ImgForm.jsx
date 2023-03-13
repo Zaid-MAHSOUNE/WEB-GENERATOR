@@ -13,7 +13,13 @@ export const ImgForm =({obj,class: classes,value}) => {
     const [Brd,setBrd]=useState(false);
 
     const [newClass,setNewClass] = useState();
-
+    const [file, setFile] = useState();
+    function handleChange(e) {
+        console.log(e.target.files);
+        console.log(obj.src);   
+        setFile(URL.createObjectURL(e.target.files[0]));
+        obj.src= file;
+    }
     const schema = yup.object().shape({
         width: yup.number().integer().min(0).max(100),
         height: yup.number().integer().min(0).max(100),
@@ -59,7 +65,7 @@ export const ImgForm =({obj,class: classes,value}) => {
         <div className={styles.txtStyle}>
            <div  className={styles.fileArea} >
                     <label>Source :   </label>
-                    <input type="file"  accept="image/png, image/jpg, image/gif, image/jpeg" aria-label="File browser example"></input>
+                    <input type="file"  accept="image/png, image/jpg, image/gif, image/jpeg" onChange={handleChange}  ></input>
            </div>
            <div>
                     <label for="BackgroundSize">Background-Size :</label>

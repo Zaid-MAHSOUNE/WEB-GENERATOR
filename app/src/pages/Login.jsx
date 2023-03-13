@@ -157,7 +157,7 @@ return(
                                 <div className='part3'>
                                 <img  onClick={()=>{setForget(true)}}  className='close'  src={close} ></img>
                                 
-                                {Done ? <><img src={check} loading='lazy'  ></img><h2>Done</h2></> : ErrorS ? <><img src={declined}  loading='lazy' ></img> <h2>Invalid email</h2> </> :<><img src={rstpass}  loading='lazy' ></img> <h2>forget password</h2></>}
+                                {Done ? <><img src={check} loading='lazy'  ></img><h2>Done</h2></> : ErrorS ? <><h2>Invalid email</h2> </> :<><img src={rstpass}  loading='lazy' ></img> <h2>forget password</h2></>}
                                 
                                 <input type='email' ref={EmailS}  placeholder='enter your email' required ></input><br></br>
                                 <button onClick={resetPass} >send email</button>

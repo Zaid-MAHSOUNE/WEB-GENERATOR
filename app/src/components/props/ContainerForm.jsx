@@ -73,7 +73,7 @@ export const ContainerForm = ({obj,class: classes,value}) => {
 
     return (
         
-        <form className={styles.form} onChange={handleSubmit(onSubmit)}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
               {obj.type  && PlaceH ?(
                         <div className={styles.container_sm} > 
                             <label  className={styles.title_sm} >Place-Holder : </label>
@@ -275,7 +275,7 @@ export const ContainerForm = ({obj,class: classes,value}) => {
            </div>
         </div>
         <div className={styles.submit} >
-            <button type='submit' > Delete</button>
+            <button type='submit ' > Add</button>
         </div> 
         </form>
     );

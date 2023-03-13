@@ -16,14 +16,14 @@ import DragAndDrop from '../../src/assets/img/dad.jpeg';
 export const LoadingContext = createContext();
 export default function Main(){
     const [itemList,setItemList] = useState([]); 
-    const [loading,setLoading] = useState(false);
+    const [loading,setLoading] = useState(true);
     const [index,setIndex] = useState(-1);
-    useEffect(() => {
+   /* useEffect(() => {
        setTimeout(()=>{
             setLoading(true);
        },1500);
         
-    })
+    })*/
     return(
         <>
             { loading ? (

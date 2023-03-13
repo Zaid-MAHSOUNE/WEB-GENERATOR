@@ -18,6 +18,7 @@ export default function Main(){
     const [itemList,setItemList] = useState([]); 
     const [loading,setLoading] = useState(false);
     const [index,setIndex] = useState(-1);
+    const [changes,setChanges] = useState(false);
     useEffect(() => {
        setTimeout(()=>{
             setLoading(true);
@@ -32,7 +33,7 @@ export default function Main(){
                           <div className='App'>
                           <Navbar />
                           <ServiceNavbar />
-                          <AppContext.Provider value={{itemList,setItemList,index,setIndex}}>
+                          <AppContext.Provider value={{itemList,setItemList,index,setIndex,changes,setChanges}}>
                           <Palette />
                           <Dashboard />
                           <Properties />

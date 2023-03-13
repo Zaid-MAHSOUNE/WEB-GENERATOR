@@ -5,9 +5,11 @@ import { ImgForm } from './ImgForm';
 import { ContainerForm } from './ContainerForm';
 import { PartsForm } from './PartsForm';
 import { AppContext } from '../../context/AppContext';
+import { useState } from 'react';
 export const Properties = () => {
 
-    const {itemList,index} = useContext(AppContext);
+    const {itemList,index,changes} = useContext(AppContext);
+
 
     let item = itemList.filter((element) => element.id == index);
 
@@ -17,7 +19,7 @@ export const Properties = () => {
         }
         else{
             if( obj.tag == "h1" || obj.tag == "p" || obj.tag == "a" ){
-                return <TxtForm obj={obj}/>
+                return <TxtForm obj={obj} />
             }
             else if(obj.tag == "img"){
                 return <ImgForm obj={obj}/>

@@ -8,7 +8,7 @@ export const Dashboard = () => {
 
     const refItems = useRef();
 
-    const {itemList, setItemList} = useContext(AppContext);
+    const {itemList, setItemList,changes} = useContext(AppContext);
     const [{isOver}, drop] = useDrop(()=>({
         accept:"item",
         drop:(item,monitor) => dropHandler(item.tag,monitor),

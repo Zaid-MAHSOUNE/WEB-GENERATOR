@@ -7,26 +7,32 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import { AppContext } from '../../context/AppContext';
 
 
-export const ContainerForm = ({obj,class: classes,value}) => {
+export const ContainerForm = ({obj,class: classes,value,change}) => {
 
-    console.log(obj.value);
+    const {itemList,setItemList,setChanges,changes} = useContext(AppContext);
 
     const [Flx,setFlx]=useState(false);
     const [Brd,setBrd]=useState(false);
     const [PlaceH,setPlaceH]=useState(true);
+    const [name,setName] = useState(obj);
+
     
-    const {itemList,setItemList} = useContext(AppContext);
+    useEffect(()=>{
+        setName(obj);
+    },[obj])
+    
 
     const schema = yup.object().shape({
         width: yup.number().integer().min(0).max(100),
         height: yup.number().integer().min(0).max(100),
     });
-
     const {register,handleSubmit} = useForm({
         resolver: yupResolver(schema),
     });
 
-    const onSubmit = (data) => {
+    const onSubmit = (e,data) => {
+        e.preventDefault();
+        setChanges((pre)=>!pre);
     }
 
 
@@ -34,14 +40,8 @@ export const ContainerForm = ({obj,class: classes,value}) => {
         e.preventDefault();
         obj.setAttribute('type',e.target.value);
     }
-    const valueHandler = (e) => {
-        e.preventDefault();
-        setItemList((previousState) => {
-            previousState.splice(previousState.indexOf(obj),1,obj);
-            return previousState;
-        });
-        obj.value = e.target.value;
-        console.log(itemList);
+    const valueHandler = () => {
+        obj.value = name;
     }
     const PlaceHolderHandler = (e) => {
         e.preventDefault();
@@ -60,7 +60,7 @@ export const ContainerForm = ({obj,class: classes,value}) => {
 
     return (
         
-        <form className={styles.form} onChange={handleSubmit(onSubmit)}>
+        <form className={styles.form} onSubmit={(e)=>handleSubmit(onSubmit(e))}>
               {obj.type  && PlaceH ?(
                         <div className={styles.container_sm} > 
                             <label  className={styles.title_sm} >Place-Holder : </label>
@@ -71,7 +71,7 @@ export const ContainerForm = ({obj,class: classes,value}) => {
                 (
                         <div className={styles.container_sm}>
                             <label className={styles.title_sm} >Value :</label>
-                            <input className={styles.input} type="text" defaultValue={obj.value} onChange={(e)=>valueHandler(e)}/>
+                            <input key={changes} className={styles.input} type="text" value={name.value} onChange={(e)=>{setName(obj.value = e.target.value)}}/>
                         </div>
                 )
 
@@ -262,7 +262,8 @@ export const ContainerForm = ({obj,class: classes,value}) => {
            </div>
         </div>
         <div className={styles.submit} >
-            <button type='submit' > Delete</button>
+            <button type='submit'> Submit</button>
+            <button type='submit'> Delete</button>
         </div> 
         </form>
     );

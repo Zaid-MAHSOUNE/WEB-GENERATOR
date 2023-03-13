@@ -25,7 +25,13 @@ export const DropItem = (props) =>  {
         });
     }
 
-    if(props.tag === "div"){
+    if(props.tag !== "div"){
+        return (
+            <props.tag id={props.id} className={props.class} style={props.style} onClick={(e)=>{
+                setIndex(e.target.getAttribute("id"));console.log("HHHH")
+            }}>{props.value}</props.tag>
+        );
+    }else{
         return (
             <div ref={drop} id={props.id} className={props.class} style={props.style} onClick={(e)=>{
                 setIndex(e.target.getAttribute("id"));

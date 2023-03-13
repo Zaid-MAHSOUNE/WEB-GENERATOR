@@ -7,54 +7,41 @@ import {yupResolver} from "@hookform/resolvers/yup";
 import { AppContext } from '../../context/AppContext';
 
 
-export const ContainerForm = ({obj,class: classes,value}) => {
+export const ContainerForm = ({obj,class: classes,value,change}) => {
+
+    const {itemList,setItemList,setChanges,changes} = useContext(AppContext);
+
     const [Flx,setFlx]=useState(false);
     const [Brd,setBrd]=useState(false);
     const [PlaceH,setPlaceH]=useState(true);
+    const [name,setName] = useState(obj);
+
     
-    const {itemList,setItemList} = useContext(AppContext);
-
-    const [newClass,setNewClass] = useState();
-
+    useEffect(()=>{
+        setName(obj);
+    },[obj])
+    
 
     const schema = yup.object().shape({
         width: yup.number().integer().min(0).max(100),
         height: yup.number().integer().min(0).max(100),
     });
-
     const {register,handleSubmit} = useForm({
         resolver: yupResolver(schema),
     });
 
-    const onSubmit = (data) => {
-        let keys = Object.keys(data);
-        let values = Object.values(data);
-        let style = "";
-        keys.map((element,index)=>{
-            if(values[index]){
-            if(element === "height" || element === "width" || element === "opacity" || element === "margin-top" || element === "margin-right" || element === "margin-left" || element === "margin-botton" || element === "padding-top" || element === "padding-right" || element === "padding-left" || element === "padding-botton") 
-             style += ""+element+":"+values[index]+"%;\n";
-             else if(element === "border-radius" || element === "border-width" )  style += ""+element+":"+values[index]+"px;\n";
-             else
-             style += ""+element+":"+values[index]+";\n";
-        }
-    })
-
-        obj.setAttribute("style",style);
+    const onSubmit = (e,data) => {
+        e.preventDefault();
+        setChanges((pre)=>!pre);
     }
 
-    const contextSetter = (obj) => {
-        let newList = itemList.filter((element) => element.id === obj.id)
-        console.log(itemList);
-    }
 
     const TypeHandler = (e) =>{
         e.preventDefault();
         obj.setAttribute('type',e.target.value);
     }
-    const valueHandler = (e) => {
-        e.preventDefault();
-        contextSetter(obj);
+    const valueHandler = () => {
+        obj.value = name;
     }
     const PlaceHolderHandler = (e) => {
         e.preventDefault();
@@ -73,7 +60,7 @@ export const ContainerForm = ({obj,class: classes,value}) => {
 
     return (
         
-        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <form className={styles.form} onSubmit={(e)=>handleSubmit(onSubmit(e))}>
               {obj.type  && PlaceH ?(
                         <div className={styles.container_sm} > 
                             <label  className={styles.title_sm} >Place-Holder : </label>
@@ -84,7 +71,7 @@ export const ContainerForm = ({obj,class: classes,value}) => {
                 (
                         <div className={styles.container_sm}>
                             <label className={styles.title_sm} >Value :</label>
-                            <input className={styles.input} type="text" value={obj.value} onChange={(e)=>valueHandler(e)}/>
+                            <input key={changes} className={styles.input} type="text" value={name.value} onChange={(e)=>{setName(obj.value = e.target.value)}}/>
                         </div>
                 )
 
@@ -275,7 +262,8 @@ export const ContainerForm = ({obj,class: classes,value}) => {
            </div>
         </div>
         <div className={styles.submit} >
-            <button type='submit ' > Add</button>
+            <button type='submit'> Submit</button>
+            <button type='submit'> Delete</button>
         </div> 
         </form>
     );

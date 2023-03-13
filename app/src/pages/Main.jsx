@@ -18,12 +18,13 @@ export default function Main(){
     const [itemList,setItemList] = useState([]); 
     const [loading,setLoading] = useState(true);
     const [index,setIndex] = useState(-1);
-   /* useEffect(() => {
+    const [changes,setChanges] = useState(false);
+    useEffect(() => {
        setTimeout(()=>{
             setLoading(true);
        },1500);
         
-    })*/
+    })
     return(
         <>
             { loading ? (
@@ -32,7 +33,7 @@ export default function Main(){
                           <div className='App'>
                           <Navbar />
                           <ServiceNavbar />
-                          <AppContext.Provider value={{itemList,setItemList,index,setIndex}}>
+                          <AppContext.Provider value={{itemList,setItemList,index,setIndex,changes,setChanges}}>
                           <Palette />
                           <Dashboard />
                           <Properties />

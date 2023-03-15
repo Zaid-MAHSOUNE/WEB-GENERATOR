@@ -1,24 +1,29 @@
-import { useState } from 'react';
+import {  useContext, useEffect, useState } from 'react';
 import {useForm} from 'react-hook-form';
 import * as yup from "yup";
 import json from "../../data/CSSjson.json";
 import styles from '../../assets/css/prop.module.css';
 import {FiPlusSquare,FiMinusSquare} from "react-icons/fi";
 import {yupResolver} from "@hookform/resolvers/yup";
+import { AppContext } from '../../context/AppContext';
 
-
-export const ImgForm =({obj,class: classes,value}) => {
-
+export const ImgForm = ({obj,class: classes,value,change}) => {
+    const {itemList,setItemList,setChanges,changes} = useContext(AppContext);
     const [Flx,setFlx]=useState(false);
     const [Brd,setBrd]=useState(false);
+    const [name,setName] = useState(obj);
+    useEffect(()=>{
+        setName(obj);
+    },[obj])
 
     const [newClass,setNewClass] = useState();
     const [file, setFile] = useState();
     function handleChange(e) {
-        console.log(e.target.files);
-        console.log(obj.src);   
+        console.log(e.target.files);  
+        console.log(obj.src);  
         setFile(URL.createObjectURL(e.target.files[0]));
-        obj.src= file;
+        obj.src= file[0];   
+        console.log(file)
     }
     const schema = yup.object().shape({
         width: yup.number().integer().min(0).max(100),
@@ -30,23 +35,24 @@ export const ImgForm =({obj,class: classes,value}) => {
         resolver: yupResolver(schema),
     });
 
-    const onSubmit = (data) => {
-        let keys = Object.keys(data);
-        let values = Object.values(data);
-        let style = "";
-        keys.map((element,index)=>{
-            if(values[index]){
-            if(element === "height" || element === "width" || element === "height" || element === "width" || element === "opacity" || element === "margin-top" || element === "margin-right" || element === "margin-left" || element === "margin-botton" || element === "padding-top" || element === "padding-right" || element === "padding-left" || element === "padding-botton") 
-             style += ""+element+":"+values[index]+"%;\n";
-             else if(element === "border-radius" || element === "border-width" )  style += ""+element+":"+values[index]+"px;\n";
+    const onSubmit = (e) => {
+        e.preventDefault();
+        setChanges((pre)=>!pre);
+          const style = {};
+        const keys = Array.from(e.target);
+       keys.map((element)=>{
+            if(element.name === "height" || element.name === "width" || element.name === "opacity" || element.name === "marginTop" || element.name === "marginRight" || element.name === "marginLeft" || element.name === "marginBotton" || element.name === "paddingTop" || element.name === "paddingRight" || element.name === "paddingLeft" || element.name === "padding-botton") 
+            style[element.name] = "" + element.value + "%" ;
+           else if(element.name === "borderRadius" || element.name === "borderWidth" )   style[element.name] = "" + element.value + "px" ;
+            else if (element.name ==='picture' || element.name === 'class'|| element.name === 'submit' ||  element.name === 'delete' ){}
              else
-             style += ""+element+":"+values[index]+";\n";
-        }
-    })
+             style[element.name] = element.value ;
+             
+        })
+        obj.style = style
+       console.log(style)
 
-        obj.setAttribute("style",style);
     }
-
 
     const classHandler = (e) => {
           
@@ -55,17 +61,17 @@ export const ImgForm =({obj,class: classes,value}) => {
 
     return (
         
-        <form className={styles.form} onChange={handleSubmit(onSubmit)}>
+        <form className={styles.form} onSubmit={(e)=>handleSubmit(onSubmit(e))}>
         {
             <div className={styles.container_sm}>
             <label className={styles.title_sm}>Class :</label>
-            <input className={styles.input} type="text" value={classes} onChange={(e)=>classHandler(e)}/>
+            <input className={styles.input} type="text" value={classes}  {...register("class")}  onChange={(e)=>classHandler(e)}/>
             </div>
         }
         <div className={styles.txtStyle}>
            <div  className={styles.fileArea} >
                     <label>Source :   </label>
-                    <input type="file"  accept="image/png, image/jpg, image/gif, image/jpeg" onChange={handleChange}  ></input>
+                    <input type="file"   {...register("picture")} onChange={handleChange}  ></input>
            </div>
            <div>
                     <label for="BackgroundSize">Background-Size :</label>
@@ -102,7 +108,7 @@ export const ImgForm =({obj,class: classes,value}) => {
                         <>
                          <div>
                          <label for="Justify-Content">Justify-Content :</label>
-                         <select {...register("justify-content")}>
+                         <select {...register("justifyContent")}>
                              <option value="baseline">baseline</option>
                              <option value="center">center</option>
                              <option value="end">end</option>
@@ -115,7 +121,7 @@ export const ImgForm =({obj,class: classes,value}) => {
                         </div>
                          <div>
                          <label for="align-items">align-items :</label>
-                         <select {...register("align-items")}>
+                         <select {...register("alignItems")}>
                              <option value="normal" >normal</option>
                              <option value="baseline">baseline</option>
                              <option value="center">center</option>
@@ -128,7 +134,7 @@ export const ImgForm =({obj,class: classes,value}) => {
                         </div>
                         <div>
                          <label for="flex-wrap">flex-wrap:</label>
-                         <select {...register("flex-wrap")}>
+                         <select {...register("flexWrap")}>
                              <option value="nowrap" >nowrap</option>
                              <option value="wrap">wrap</option>
                              <option value="wrap-reverse">wrap-reverse</option>
@@ -152,21 +158,21 @@ export const ImgForm =({obj,class: classes,value}) => {
            </div>
            <div className={styles.MarginArea} >
                     <label>Margin </label>
-                    <input type="number" placeholder='top' {...register("margin-top")}></input>
-                    <input type="number" placeholder='right' {...register("margin-right")}></input>
-                    <input type="number" placeholder='bottom' {...register("margin-bottom")}></input>
-                    <input type="number" placeholder='left' {...register("margin-left")}></input>
+                    <input type="number" placeholder='top' {...register("marginTop")}></input>
+                    <input type="number" placeholder='right' {...register("marginRight")}></input>
+                    <input type="number" placeholder='bottom' {...register("marginBottom")}></input>
+                    <input type="number" placeholder='left' {...register("marginLeft")}></input>
            </div>
            <div className={styles.MarginArea} >
                     <label>Padding </label>
-                    <input type="number" placeholder='top' {...register("padding-top")}></input>
-                    <input type="number" placeholder='right' {...register("padding-right")}></input>
-                    <input type="number" placeholder='bottom' {...register("padding-bottom")}></input>
-                    <input type="number" placeholder='left' {...register("padding-left")}></input>
+                    <input type="number" placeholder='top' {...register("paddingTop")}></input>
+                    <input type="number" placeholder='right' {...register("paddingRight")}></input>
+                    <input type="number" placeholder='bottom' {...register("paddingBottom")}></input>
+                    <input type="number" placeholder='left' {...register("paddingLeft")}></input>
            </div>
            <div>
                     <label for="Border">Border :</label>
-                    <select {...register("border-style")} onChange={ (e) => {  e.target.value !="none"?  setBrd(true):setBrd(false)  } } >
+                    <select {...register("borderStyle")} onChange={ (e) => {  e.target.value !="none"?  setBrd(true):setBrd(false)  } } >
                     <option value="ridge ">solid </option>
                          <option value="none">none</option>
                         <option value="dotted ">dotted </option>
@@ -182,15 +188,15 @@ export const ImgForm =({obj,class: classes,value}) => {
                         <>
                          <div>
                          <label for="Border">Border-Color :</label>
-                          <input className={styles.colors} type="color" {...register("border-color")}/>
+                          <input className={styles.colors} type="color" {...register("borderColor")}/>
                           </div>
                           <div>
                            <label>Border-width:   </label>
-                           <input type="number" {...register("border-width")}></input>
+                           <input type="number" {...register("borderWidth")}></input>
                             </div>
                            <div>
                            <label>Border-radius:   </label>
-                           <input type="number" {...register("border-radius")}></input>
+                           <input type="number" {...register("borderRadius")}></input>
                             </div>
                             </>
 
@@ -209,8 +215,9 @@ export const ImgForm =({obj,class: classes,value}) => {
            </div>
         </div>
         <div className={styles.submit} >
-            <button type='submit' > Delete</button>
-        </div>
+            <button type='submit'  {...register("submit")}  >   Submit</button>
+            <button  {...register("delete")}  > Delete</button>
+        </div> 
         
         
         </form>

@@ -1,45 +1,45 @@
-import { useState } from 'react';
+import { useContext ,useEffect, useState } from 'react';
 import {useForm} from 'react-hook-form';
 import * as yup from "yup";
 import json from "../../data/CSSjson.json";
 import styles from '../../assets/css/prop.module.css';
 import {FiPlusSquare,FiMinusSquare} from "react-icons/fi";
 import {yupResolver} from "@hookform/resolvers/yup";
+import { AppContext } from '../../context/AppContext';
 
 
-export const TxtForm =({obj,class: classes,value}) => {
+export const TxtForm = ({obj,class: classes,value,change}) => {
+    const {itemList,setItemList,setChanges,changes} = useContext(AppContext);
     const [newClass,setNewClass] = useState();
     const [Brd,setBrd]=useState(false);
-
-
+    const [name,setName] = useState(obj);
+    useEffect(()=>{
+        setName(obj);
+    },[obj])
     const schema = yup.object();
 
     const {register,handleSubmit} = useForm({
         resolver: yupResolver(schema),
     });
 
-    const onSubmit = (data) => {
-        let keys = Object.keys(data);
-        let values = Object.values(data);
-        let style = "";
-        keys.map((element,index)=>{
-            if(values[index]){
-            if(element === "opacity" || element === "margin-top" || element === "margin-right" || element === "margin-left" || element === "margin-botton" || element === "padding-top" || element === "padding-right" || element === "padding-left" || element === "padding-botton") 
-             style += ""+element+":"+values[index]+"%;\n";
-             else if(element === "border-radius" || element === "border-width" || element ==="font-size"  || element === "letter-spacing" )  style += ""+element+":"+values[index]+"px;\n";
-             else
-             style += ""+element+":"+values[index]+";\n";
-        }
-    })
-
-        obj.setAttribute("style",style);
-    }
-
-    const valueHandler = (e) => {
+    const onSubmit = (e) => {
         e.preventDefault();
-        obj.textContent = e.target.value;
-    }
+        setChanges((pre)=>!pre);
+          const style = {};
+        const keys = Array.from(e.target);
+       keys.map((element)=>{
+            if( element.name === "opacity" || element.name === "marginTop" || element.name === "marginRight" || element.name === "marginLeft" || element.name === "marginBotton" || element.name === "paddingTop" || element.name === "paddingRight" || element.name === "paddingLeft" || element.name === "padding-botton") 
+            style[element.name] = "" + element.value + "%" ;
+           else if(element.name === "borderRadius" || element.name === "borderWidth" || element.name === "fontSize" || element.name === "letterSpacing" )     style[element.name] = "" + element.value + "px" ;
+            else if (element.name ==='value' || element.name === 'class' ||  element.name === 'submit' ||  element.name === 'delete' ){}
+             else
+             style[element.name] = element.value ;
+             
+        })
+        obj.style = style
+       console.log(style)
 
+    }
     const classHandler = (e) => {
        
     }
@@ -47,31 +47,31 @@ export const TxtForm =({obj,class: classes,value}) => {
 
     return (
         
-        <form className={styles.form} onChange={handleSubmit(onSubmit)}>
+        <form className={styles.form} onSubmit={(e)=>handleSubmit(onSubmit(e))}>
         <div className={styles.container_sm}>
             <label className={styles.title_sm} >Value :</label>
-            <input className={styles.input} type="text" onChange={(e)=>valueHandler(e)}/>
+            <input key={changes} className={styles.input} type="text"  {...register("value")}  value={name.value} onChange={(e)=>{setName(obj.textontent = e.target.value)}}/>
         </div>
         {
             <div className={styles.container_sm}>
             <label className={styles.title_sm}>Class :</label>
-            <input className={styles.input} type="text" value={classes} onChange={(e)=>classHandler(e)}/>
+            <input className={styles.input} type="text" value={classes}  {...register("class")}  onChange={(e)=>classHandler(e)}/>
             </div>
         }
         <div className={styles.container_sm}>
             <label className={styles.title_sm}>Color </label>
             <input className={styles.input_color} type="color" {...register("color")}/>
             <label className={styles.title_sm}>Background Color </label>
-            <input className={styles.input_color} type="color" {...register("background-color")}/>
+            <input className={styles.input_color} type="color"  defaultValue ='#FFFFFF'{...register("backgroundColor")}/>
         </div>
         <div className={styles.txtStyle}>
            <div>
                     <label>Font-size :   </label>
-                    <input type="number"  {...register("font-size")}  ></input>
+                    <input type="number"  {...register("fontSize")}  ></input>
            </div>
            <div>
                     <label for="TextDecoration">Text-Decoration :</label>
-                    <select  {...register("text-decoration")} >
+                    <select  {...register("textDecoration")} >
                         <option value="none">none</option>
                         <option value="unherit">unherit</option>
                         <option value="unset">unset</option>
@@ -81,11 +81,11 @@ export const TxtForm =({obj,class: classes,value}) => {
                         <option value="underline">underline</option>
                     </select>
                     <label>Text-Decoration-Color :</label>
-                    <input className={styles.colors} type="color" {...register("text-decoration-color")}/>
+                    <input className={styles.colors} type="color" {...register("textDecorationColor")}/>
            </div>
            <div>
                     <label for="FontFamily">Font Family :</label>
-                    <select  {...register("font-familly")}  >
+                    <select  {...register("fontFamilly")}  >
                         <option value="Default">Default</option>
                         <option value="Georgia, serif">Georgia, serif</option>
                         <option value="Gill Sans', sans-serif"> "Gill Sans", sans-serif</option>
@@ -93,13 +93,13 @@ export const TxtForm =({obj,class: classes,value}) => {
                         <option value="Arial">Arial</option>
                         <option value="Helvetica">Helvetica</option>
                         <option value="Verdana">Verdana</option>
-                        <option value="'Times New Roman'">Times New Roman</option>
+                        <option value="Times New Roman">'Times New Roman'</option>
                         <option value="Georgia">Georgian</option>
                     </select>
            </div>
            <div>
                     <label for="TextTransform">Text-Transform :</label>
-                    <select  {...register("text-transform")} >
+                    <select  {...register("textTransform")} >
                         <option value="none">none</option>
                         <option value="uppercase">uppercase</option>
                         <option value="lowercase">lowercase</option>
@@ -109,7 +109,7 @@ export const TxtForm =({obj,class: classes,value}) => {
            
            <div>
                     <label for="FontWeight">Font Weight :</label>
-                    <select  {...register("font-weight")}  >
+                    <select  {...register("fontWeight")}  >
                         <option value="Default">Default</option>
                         <option value="bold">bold</option>
                         <option value="bolder">bolder</option>
@@ -120,7 +120,7 @@ export const TxtForm =({obj,class: classes,value}) => {
            </div>
            <div  >
                     <label>Letter-Spacing :  </label>
-                    <input type="number"  {...register("letter-spacing")}  ></input>
+                    <input type="number"  {...register("letterSpacing")}  ></input>
            </div>
            <div>
                     <label>Opacity:   </label>
@@ -128,17 +128,17 @@ export const TxtForm =({obj,class: classes,value}) => {
            </div>
            <div className={styles.MarginArea} >
                     <label>Margin </label>
-                    <input type="number" placeholder='top' {...register("margin-top")}></input>
-                    <input type="number" placeholder='right' {...register("margin-right")}></input>
-                    <input type="number" placeholder='bottom' {...register("margin-bottom")}></input>
-                    <input type="number" placeholder='left' {...register("margin-left")}></input>
+                    <input type="number" placeholder='top' {...register("marginTop")}></input>
+                    <input type="number" placeholder='right' {...register("marginRight")}></input>
+                    <input type="number" placeholder='bottom' {...register("marginBottom")}></input>
+                    <input type="number" placeholder='left' {...register("marginLeft")}></input>
            </div>
            <div className={styles.MarginArea} >
                     <label>Padding </label>
-                    <input type="number" placeholder='top' {...register("padding-top")}></input>
-                    <input type="number" placeholder='right' {...register("padding-right")}></input>
-                    <input type="number" placeholder='bottom' {...register("padding-bottom")}></input>
-                    <input type="number" placeholder='left' {...register("padding-left")}></input>
+                    <input type="number" placeholder='top' {...register("paddingTop")}></input>
+                    <input type="number" placeholder='right' {...register("paddingRight")}></input>
+                    <input type="number" placeholder='bottom' {...register("paddingBottom")}></input>
+                    <input type="number" placeholder='left' {...register("paddingLeft")}></input>
            </div>
            <div>
                     <label for="Cursor">Cursor :</label>
@@ -154,7 +154,7 @@ export const TxtForm =({obj,class: classes,value}) => {
            </div>
            <div>
                     <label for="Border">Border :</label>
-                    <select {...register("border-style")} onChange={ (e) => {  e.target.value !="none"?  setBrd(true):setBrd(false)  } } >
+                    <select {...register("borderStyle")} onChange={ (e) => {  e.target.value !="none"?  setBrd(true):setBrd(false)  } } >
                     <option value="ridge ">solid </option>
                         <option value="none">none</option>
                         <option value="dotted ">dotted </option>
@@ -170,15 +170,15 @@ export const TxtForm =({obj,class: classes,value}) => {
                         <>
                          <div>
                          <label for="Border">Border-Color :</label>
-                          <input className={styles.colors} type="color" {...register("border-color")}/>
+                          <input className={styles.colors} type="color" {...register("borderColor")}/>
                           </div>
                           <div>
                            <label>Border-width:   </label>
-                           <input type="number" {...register("border-width")}></input>
+                           <input type="number" {...register("borderWidth")}></input>
                             </div>
                            <div>
                            <label>Border-radius:   </label>
-                           <input type="number" {...register("border-radius")}></input>
+                           <input type="number" {...register("borderRadius")}></input>
                             </div>
                             </>
 
@@ -195,7 +195,8 @@ export const TxtForm =({obj,class: classes,value}) => {
            </div>
         </div>
         <div className={styles.submit} >
-            <button type='submit' > Delete</button>
+            <button type='submit'  {...register("submit")}  >   Submit</button>
+            <button  {...register("delete")}  > Delete</button>
         </div> 
         </form>
     );

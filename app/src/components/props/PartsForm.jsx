@@ -1,36 +1,46 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState ,useContext } from 'react';
 import {useForm} from 'react-hook-form';
 import * as yup from "yup";
 import styles from '../../assets/css/prop.module.css';
 import {FiPlusSquare,FiMinusSquare} from "react-icons/fi";
 import {yupResolver} from "@hookform/resolvers/yup";
+import { AppContext } from '../../context/AppContext';
 
 
-export const PartsForm = ({obj,class: classes,value}) => {
+export const PartsForm =  ({obj,class: classes,value,change}) => {
+    const {itemList,setItemList,setChanges,changes} = useContext(AppContext);
     const [Flx,setFlx]=useState(false);
     const [Brd,setBrd]=useState(false);
     const [newClass,setNewClass] = useState();
     const schema = yup.object();
+    const [name,setName] = useState(obj);
+
+    
+    useEffect(()=>{
+        setName(obj);
+    },[obj])
 
     const {register,handleSubmit} = useForm({
         resolver: yupResolver(schema),
     });
 
-    const onSubmit = (data) => {
-        let keys = Object.keys(data);
-        let values = Object.values(data);
-        let style = "";
-        keys.map((element,index)=>{
-            if(values[index]){
-            if(element === "padding-top" || element === "padding-right" || element === "padding-left" || element === "padding-botton") 
-             style += ""+element+":"+values[index]+"%;\n";
-             else if(element === "border-radius" || element === "border-width" || element ==="font-size"  || element === "letter-spacing" )  style += ""+element+":"+values[index]+"px;\n";
+    const onSubmit = (e) => {
+        e.preventDefault();
+        setChanges((pre)=>!pre);
+          const style = {};
+        const keys = Array.from(e.target);
+       keys.map((element)=>{
+            if( element.name === "paddingTop" || element.name === "paddingRight" || element.name === "paddingLeft" || element.name === "padding-botton") 
+            style[element.name] = "" + element.value + "%" ;
+           else if(element.name === "borderRadius" || element.name === "borderWidth" || element.name === "fontSize" || element.name === "letterSpacing" )   style[element.name] = "" + element.value + "px" ;
+            else if (element.name ==='value' || element.name === 'class'  ||  element.name === 'submit' ||  element.name === 'delete' ){}
              else
-             style += ""+element+":"+values[index]+";\n";
-        }
-    })
+             style[element.name] = element.value ;
+             
+        })
+        obj.style = style
+       console.log(style)
 
-        obj.setAttribute("style",style);
     }
     const valueHandler = (e) => {
         e.preventDefault();
@@ -42,32 +52,32 @@ export const PartsForm = ({obj,class: classes,value}) => {
 
     return (
         
-        <form className={styles.form} onChange={handleSubmit(onSubmit)}>
+        <form className={styles.form} onSubmit={(e)=>handleSubmit(onSubmit(e))}>
                         <div className={styles.container_sm}>
                             <label className={styles.title_sm} >Value :</label>
-                            <input className={styles.input} type="text" onChange={(e)=>valueHandler(e)}/>
+                            <input key={changes} className={styles.input} type="text"  {...register("value")}  value={name.value} onChange={(e)=>{setName(obj.value = e.target.value)}}/>
                         </div>
         {
             <div className={styles.container_sm}>
             <label className={styles.title_sm}>Class :</label>
-            <input className={styles.input} type="text" value={classes} onChange={(e)=>classHandler(e)}/>
+            <input className={styles.input} type="text" value={classes}  {...register("class")}  onChange={(e)=>classHandler(e)}/>
             </div>
         }
         <div className={styles.container_sm}>
             <label className={styles.title_sm}>Color </label>
             <input className={styles.input_color} type="color" {...register("color")}/>
             <label className={styles.title_sm}>Background Color </label>
-            <input className={styles.input_color} type="color" {...register("background-color")}/>
+            <input className={styles.input_color} type="color" {...register("backgroundColor")} defaultValue ='#FFFFFF' />
         </div>
         
         <div className={styles.txtStyle}>
               
            <div className={styles.MarginArea} >
                     <label>Padding </label>
-                    <input type="number" placeholder='top' {...register("padding-top")}></input>
-                    <input type="number" placeholder='right' {...register("padding-right")}></input>
-                    <input type="number" placeholder='bottom' {...register("padding-bottom")}></input>
-                    <input type="number" placeholder='left' {...register("padding-left")}></input>
+                    <input type="number" placeholder='top' {...register("paddingTop")}></input>
+                    <input type="number" placeholder='right' {...register("paddingright")}></input>
+                    <input type="number" placeholder='bottom' {...register("paddingBottom")}></input>
+                    <input type="number" placeholder='left' {...register("paddingLeft")}></input>
            </div>
            
            <div>
@@ -84,7 +94,7 @@ export const PartsForm = ({obj,class: classes,value}) => {
            </div>
            <div>
                     <label for="Cursor">Text-Align :</label>
-                    <select {...register("text-align")}>
+                    <select {...register("textAlign")}>
                         <option value=""></option>
                         <option value="center">center</option>
                         <option value="end">end</option>
@@ -96,7 +106,7 @@ export const PartsForm = ({obj,class: classes,value}) => {
            </div>
            <div>
                     <label for="Border">Border :</label>
-                    <select {...register("border-style")} onChange={ (e) => {  e.target.value !="none"?  setBrd(true):setBrd(false)  } } >
+                    <select {...register("borderStyle")} onChange={ (e) => {  e.target.value !="none"?  setBrd(true):setBrd(false)  } } >
                          <option value="ridge ">solid </option>
                         <option value="none">none</option>
                         <option value="dotted ">dotted </option>
@@ -112,26 +122,26 @@ export const PartsForm = ({obj,class: classes,value}) => {
                         <>
                          <div>
                          <label for="Border">Border-Color :</label>
-                          <input className={styles.colors} type="color" {...register("border-color")}/>
+                          <input className={styles.colors} type="color" {...register("borderColor")}/>
                           </div>
                           <div>
                            <label>Border-width:   </label>
-                           <input type="number" {...register("border-width")}></input>
+                           <input type="number" {...register("borderWidth")}></input>
                             </div>
                            <div>
                            <label>Border-radius:   </label>
-                           <input type="number" {...register("border-radius")}></input>
+                           <input type="number" {...register("borderRadius")}></input>
                             </div>
                             </>
 
                 )}
                 <div>
                     <label>Font-size :   </label>
-                    <input type="number"  {...register("font-size")}  ></input>
+                    <input type="number"  {...register("fontSize")}  ></input>
            </div>
            <div>
                     <label for="FontFamily">Font Family :</label>
-                    <select  {...register("font-familly")}  >
+                    <select  {...register("fontFamilly")}  >
                         <option value="Default">Default</option>
                         <option value="Georgia, serif">Georgia, serif</option>
                         <option value="Gill Sans', sans-serif"> "Gill Sans", sans-serif</option>
@@ -145,7 +155,7 @@ export const PartsForm = ({obj,class: classes,value}) => {
            </div>
            <div>
                     <label for="TextTransform">Text-Transform :</label>
-                    <select  {...register("text-transform")} >
+                    <select  {...register("textTransform")} >
                         <option value="none">none</option>
                         <option value="uppercase">uppercase</option>
                         <option value="lowercase">lowercase</option>
@@ -155,7 +165,7 @@ export const PartsForm = ({obj,class: classes,value}) => {
            
            <div>
                     <label for="FontWeight">Font Weight :</label>
-                    <select  {...register("font-weight")}  >
+                    <select  {...register("fontWeight")}  >
                         <option value="Default">Default</option>
                         <option value="bold">bold</option>
                         <option value="bolder">bolder</option>
@@ -166,7 +176,7 @@ export const PartsForm = ({obj,class: classes,value}) => {
            </div>
            <div  >
                     <label>Letter-Spacing :  </label>
-                    <input type="number"  {...register("letter-spacing")}  ></input>
+                    <input type="number"  {...register("letterSpacing")}  ></input>
            </div>
                    
                      <div>
@@ -184,7 +194,7 @@ export const PartsForm = ({obj,class: classes,value}) => {
                         <>
                          <div>
                          <label for="Justify-Content">Justify-Content :</label>
-                         <select {...register("justify-content")}>
+                         <select {...register("justifyContent")}>
                              <option value="baseline">baseline</option>
                              <option value="center">center</option>
                              <option value="end">end</option>
@@ -197,7 +207,7 @@ export const PartsForm = ({obj,class: classes,value}) => {
                         </div>
                          <div>
                          <label for="align-items">align-items :</label>
-                         <select {...register("align-items")}>
+                         <select {...register("alignItems")}>
                              <option value="normal" >normal</option>
                              <option value="baseline">baseline</option>
                              <option value="center">center</option>
@@ -210,7 +220,7 @@ export const PartsForm = ({obj,class: classes,value}) => {
                         </div>
                         <div>
                          <label for="flex-wrap">flex-wrap:</label>
-                         <select {...register("flex-wrap")}>
+                         <select {...register("flexWrap")}>
                              <option value="nowrap" >nowrap</option>
                              <option value="wrap">wrap</option>
                              <option value="wrap-reverse">wrap-reverse</option>
@@ -224,7 +234,8 @@ export const PartsForm = ({obj,class: classes,value}) => {
             
         </div>
         <div className={styles.submit} >
-            <button type='submit' > Delete</button>
+            <button type='submit'  {...register("submit")}  >   Submit</button>
+            <button  {...register("delete")}  > Delete</button>
         </div> 
         </form>
     );

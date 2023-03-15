@@ -10,10 +10,15 @@ import { auth } from './../../context/firebase/FirebaseConfig'
 function Navbar(){
     const nav = useNavigate();
     const signout = async ()=>{
+        try{
         await signOut(auth)
         console.log(localStorage.length)
         localStorage.clear();
         nav('/');
+        }
+        catch(error){
+            console.log(error)
+        }
     }
     return (
         <>

@@ -21,9 +21,9 @@
 .button{
     border: 1px solid black;
     width: fit-content;
-    min-width: 20%;
+    min-width: 13%;
     height: fit-content;
-    min-height: 20%;
+    min-height: 7%;
 }
 .body{
 

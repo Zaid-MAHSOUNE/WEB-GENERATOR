@@ -1,5 +1,5 @@
 import { useContext, useEffect, useState } from 'react';
-import {useForm} from 'react-hook-form';
+import {set, useForm} from 'react-hook-form';
 import * as yup from "yup";
 import styles from '../../assets/css/prop.module.css';
 import {FiPlusSquare,FiMinusSquare} from "react-icons/fi";
@@ -10,13 +10,13 @@ import { AppContext } from '../../context/AppContext';
 export const ContainerForm = ({obj,class: classes,value,change}) => {
 
     const {itemList,setItemList,setChanges,changes} = useContext(AppContext);
-
+    
     const [Flx,setFlx]=useState(false);
     const [Brd,setBrd]=useState(false);
     const [PlaceH,setPlaceH]=useState(true);
     const [name,setName] = useState(obj);
-
-    
+    const [cls,setCls] = useState(obj); 
+    const HTMLAndCSS = [{}]
     useEffect(()=>{
         setName(obj);
     },[obj])
@@ -30,48 +30,58 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
         resolver: yupResolver(schema),
     });
 
-    const onSubmit = (e,data) => {
+    const onSubmit = (e) => {
+        
         e.preventDefault();
+        const style = {};
+        const keys = Array.from(e.target);
         setChanges((pre)=>!pre);
+        //new class
+        keys.map((element)=>{
+            if(element.name === "height" || element.name === "width" || element.name === "opacity" || element.name === "marginTop" || element.name === "marginRight" || element.name === "marginLeft" || element.name === "marginBotton" || element.name === "paddingTop" || element.name === "paddingRight" || element.name === "paddingLeft" || element.name === "padding-botton") 
+            style[element.name] = "" + element.value + "%" ;
+           else if(element.name === "borderRadius" || element.name === "borderWidth" )   style[element.name] = "" + element.value + "px" ;
+            else if (element.name ==='value' ||  element.name === 'class' ||  element.name === 'placeholder' ||  element.name === 'submit' ||  element.name === 'delete' ){}
+            else
+             style[element.name] = element.value ;
+        })
+        obj.style = style
+        //allready exist
+        itemList.map((itm)=>{
+                if(JSON.stringify(itm.class).slice(1,itm.class.length+1) === cls ){
+                    console.log("identique")
+                    obj.style = itm.style
+                }
+                else{}
+            
+        })
+                
+     
     }
-
-
     const TypeHandler = (e) =>{
         e.preventDefault();
         obj.setAttribute('type',e.target.value);
-    }
-    const valueHandler = () => {
-        obj.value = name;
+        obj.type = e.taget.value;
     }
     const PlaceHolderHandler = (e) => {
         e.preventDefault();
         obj.value = e.target.value;
     }
-    const classHandler = (e) => {
-        /*classes.matches(/^[a-z][A-Za-z0-9_-]*$/i*/
-            if(0){
-                return true;
-            }else{
-                alert("Class naming rules violated");
-            }
-           
-    }
-    
-
+    const a = itemList.map((elm)=><option>{JSON.stringify(elm.class).slice(1,elm.class.length+1)}</option>)
     return (
         
         <form className={styles.form} onSubmit={(e)=>handleSubmit(onSubmit(e))}>
-              {obj.type  && PlaceH ?(
+              {obj.tag == 'input'  && PlaceH ?(
                         <div className={styles.container_sm} > 
                             <label  className={styles.title_sm} >Place-Holder : </label>
-                            <input   className={styles.input} type='text' onChange={(e) => PlaceHolderHandler(e)}  ></input>
+                            <input   className={styles.input} type='text'  {...register("placeholder")}  onChange={(e) => PlaceHolderHandler(e)}  ></input>
                         </div>
 
                 ):
                 (
                         <div className={styles.container_sm}>
                             <label className={styles.title_sm} >Value :</label>
-                            <input key={changes} className={styles.input} type="text" value={name.value} onChange={(e)=>{setName(obj.value = e.target.value)}}/>
+                            <input key={changes} className={styles.input} type="text"  {...register("value")}  value={obj.value}  onChange={(e)=>{setName(obj.value = e.target.value)}}/>
                         </div>
                 )
 
@@ -80,14 +90,17 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
         
         {
             <div className={styles.container_sm}>
-            <label className={styles.title_sm}>Class :</label>
-            <input className={styles.input} type="text" value={classes} onChange={(e)=>classHandler(e)}/>
+            <label className={styles.title_sm}>Class</label>
+            <input key={changes} className={styles.input} type="text"   {...register("class")}   value={obj.class} onChange={(e)=>{ setCls(obj.class = e.target.value) }}  />
+            <select>
+            {a}
+            </select>
             </div>
         }
         <div className={styles.container_sm}>
 
-            <label className={styles.title_sm}>Background Color </label>
-            <input className={styles.input_color} type="color" {...register("background-color")}/>
+            <label className={styles.title_sm}>Background Color </label> 
+            <input className={styles.input_color} type="color" defaultValue ='#FFFFFF' {...register("backgroundColor")}/>
             
         </div>
         
@@ -96,10 +109,10 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
             
             <div className={styles.sizeArea} >
                     <label>Size :   </label>
-                    <input type="number" placeholder='width' {...register("width")}></input>
+                    <input type="number" placeholder='width'  name='width' {...register("width")}></input>
                     <input type="number" placeholder='height' {...register("height")}></input>
             </div>
-            {obj.type && (
+            {obj.tag == 'input' && (
 
                     <div>
                     <label htmlFor="Input-Type">Input-Type :</label>
@@ -127,17 +140,17 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
            </div>
            <div className={styles.MarginArea} >
                     <label>Margin </label>
-                    <input type="number" placeholder='top' {...register("margin-top")}></input>
-                    <input type="number" placeholder='right' {...register("margin-right")}></input>
-                    <input type="number" placeholder='bottom' {...register("margin-bottom")}></input>
-                    <input type="number" placeholder='left' {...register("margin-left")}></input>
+                    <input type="number" placeholder='top' {...register("marginTop")}></input>
+                    <input type="number" placeholder='right' {...register("marginRight")}></input>
+                    <input type="number" placeholder='bottom' {...register("marginBottom")}></input>
+                    <input type="number" placeholder='left' {...register("marginLeft")}></input>
            </div>
            <div className={styles.MarginArea} >
                     <label>Padding </label>
-                    <input type="number" placeholder='top' {...register("padding-top")}></input>
-                    <input type="number" placeholder='right' {...register("padding-right")}></input>
-                    <input type="number" placeholder='bottom' {...register("padding-bottom")}></input>
-                    <input type="number" placeholder='left' {...register("padding-left")}></input>
+                    <input type="number" placeholder='top' {...register("paddingTop")}></input>
+                    <input type="number" placeholder='right' {...register("paddingRight")}></input>
+                    <input type="number" placeholder='bottom' {...register("paddingBottom")}></input>
+                    <input type="number" placeholder='left' {...register("paddingLeft")}></input>
            </div>
            
            <div>
@@ -154,7 +167,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
            </div>
            <div>
                     <label htmlFor="Cursor">Text-Align :</label>
-                    <select {...register("text-align")}>
+                    <select {...register("textAlign")}>
                         <option value=""></option>
                         <option value="center">center</option>
                         <option value="end">end</option>
@@ -166,7 +179,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
            </div>
            <div>
                     <label htmlFor="Border">Border :</label>
-                    <select {...register("border-style")} onChange={ (e) => {  e.target.value !="none"?  setBrd(true):setBrd(false)  } } >
+                    <select {...register("borderStyle")} onChange={ (e) => {  e.target.value !="none"?  setBrd(true):setBrd(false)  } } >
                     <option value="ridge ">solid </option>
                          <option value="none">none</option>
                         <option value="dotted ">dotted </option>
@@ -182,15 +195,15 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
                         <>
                          <div>
                          <label htmlFor="Border">Border-Color :</label>
-                          <input className={styles.colors} type="color" {...register("border-color")}/>
+                          <input className={styles.colors} type="color" {...register("borderColor")}/>
                           </div>
                           <div>
                            <label>Border-width:   </label>
-                           <input type="number" {...register("border-width")}></input>
+                           <input type="number" {...register("borderWidth")}></input>
                             </div>
                            <div>
                            <label>Border-radius:   </label>
-                           <input type="number" {...register("border-radius")}></input>
+                           <input type="number" {...register("borderRadius")}></input>
                             </div>
                             </>
 
@@ -211,7 +224,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
                         <>
                          <div>
                          <label htmlFor="Justify-Content">Justify-Content :</label>
-                         <select {...register("justify-content")}>
+                         <select {...register("justifyContent")}>
                              <option value="baseline">baseline</option>
                              <option value="center">center</option>
                              <option value="end">end</option>
@@ -224,7 +237,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
                         </div>
                          <div>
                          <label htmlFor="align-items">align-items :</label>
-                         <select {...register("align-items")}>
+                         <select {...register("alignItems")}>
                              <option value="normal" >normal</option>
                              <option value="baseline">baseline</option>
                              <option value="center">center</option>
@@ -237,7 +250,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
                         </div>
                         <div>
                          <label htmlFor="flex-wrap">flex-wrap:</label>
-                         <select {...register("flex-wrap")}>
+                         <select {...register("flexWrap")}>
                              <option value="nowrap" >nowrap</option>
                              <option value="wrap">wrap</option>
                              <option value="wrap-reverse">wrap-reverse</option>
@@ -262,8 +275,8 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
            </div>
         </div>
         <div className={styles.submit} >
-            <button type='submit'> Submit</button>
-            <button type='submit'> Delete</button>
+            <button type='submit'  {...register("submit")}  >   Submit</button>
+            <button  {...register("delete")}  > Delete</button>
         </div> 
         </form>
     );

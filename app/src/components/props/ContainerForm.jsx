@@ -16,11 +16,14 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
     const [PlaceH,setPlaceH]=useState(true);
     const [name,setName] = useState(obj);
     const [cls,setCls] = useState(obj); 
-    const HTMLAndCSS = [{}]
+
     useEffect(()=>{
         setName(obj);
     },[obj])
-    
+    useEffect(()=>{
+        console.log('use uffect call')
+       
+    },[itemList])
 
     const schema = yup.object().shape({
         width: yup.number().integer().min(0).max(100),
@@ -46,17 +49,14 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
              style[element.name] = element.value ;
         })
         obj.style = style
-        //allready exist
         itemList.map((itm)=>{
-                if(JSON.stringify(itm.class).slice(1,itm.class.length+1) === cls ){
-                    console.log("identique")
-                    obj.style = itm.style
-                }
-                else{}
-            
-        })
+            if(JSON.stringify(itm.class).slice(1,itm.class.length+1) === cls ){
+                console.log("identique")
+                itm.style = style
                 
-     
+            }
+            else{}
+    })
     }
     const TypeHandler = (e) =>{
         e.preventDefault();

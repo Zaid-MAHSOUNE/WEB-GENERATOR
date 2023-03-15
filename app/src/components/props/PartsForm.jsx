@@ -14,7 +14,7 @@ export const PartsForm =  ({obj,class: classes,value,change}) => {
     const [newClass,setNewClass] = useState();
     const schema = yup.object();
     const [name,setName] = useState(obj);
-
+    const [cls,setCls] = useState(obj); 
     
     useEffect(()=>{
         setName(obj);
@@ -26,9 +26,10 @@ export const PartsForm =  ({obj,class: classes,value,change}) => {
 
     const onSubmit = (e) => {
         e.preventDefault();
-        setChanges((pre)=>!pre);
-          const style = {};
+        const style = {};
         const keys = Array.from(e.target);
+        setChanges((pre)=>!pre);
+        //new class
        keys.map((element)=>{
             if( element.name === "paddingTop" || element.name === "paddingRight" || element.name === "paddingLeft" || element.name === "padding-botton") 
             style[element.name] = "" + element.value + "%" ;
@@ -37,11 +38,20 @@ export const PartsForm =  ({obj,class: classes,value,change}) => {
              else
              style[element.name] = element.value ;
              
-        })
-        obj.style = style
-       console.log(style)
-
-    }
+            })
+            obj.style = style
+            //allready exist
+            itemList.map((itm)=>{
+                    if(JSON.stringify(itm.class).slice(1,itm.class.length+1) === cls ){
+                        console.log("identique")
+                        obj.style = itm.style
+                    }
+                    else{}
+                
+            })
+               console.log(itemList)     
+         
+        }
     const valueHandler = (e) => {
         e.preventDefault();
         obj.textContent = e.target.value;
@@ -49,7 +59,7 @@ export const PartsForm =  ({obj,class: classes,value,change}) => {
     const classHandler = (e) => {
     }
     
-
+    const a = itemList.map((elm)=><option>{JSON.stringify(elm.class).slice(1,elm.class.length+1)}</option>)
     return (
         
         <form className={styles.form} onSubmit={(e)=>handleSubmit(onSubmit(e))}>
@@ -60,9 +70,13 @@ export const PartsForm =  ({obj,class: classes,value,change}) => {
         {
             <div className={styles.container_sm}>
             <label className={styles.title_sm}>Class :</label>
-            <input className={styles.input} type="text" value={classes}  {...register("class")}  onChange={(e)=>classHandler(e)}/>
+            <input key={changes} className={styles.input} type="text"   {...register("class")}   value={obj.class} onChange={(e)=>{ setCls(obj.class = e.target.value) }}  />
+            
             </div>
         }
+        <select>
+            {a}
+        </select>
         <div className={styles.container_sm}>
             <label className={styles.title_sm}>Color </label>
             <input className={styles.input_color} type="color" {...register("color")}/>

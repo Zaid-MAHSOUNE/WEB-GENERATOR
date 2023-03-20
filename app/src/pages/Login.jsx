@@ -10,13 +10,15 @@ import declined from '../../src/assets/img/declined.png';
 import rstpass from '../../src/assets/img/wrong-password.png';
 import { NavLink,useNavigate } from "react-router-dom";
 import back from '../../src/assets/img/back.png';
-import { useRef , useState } from 'react';
+import { useEffect, useRef , useState } from 'react';
 import { signInWithEmailAndPassword ,GoogleAuthProvider,signInWithPopup, FacebookAuthProvider,GithubAuthProvider, sendPasswordResetEmail } from 'firebase/auth';
 import { auth } from './../context/firebase/FirebaseConfig'
 import LoadingPage from '../components/Loading/LoadingPage';
+import { translationFirebaseErrorsEN } from 'react-translation-firebase-errors';
 export const Login = () => {
         const nav = useNavigate();
         let user;
+        const [text,settext] = useState(false);
         const [loading,setLoading] = useState(true);
         const [Error,setError] = useState(false);
         const [ErrorS,setErrorS] = useState(false);
@@ -28,11 +30,15 @@ export const Login = () => {
         const Sign = async (e)=>{
                 e.preventDefault();
                 try{
-                        setLoading(false);
+                     
                          user = await signInWithEmailAndPassword(auth,Email.current.value,Password.current.value);
                         if(user){
+                                setLoading(false);
+                                localStorage.setItem("username",user.user.email)
                                 localStorage.setItem("email",user.user.email)
-                                localStorage.setItem("username",user.user.displayName)
+                                setTimeout(()=>{
+                                        setLoading(true)
+                                },5000)
                                 nav('/');
                         }
                         
@@ -40,11 +46,10 @@ export const Login = () => {
                 }catch(error){
                         console.log(error);
                         setError(error);
+                        settext( translationFirebaseErrorsEN(error.code))
+                         console.log(text)   
                 }
-                finally{
-                        setLoading(true);
-                       
-                }
+            
         }
         const signWithG = (e)=>{
                         e.preventDefault();
@@ -57,7 +62,12 @@ export const Login = () => {
                                         localStorage.setItem("pic",result.user.photoURL)
                                         nav('/');
                                 }
-                        }).catch((error)=> { console.log(error) }).finally (setLoading(true))
+                        }).catch((error)=> { 
+                                console.log(error) 
+                                setError(error);
+                                settext( translationFirebaseErrorsEN(error.code))
+                        
+                        }).finally (setLoading(true))
                        
         }
         const signWithF = (e)=>{
@@ -71,7 +81,12 @@ export const Login = () => {
                                 localStorage.setItem("pic",result.user.photoURL)
                                 nav('/');
                         }
-                }).catch((error)=> { console.log(error) }).finally (setLoading(true))
+                }).catch((error)=> { 
+                        console.log(error) 
+                        setError(error);
+                        settext( translationFirebaseErrorsEN(error.code))
+                
+                }).finally (setLoading(true))
                
         }
          const signWithGit = (e)=>{
@@ -85,7 +100,11 @@ export const Login = () => {
                                 localStorage.setItem("pic",result.user.photoURL)
                                 nav('/');
                         }
-                }).catch((error)=> { console.log(error) }).finally (setLoading(true))
+                }).catch((error)=> { 
+                        console.log(error)
+                        setError(error);
+                        settext( translationFirebaseErrorsEN(error.code))
+                }).finally (setLoading(true))
                
                 }
         const resetPass = ()=>{
@@ -112,11 +131,10 @@ export const Login = () => {
                         }
                
         }
-       
+
 return(
         <>
        {loading ? (
-        
         <div className='mainn'>
                 <img className='code' src={code} ></img>
                <NavLink to='/' > <img className='back' src={back}  ></img></NavLink>
@@ -135,7 +153,7 @@ return(
                     <button type='submit'>Login</button>
                     <h4>Don't have an account ? <NavLink  to='/Register' >register</NavLink></h4>
                     <h4>forget password ? <NavLink onClick={()=>{setForget(false)}}  >recovering</NavLink></h4>
-                    {Error ? <p>Email or Password invalid</p>:null}
+                    {(Error ? <p>{text}</p> :null)}
             </div>
             </form>
             {forget ? ( 
@@ -157,7 +175,7 @@ return(
                                 <div className='part3'>
                                 <img  onClick={()=>{setForget(true)}}  className='close'  src={close} ></img>
                                 
-                                {Done ? <><img src={check} loading='lazy'  ></img><h2>Done</h2></> : ErrorS ? <><h2>Invalid email</h2> </> :<><img src={rstpass}  loading='lazy' ></img> <h2>forget password</h2></>}
+                                {Done ? <><img src={check} loading='lazy'  ></img><h2>Done</h2></> : ErrorS ? <>  <img src={declined} loading='lazy' ></img> <h2>Invalid email</h2> </> :<><img src={rstpass}  loading='lazy' ></img> <h2>forget password</h2></>}
                                 
                                 <input type='email' ref={EmailS}  placeholder='enter your email' required ></input><br></br>
                                 <button onClick={resetPass} >send email</button>

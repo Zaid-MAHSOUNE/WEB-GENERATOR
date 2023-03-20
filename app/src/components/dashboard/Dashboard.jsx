@@ -1,4 +1,4 @@
-import { useContext, useRef, useState } from 'react';
+import { useContext, useRef, useState , useEffect } from 'react';
 import { useDrop } from 'react-dnd';
 import styles from '../../assets/css/dashboard.module.css';
 import { DropItem } from './DropItem';
@@ -17,7 +17,23 @@ export const Dashboard = () => {
             isOverCurrent: monitor.isOver({ shallow: true }),
         })
     }));
+    //refresh
+   /* useEffect(() => {
+        window.addEventListener("beforeunload", handleBeforeUnload);
+        return () => {
+          window.removeEventListener("beforeunload", handleBeforeUnload);
+        };
+      
+      }, []);
+      const handleBeforeUnload = (e) => {
+        e.preventDefault();
+        const message =
+          "Are you sure you want to leave? All your work will be lost.";
+        e.returnValue = message;
+        return message;
+      };*/
 
+      //
     const dropHandler = (tag,monitor)=>{
         refItems.current = drop.current;
         const didDrop = monitor.didDrop()

@@ -1,7 +1,6 @@
 import Navbar from "../components/navbar/Navbar";
 import { useEffect } from "react";
 import { createContext, useState } from "react";
-import ServiceNavbar from "../components/navbar/ServiceNavbar";
 import { Dashboard } from '../components/dashboard/Dashboard';
 import { Palette } from '../components/palette/Palette';
 import { Properties } from '../components/props/Properties';
@@ -32,7 +31,6 @@ export default function Main(){
                           <DndProvider backend={HTML5Backend}>
                           <div className='App'>
                           <Navbar />
-                          <ServiceNavbar />
                           <AppContext.Provider value={{itemList,setItemList,index,setIndex,changes,setChanges}}>
                           <Palette />
                           <Dashboard />

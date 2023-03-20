@@ -1,5 +1,5 @@
 .container{
-    height: 87.9vh;
+    height: 91.5vh;
     width: 59.3%;
     padding: 2px;
     border : 1px solid #111; 
@@ -9,7 +9,7 @@
 }
 
 .container::-webkit-scrollbar{
-    width: 6px;
+    width: 3px;
 }
 .container::-webkit-scrollbar-thumb{
     background-color:#2cbade ;

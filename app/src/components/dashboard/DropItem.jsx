@@ -94,7 +94,7 @@ export const DropItem = (props) =>  {
         return (
             <props.tag id={props.id} className={props.class + ' text'}  style={props.style} onClick={(e)=>{
                 setIndex(e.target.getAttribute("id"));
-            }}></props.tag>
+            }}> text </props.tag>
         );
     }
     else{

@@ -42,7 +42,7 @@
     color: white;
     border-radius: 8px;
     cursor: default;
-    margin-bottom:50px;
+    margin-bottom:40px;
 }
 .part1 input{
     border: black solid;
@@ -77,19 +77,25 @@
 .part1 button{
     cursor: pointer;
     width: 300px;
-    height: 35px;
+    height: 38px;
     margin-bottom: 10px;
     border-radius: 5px;
     border: none;
     color: white;
     background-color: #2cbade;
-    font-size: 15px;
+    font-size: 16px;
+    font-weight: bold;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
 }
 .part1 h4{
     margin-bottom: 3px;
     font-size: 13px;
 }
+.part1 h4 a{
+    color: #2cbade ;
+    text-decoration: none;
+}
+
 ::placeholder{
     color: black;
     font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;

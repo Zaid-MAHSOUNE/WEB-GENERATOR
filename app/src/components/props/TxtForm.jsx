@@ -50,7 +50,7 @@ export const TxtForm = ({obj,class: classes,value,change}) => {
         <form className={styles.form} onSubmit={(e)=>handleSubmit(onSubmit(e))}>
         <div className={styles.container_sm}>
             <label className={styles.title_sm} >Value :</label>
-            <input key={changes} className={styles.input} type="text"  {...register("value")}  value={name.value} onChange={(e)=>{setName(obj.textontent = e.target.value)}}/>
+            <input key={changes} className={styles.input} type="text"  {...register("value")}  value={name.value} onSubmit={(e)=>{setName(obj.innerHTML  = e.target.value)}}/>
         </div>
         {
             <div className={styles.container_sm}>

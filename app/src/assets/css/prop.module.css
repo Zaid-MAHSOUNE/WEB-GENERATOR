@@ -1,6 +1,6 @@
 .container{
     border : 1px solid black;
-    height: 88.5vh;
+    height: 92.2vh;
     width: 20%;
     background-color: white;
     overflow: scroll;
@@ -18,6 +18,7 @@
     text-align: center;
     border-bottom: 1px solid #899499;
     background-color: #eee;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .container_sm{
@@ -163,14 +164,14 @@
     width: 40%;
     height: 27px;
     border-radius: 5px;
-    background-color: #05acd6;
+    background-color: #1CB0F6;
     border: none;
     color: white;
     font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
     font-size: 18px;
 }
 .submit button:hover{
-    background-color: #0088a9;
+    background-color: #1da1dd;
     cursor: pointer;
 }
 .sizeArea{
@@ -184,7 +185,7 @@
     width: 60px;
 }
 ::-webkit-file-upload-button{
-    background-color: #05acd6;
+    background-color: #1CB0F6;
     border: none;
     border-radius: 5px;
     cursor: pointer;

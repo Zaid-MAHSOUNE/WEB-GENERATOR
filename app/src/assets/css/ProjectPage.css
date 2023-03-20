@@ -11,7 +11,7 @@
     padding-top: 20px;
     padding-bottom: 20px;
     width: 99.9%;
-    height: 86.5%;
+    height: 87%;
     background-color: white;
     display: flex;
     justify-content: space-around;
@@ -68,8 +68,11 @@
     width: 510px;
     height: 625px;
     border-radius: 8px;
-    display: flex;
-    flex-wrap: wrap;
+    display: grid;
+   grid-template-columns: repeat(2 , 100px);
+  grid-template-rows: 150px;
+   grid-column-gap: 155px;
+   grid-row-gap: -20px;
     overflow: scroll;
     overflow-x: hidden;
     scroll-behavior:initial;
@@ -90,4 +93,12 @@
     height: 644px;
     border: none;
     box-shadow: #2cbade 0px 0px 0px 3px;
+}   
+.Alert{
+    width: 420px;
+    text-align: center;
+    margin-top: 200%;
+    margin-left: 26%;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 13px;
 }

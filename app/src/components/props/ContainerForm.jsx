@@ -16,15 +16,11 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
     const [PlaceH,setPlaceH]=useState(true);
     const [name,setName] = useState(obj);
     const [cls,setCls] = useState(obj); 
-
+    const [NList,setNList] = useState(''); 
     useEffect(()=>{
         setName(obj);
     },[obj])
-    useEffect(()=>{
-        console.log('use uffect call')
-       
-    },[itemList])
-
+    
     const schema = yup.object().shape({
         width: yup.number().integer().min(0).max(100),
         height: yup.number().integer().min(0).max(100),
@@ -44,7 +40,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
             if(element.name === "height" || element.name === "width" || element.name === "opacity" || element.name === "marginTop" || element.name === "marginRight" || element.name === "marginLeft" || element.name === "marginBotton" || element.name === "paddingTop" || element.name === "paddingRight" || element.name === "paddingLeft" || element.name === "padding-botton") 
             style[element.name] = "" + element.value + "%" ;
            else if(element.name === "borderRadius" || element.name === "borderWidth" )   style[element.name] = "" + element.value + "px" ;
-            else if (element.name ==='value' ||  element.name === 'class' ||  element.name === 'placeholder' ||  element.name === 'submit' ||  element.name === 'delete' ){}
+            else if (element.name ==='value' ||  element.name === 'class' ||  element.name === 'placeholder' ||  element.name === 'submit' ||  element.name === 'delete'  ||  element.name === 'list'){}
             else
              style[element.name] = element.value ;
         })
@@ -53,10 +49,15 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
             if(JSON.stringify(itm.class).slice(1,itm.class.length+1) === cls ){
                 console.log("identique")
                 itm.style = style
-                
             }
             else{}
     })
+    }
+    const addnewlist = (e) =>{
+        e.preventDefault();
+        var li = document.createElement("li");
+        li.appendChild(document.createTextNode(NList));
+        obj.appendChild(li);
     }
     const TypeHandler = (e) =>{
         e.preventDefault();
@@ -67,16 +68,41 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
         e.preventDefault();
         obj.value = e.target.value;
     }
-    const a = itemList.map((elm)=><option>{JSON.stringify(elm.class).slice(1,elm.class.length+1)}</option>)
+    //const a = itemList.map((elm)=>{<option>{JSON.stringify(elm.class).slice(1,elm.class.length+1)}</option>})
     return (
         
         <form className={styles.form} onSubmit={(e)=>handleSubmit(onSubmit(e))}>
+             {
+            <div className={styles.container_sm}>
+            <label className={styles.title_sm}>Class</label>
+            <input key={changes} className={styles.input} type="text"   {...register("class")}   value={obj.class} onChange={(e)=>{ setCls(obj.class = e.target.value) }}  />
+            </div>
+            }
               {obj.tag == 'input'  && PlaceH ?(
                         <div className={styles.container_sm} > 
                             <label  className={styles.title_sm} >Place-Holder : </label>
                             <input   className={styles.input} type='text'  {...register("placeholder")}  onChange={(e) => PlaceHolderHandler(e)}  ></input>
                         </div>
 
+                ): obj.tag =='ul' ? (
+                    <>
+                     <div className={styles.container_sm}>
+                            <label className={styles.title_sm} >list name :</label>
+                            <input key={changes} className={styles.input} type="text"  {...register("value")}  value={obj.value}  onChange={(e)=>{setName(obj.value = e.target.value)}}/>
+                    </div>
+                    <div className={styles.container_sm}>
+                    <label className={styles.title_sm} >list Type</label>
+                    <select defaultValue='ul'  onChange={(e)=> {obj.replaceChild(obj.tag, e.target.value) }}  >
+                        <option>ul</option>
+                        <option>ol</option>
+                    </select>
+                    </div>
+                     <div className={styles.container_sm}>
+                     <label className={styles.title_sm} >Add a list</label>
+                     <input key={''} className={styles.input} type="text"  onChange={(e) => setNList(e.target.value)} {...register("list")} />
+                     <FiPlusSquare size='30px' onClick={addnewlist}  ></FiPlusSquare>
+                     </div>
+                     </>
                 ):
                 (
                         <div className={styles.container_sm}>
@@ -88,17 +114,10 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
                 }
         
         
-        {
-            <div className={styles.container_sm}>
-            <label className={styles.title_sm}>Class</label>
-            <input key={changes} className={styles.input} type="text"   {...register("class")}   value={obj.class} onChange={(e)=>{ setCls(obj.class = e.target.value) }}  />
-            <select>
-            {a}
-            </select>
-            </div>
-        }
+       
         <div className={styles.container_sm}>
-
+             <label className={styles.title_sm}>Color </label>
+            <input className={styles.input_color} type="color" {...register("color")}/>
             <label className={styles.title_sm}>Background Color </label> 
             <input className={styles.input_color} type="color" defaultValue ='#FFFFFF' {...register("backgroundColor")}/>
             

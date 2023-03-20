@@ -9,39 +9,36 @@ import { useRef , useState } from 'react';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from './../context/firebase/FirebaseConfig'
 import LoadingPage from '../components/Loading/LoadingPage';
+import { translationFirebaseErrorsEN } from 'react-translation-firebase-errors';
 
 export const Register = () => {
         const nav = useNavigate();
+        const [text,settext] = useState(false);
         const [loading,setLoading] = useState(true);
         const Email = useRef();
         const Password = useRef();
         const PasswordC = useRef();
         const [Error1,setError1] = useState(false)
-        const [Error2,setError2] = useState(false)
         const Rgstr = async (e)=>{
-                setError2(false);
                 setError1(false);
                 e.preventDefault();
                 try{
                         if(Password.current.value==PasswordC.current.value){
-                        setLoading(false);
                         const user = await createUserWithEmailAndPassword(auth,Email.current.value,Password.current.value);
                         if(user){
+                               
                                 nav('/Login');
                         }}
                         else{
-                                 setError1(true);    
+                                setError1(true)
+                                settext('check the Password') 
                         }
-                        
-                        
                       
                 }catch(error){
                         console.log(error);
-                        setError2(true)
-                }
-                finally{
-                        setLoading(true);
-                       
+                        setError1(true)
+                        settext( translationFirebaseErrorsEN(error.code))
+                      
                 }
                 
         }
@@ -57,19 +54,18 @@ return(
 
                     <div className="email">
                         <p>Email</p>
-                         <input type='email' ref={Email} required  autoComplete='none' ></input>
+                         <input type='email' ref={Email}  autoComplete='none' ></input>
                     </div>
                     <div className="password">
                         <p>Create Password</p>
-                         <input type='text' ref={Password} required ></input>
+                         <input type='text' ref={Password} ></input>
                     </div>
                     <div className="password">
                         <p>Confirm Password</p>
-                         <input type='text' ref={PasswordC} required ></input>
+                         <input type='text' ref={PasswordC}  ></input>
                     </div>
                     <button type='submit'>Register</button>
-                    {Error1 ? <p>check your Password </p>:null}
-                    {Error2 ? <p>Account allready exist or check your informations</p>:null}
+                    {Error1 ? <p>{text}</p>:null}
             </div>
             </form>
             <div className='part2' >

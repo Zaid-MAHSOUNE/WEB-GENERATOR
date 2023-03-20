@@ -1,4 +1,5 @@
 import {  useContext, useEffect, useState } from 'react';
+import axios from 'axios';
 import {useForm} from 'react-hook-form';
 import * as yup from "yup";
 import json from "../../data/CSSjson.json";
@@ -11,20 +12,26 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
     const {itemList,setItemList,setChanges,changes} = useContext(AppContext);
     const [Flx,setFlx]=useState(false);
     const [Brd,setBrd]=useState(false);
+    const [file, setFile] = useState(null);
     const [name,setName] = useState(obj);
     useEffect(()=>{
         setName(obj);
     },[obj])
-
-    const [newClass,setNewClass] = useState();
-    const [file, setFile] = useState();
-    function handleChange(e) {
-        console.log(e.target.files);  
-        console.log(obj.src);  
-        setFile(URL.createObjectURL(e.target.files[0]));
-        obj.src= file[0];   
-        console.log(file)
+    function handleFileInputChange(event) {
+      const selectedFile = event.target.files;
+      setFile(selectedFile);
     }
+    async function handleSub(event) {
+        event.preventDefault();
+        if (file) {
+          const formData = new FormData();
+          formData.append('image', file);
+          try {
+               axios.post('http://localhost:3000',formData).then((res)=>{console.log(res)})
+          } catch (error) {
+            console.error(error);
+          }
+        }}
     const schema = yup.object().shape({
         width: yup.number().integer().min(0).max(100),
         height: yup.number().integer().min(0).max(100),
@@ -35,7 +42,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
         resolver: yupResolver(schema),
     });
 
-    const onSubmit = (e) => {
+   const onSubmit = (e) => {
         e.preventDefault();
         setChanges((pre)=>!pre);
           const style = {};
@@ -61,7 +68,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
 
     return (
         
-        <form className={styles.form} onSubmit={(e)=>handleSubmit(onSubmit(e))}>
+        <form className={styles.form}  onSubmit={handleSub}>
         {
             <div className={styles.container_sm}>
             <label className={styles.title_sm}>Class :</label>
@@ -71,7 +78,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
         <div className={styles.txtStyle}>
            <div  className={styles.fileArea} >
                     <label>Source :   </label>
-                    <input type="file"   {...register("picture")} onChange={handleChange}  ></input>
+                    <input type="file"   {...register("picture")} onChange={handleFileInputChange}    ></input>
            </div>
            <div>
                     <label for="BackgroundSize">Background-Size :</label>

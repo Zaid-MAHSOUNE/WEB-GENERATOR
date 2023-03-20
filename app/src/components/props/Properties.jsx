@@ -24,7 +24,7 @@ export const Properties = () => {
             else if(obj.tag == "img"){
                 return <ImgForm obj={obj}/>
             }
-            else if( obj.tag == "div" || obj.tag == "button" || obj.tag == "input" ){
+            else if( obj.tag == "div" || obj.tag == "button" || obj.tag == "input" || obj.tag == "ul" ){
                 return <ContainerForm obj={obj}/>;
             }
             else if( obj.tag == "body" || obj.tag == "header" || obj.tag == "footer" ){

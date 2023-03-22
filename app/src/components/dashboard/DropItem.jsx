@@ -78,7 +78,7 @@ export const DropItem = (props) =>  {
     }
     else if( props.tag !=="div" &&  props.tag === "img" ){
         return (
-            <props.tag id={props.id} className={props.class + ' media'} alt='media'  src='' style={props.style} onClick={(e)=>{
+            <props.tag id={props.id} className={props.class + ' media'} alt='media'  src={props.src} style={props.style} onClick={(e)=>{
                 setIndex(e.target.getAttribute("id"));
             }} />
         );
@@ -94,7 +94,7 @@ export const DropItem = (props) =>  {
         return (
             <props.tag id={props.id} className={props.class + ' text'}  style={props.style} onClick={(e)=>{
                 setIndex(e.target.getAttribute("id"));
-            }}> text </props.tag>
+            }}>{ props.value} </props.tag>
         );
     }
     else{

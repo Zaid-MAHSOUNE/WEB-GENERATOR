@@ -48,7 +48,7 @@ export const Dashboard = () => {
     return (
         <div ref={drop} className={styles.container}>
             {
-                itemList.map((element,index)=> element.parentId === 0 ? <DropItem key={index} class={element.class} style={element.style} value={element.value} tag={element.tag} id={element.id} parentId={element.parentId}/> : null )
+                itemList.map((element,index)=> element.parentId === 0 ? <DropItem key={index} class={element.class} style={element.style} value={element.value} src={element.src}  tag={element.tag} id={element.id} parentId={element.parentId}/> : null )
             }
         </div>
     );

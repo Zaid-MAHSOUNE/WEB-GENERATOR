@@ -1,34 +1,81 @@
 import '../../assets/css/ProjectPage.css'
-import ProjectElement from '../ProjectPageComponent/ProjectElement'
-import { ref, listAll } from 'firebase/storage'
-import { storage } from '../../context/firebase/FirebaseConfig'
-import { useEffect, useState } from 'react'
+
+import { useEffect, useRef, useState } from 'react'
 import { TbDatabaseOff} from "react-icons/tb";
+import { database,coll } from '../../context/firebase/FirebaseConfig';
+import {collection  ,getDocs}  from 'firebase/firestore'
+import bg from '../../assets/svg/bg.svg'
+import {IoMdDownload } from "react-icons/io";
+import { FaCode } from "react-icons/fa";
+import {BiX} from "react-icons/bi";
+import RiseLoader from 'react-spinners/RiseLoader';
+import axios from 'axios';
+
+
 
 export default function ProjetDashboard() {
-  const [ALL, setALL] = useState([])
   const  [Show,setShow] = useState(false);
-  useEffect(() => {
-    const GetData = (User) => {
-      const dt = ref(storage, User + '/')
-      listAll(dt).then((res) => {
-        const items = res.items.map((item) => item.name.slice(0,item.name.length-4))
-        console.log(res.items.map((ite)=>ite.fullPath))
-        setALL(items)
-      })
+  const [pop, setpop] = useState(false)
+  const [Downld, setDownld] = useState(false)
+  const  [ALL,setALL] = useState([]);
+  const  [Code,setCode] = useState([]);
+  //katjib data mn firebase  ( smiyat dyal ga3 les projet ) 
+  useEffect(()=>{
+      const GetData = async (Cid) => {
+        const data = await getDocs(coll).then((elm)=>{
+          let AL = elm.docs.map((doc) => {if(doc.data().id==Cid){ return doc.data().name}  } );
+          AL = AL.filter(function( element ) {
+            return element !== undefined;
+         });
+         setALL(AL)
+        })
+        
     }
+   GetData(localStorage.getItem('email'))
+  },[])
+  //katjib l code html mn fire base
+const getCode = async(Pid) =>{
+  const Cid = localStorage.getItem('email')
+  const data = await getDocs(coll).then((elm)=>{
+    let AL = elm.docs.map((doc) => {if(doc.data().id== Cid && doc.data().name == Pid  ){ return doc.data().HTML}  } );
+    AL = AL.filter(function( element ) {
+      return element !== undefined;
+   });
+   setCode(AL)
+  })
+}
+// katssift object l api
+const getDocument = async (Pid) =>{
+  setpop(true)
+  await getCode(Pid).then(()=>{
+    var formData = new FormData()
+    formData.append('jsonFile', JSON.stringify(Code))
+         axios.post('http://localhost/doc/WEB-GEN-API/api/v1/compiler/',formData).then((res)=>{
+        console.log(res.data)
+        setpop(false)
+        setDownld(true)
+    }).catch((error)=>console.log(error))
+  })  
     
-    GetData(localStorage.getItem('email'))
-  }, [])
-
+}
 
   return (
-    <div className="containerr">
+    <div className="containerr"  >
       <div className="m1">
-        {ALL.length > 0  ? (
-          ALL.map((title) => (
-          <div onClick={(e)=>{setShow(!Show)}} ><ProjectElement key={title}  title={title}   /> </div>
-            
+      {ALL.length > 0  ? (
+          ALL.map((title) => (        
+            <div className="main"  key={title}  >
+            <img src={bg} ></img>
+            <div className="down">
+                <div className="title">
+                        <h3> {title}</h3>
+                </div>  
+                <div className="tools">
+                    <IoMdDownload size="22px" title='download'  values={title} onClick={()=>getDocument(title)}  ></IoMdDownload>
+                    <FaCode size="22px" title='view project' values={title}  onClick={(e)=>{setShow(true); getCode(title);   }   }  ></FaCode>
+                </div>
+            </div>
+        </div>
           ))
         ) : (
           <div className='Alert' >
@@ -38,9 +85,35 @@ export default function ProjetDashboard() {
         )}
       </div>
       {Show &&(
-            <div className="m2">
-            <iframe></iframe>
+            <div className="m2" >
+                <iframe  srcDoc={Code} >
+
+                </iframe>
           </div>
+      )}
+      {pop &&(
+             <section  className='pop' >
+             <div>
+                  <RiseLoader
+                    color="#1CB0F6"
+                    speedMultiplier={0.9}
+                  />
+                  <label htmlFor="alert">  Generating the project </label>
+             </div>
+         </section>  
+      )}
+      {Downld && (
+            <section  className='pop' >
+            <div>
+                 <label htmlFor="alert">  Download Your Project </label>
+                 <div className='choose' >
+                     <button  onClick={()=>{setDownld(false)}}  > <BiX size="25px" /> To Projects </button>
+                    <button > <IoMdDownload size="18px" /> Download</button>
+                 </div>
+                 
+            </div>
+           </section>  
+        
       )}
       
     </div>

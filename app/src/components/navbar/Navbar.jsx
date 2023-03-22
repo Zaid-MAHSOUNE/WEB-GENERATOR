@@ -2,13 +2,17 @@ import "../../assets/css/Navbar.css";
 import  userid from '../../assets/img/userid.png';
 
 import { NavLink ,useNavigate } from "react-router-dom";
-import { signOut } from 'firebase/auth';
-import { auth } from './../../context/firebase/FirebaseConfig'
+import { getAuth, signOut } from 'firebase/auth';
+import { auth  } from './../../context/firebase/FirebaseConfig'
 import { BiLibrary,BiHome ,BiLogOut,BiMessageRounded ,BiCaretDown,BiUserCircle,BiX,BiTrash} from "react-icons/bi";
+import { TiUserDeleteOutline} from 'react-icons/ti'
 import { useState } from "react";
+import { async } from "@firebase/util";
 function Navbar(){
     const [opt,setopt]=useState(false);
     const [Dtl,setDtl]=useState(false);
+    const [Conf,setConf]=useState(false);
+    const [Alert,setAlert]=useState(false);
     const nav = useNavigate();
     const signout = async ()=>{
         try{
@@ -21,6 +25,17 @@ function Navbar(){
         catch(error){
             console.log(error)
         }
+    }
+    const DltUser = async ()=>{
+            await auth.currentUser.delete().then((res)=>{
+                setConf(false)
+                setAlert(true)
+                setDtl(false)
+                console.log('user deleted');
+                setTimeout(()=>{
+                    signout()    
+                },1000)
+            })
     }
     return (
         <>
@@ -51,7 +66,7 @@ function Navbar(){
                         </ul>
                     </div>
                 ):null}
-              {Dtl &&(
+              {Dtl && Conf==false ?(
                    <div className="Accountpop"  >
                         <section>
                             <BiX onClick={(e)=>{setDtl(!Dtl)}} size='35px' />
@@ -67,15 +82,37 @@ function Navbar(){
                                 <input value={localStorage.getItem('email')} disabled  ></input>
                             </div>
                             <div>
-                                <button><BiTrash size='20px' /> Delete Account </button>
+                                <button onClick={(e)=>{setConf(true)}}  ><BiTrash size='20px'  /> Delete Account </button>
                             </div>
                         </section>
                    </div>
-              )}
-                      
+              ): Dtl && Conf == true ? (
+                <div className="Accountpop"  >
+                    <section>
+                        <BiX onClick={(e)=>{setDtl(!Dtl)}} size='35px' />
+                        <div>
+                            <img src={localStorage.getItem('pic') ? localStorage.getItem('pic') : userid} />
+                            <label>You really want to detate Your Account?<br/> You will loose all your projects </label>
+                        </div>
+                        <div>
+                            <button onClick={(e)=>{DltUser()}} > <BiTrash size='20px'  /> Yes </button> 
+                        </div>
+                    </section>
+           </div>
+              ):null}   
+              {Alert && (
 
-           
-                
+                <div className="Accountpop" >
+                    <section>
+                        <div >
+                            <TiUserDeleteOutline  color="lightcoral" size='150px' ></TiUserDeleteOutline>
+                        </div>
+                        <div className="ALRT" >
+                            <h1>Account Deleted</h1 >
+                        </div>  
+                    </section>
+                </div>
+              )}
            </nav>
         </>
     )

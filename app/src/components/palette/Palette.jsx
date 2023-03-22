@@ -14,10 +14,11 @@ import {useNavigate } from "react-router-dom";
 import { BiCaretDown ,BiEditAlt} from "react-icons/bi";
 import { DraggableItem } from './DraggableItem';
 import { upload } from '../../context/firebase/FirebaseConfig';
-
+import { AppContext } from '../../context/AppContext';
 
 export const Palette = () => {
     const nav = useNavigate();
+    const {itemList,setItemList,setChanges,changes} = useContext(AppContext);
     const[Project,setProject] = useState('WebProject');  
     const[Dropped,setDropped] = useState(false);
     const[Dropped2,setDropped2] = useState(false);
@@ -27,9 +28,9 @@ export const Palette = () => {
     const[SavePop,setSavePop] = useState(false);  
     const[Alert,setAlert] = useState(false);  
     const[Alert2,setAlert2] = useState(false);  
-    const ToProjectPage = (data)=>{
-            const rst = upload(data,Project,localStorage.getItem('email'));
-            if(rst === true){
+    const ToProjectPage = ()=>{
+         upload(itemList,Project,localStorage.getItem('email')).then((rst)=>{
+            if(rst == true){
                 setSavePop(false)
                 setAlert(true)
                 setTimeout(()=>{
@@ -43,6 +44,9 @@ export const Palette = () => {
                     setAlert2(false)
                 },3000)
             }
+
+         })
+            
            
               
     }
@@ -121,7 +125,7 @@ export const Palette = () => {
                              <section><BiEditAlt size='50px'   /></section>
                          </div>
                          <div>
-                             <label>Project name</label>
+                             <label htmlFor='Title' >Project name</label>
                              <input type='text'  value={Project}  onChange={(e)=>{setProject(e.target.value)}}  ></input>
                          </div>
                          <div className={styles.choose} >
@@ -129,7 +133,7 @@ export const Palette = () => {
                          </div>
                          </div>
                         </section>
-
+        
                 )}
                 {SavePop && (
                                 <section  className={styles.pop} >
@@ -139,11 +143,11 @@ export const Palette = () => {
                                         <p>If you save your project you are not allow <br></br> anymore to make changes</p>
                                    
                                     <div className={styles.choose} >
-                                        <button  onClick={(e)=>{setSavePop(false)}}  >Concel</button>
-                                        <button  onClick={(e)=>{ToProjectPage(Nfile)}} >Save</button>
+                                        <button  onClick={(e)=>{setSavePop(false)}}  >Cancel</button>
+                                        <button  onClick={(e)=>{ToProjectPage()}} >Save</button>
                                     </div>
                                     </div>
-                                </section>
+                                </section>  
                             )
 
                 }

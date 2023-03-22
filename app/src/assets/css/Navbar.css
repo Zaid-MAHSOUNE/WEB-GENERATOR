@@ -241,6 +241,9 @@ nav{
   text-align: center;
 
 }
+.Accountpop section div label{
+  margin-top: 40px;
+}
 .Accountpop section div button{
   display: flex;
   justify-content: center;
@@ -259,4 +262,12 @@ nav{
   background-color: rgb(238, 145, 145);
 
   transform: scale(1.02);
+}
+.ALRT {
+      font-size: 22px;
+      margin-top: 25px;
+      margin-bottom: 10px;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      font-weight: bold;
+      color: lightcoral;
 }

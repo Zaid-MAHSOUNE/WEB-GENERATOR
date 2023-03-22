@@ -17,21 +17,13 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
     useEffect(()=>{
         setName(obj);
     },[obj])
-    function handleFileInputChange(event) {
-      const selectedFile = event.target.files;
-      setFile(selectedFile);
+    function handleFileInputChange(e) {
+        e.preventDefault()
+        setChanges((pre)=>!pre);
+        setFile(URL.createObjectURL(e.target.files[0]));
+        obj.src= URL.createObjectURL(e.target.files[0])
+        console.log(obj)
     }
-    async function handleSub(event) {
-        event.preventDefault();
-        if (file) {
-          const formData = new FormData();
-          formData.append('image', file);
-          try {
-               axios.post('http://localhost:3000',formData).then((res)=>{console.log(res)})
-          } catch (error) {
-            console.error(error);
-          }
-        }}
     const schema = yup.object().shape({
         width: yup.number().integer().min(0).max(100),
         height: yup.number().integer().min(0).max(100),
@@ -68,7 +60,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
 
     return (
         
-        <form className={styles.form}  onSubmit={handleSub}>
+        <form className={styles.form}  onSubmit={(e)=>handleSubmit(onSubmit(e))}>
         {
             <div className={styles.container_sm}>
             <label className={styles.title_sm}>Class :</label>
@@ -77,12 +69,12 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
         }
         <div className={styles.txtStyle}>
            <div  className={styles.fileArea} >
-                    <label>Source :   </label>
-                    <input type="file"   {...register("picture")} onChange={handleFileInputChange}    ></input>
+                    <label htmlFor='Title' >Source :   </label>
+                    <input type="file"   {...register("picture")} onChange={(e)=>{handleFileInputChange(e)}}    ></input>
            </div>
            <div>
-                    <label for="BackgroundSize">Background-Size :</label>
-                    <select  {...register("background-size")}  >
+                    <label htmlFor="BackgroundSize">Background-Size :</label>
+                    <select  {...register("backgroundSize")}  >
                         <option value="auto">auto</option>
                         <option value="cover">cover</option>
                         <option value="contain">contain</option>
@@ -92,16 +84,16 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
                     </select>
            </div>
            <div className={styles.sizeArea} >
-                    <label>Size :   </label>
+                    <label htmlFor='titl' >Size :   </label>
                     <input  placeholder='width' {...register("width")} ></input>
                     <input placeholder='Height' {...register("height")} ></input>
             </div>
             <div>
-                    <label>Opacity:   </label>
+                    <label  htmlFor='title' >Opacity:   </label>
                     <input type="number" {...register("opacity")} ></input>
            </div>
            <div>
-                    <label for="Display">Display :</label>
+                    <label htmlFor="Display">Display :</label>
                     <select {...register("display")} onChange={ (e) => {  e.target.value==="flex"?  setFlx(true):setFlx(false)  } }  >
                         <option value="block">block</option>
                         <option value="none">none</option>
@@ -114,7 +106,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
                     {Flx && (
                         <>
                          <div>
-                         <label for="Justify-Content">Justify-Content :</label>
+                         <label htmlFor="Justify-Content">Justify-Content :</label>
                          <select {...register("justifyContent")}>
                              <option value="baseline">baseline</option>
                              <option value="center">center</option>
@@ -127,7 +119,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
                          </select>
                         </div>
                          <div>
-                         <label for="align-items">align-items :</label>
+                         <label htmlFor="align-items">align-items :</label>
                          <select {...register("alignItems")}>
                              <option value="normal" >normal</option>
                              <option value="baseline">baseline</option>
@@ -140,7 +132,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
                          </select>
                         </div>
                         <div>
-                         <label for="flex-wrap">flex-wrap:</label>
+                         <label htmlFor="flex-wrap">flex-wrap:</label>
                          <select {...register("flexWrap")}>
                              <option value="nowrap" >nowrap</option>
                              <option value="wrap">wrap</option>
@@ -154,7 +146,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
                     )}
             
            <div>
-                    <label for="Position">Position :</label>
+                    <label htmlFor="Position">Position :</label>
                     <select  {...register("position")} >
                         <option value="relative">relative</option>
                         <option value="static">static</option>
@@ -178,7 +170,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
                     <input type="number" placeholder='left' {...register("paddingLeft")}></input>
            </div>
            <div>
-                    <label for="Border">Border :</label>
+                    <label htmlFor="Border">Border :</label>
                     <select {...register("borderStyle")} onChange={ (e) => {  e.target.value !="none"?  setBrd(true):setBrd(false)  } } >
                     <option value="ridge ">solid </option>
                          <option value="none">none</option>
@@ -194,7 +186,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
                 {Brd && (
                         <>
                          <div>
-                         <label for="Border">Border-Color :</label>
+                         <label htmlFor="Border">Border-Color :</label>
                           <input className={styles.colors} type="color" {...register("borderColor")}/>
                           </div>
                           <div>
@@ -209,7 +201,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
 
                 )}
            <div>
-                    <label for="Cursor">Cursor :</label>
+                    <label htmlFor="Cursor">Cursor :</label>
                     <select {...register("cursor")}>
                         <option value="default">default</option>
                         <option value="crosshair">crosshair</option>

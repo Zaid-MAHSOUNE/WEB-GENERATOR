@@ -38,18 +38,16 @@ const getCode = async(Pid) =>{
   const Cid = localStorage.getItem('email')
   const data = await getDocs(coll).then((elm)=>{
     let AL = elm.docs.map((doc) => {if(doc.data().id== Cid && doc.data().name == Pid  ){ return doc.data().HTML}  } );
-    AL = AL.filter(function( element ) {
-      return element !== undefined;
-   });
-   console.log(AL)
+   
+   console.log( JSON.parse(AL))
    const {data} = axios.post('http://localhost/doc/WEB-GEN-API/api/v1/compiler/', {
-    body: JSON.stringify(AL)
+    body: AL
   }, {
     headers: {
       'Content-Type': 'application/json'
     }
 }).then((res)=>{
-  console.log(res)
+  console.log(res.data)
   setpop(false)
   setDownld(true)
 })  
@@ -101,10 +99,10 @@ const getCode = async(Pid) =>{
       {Downld && (
             <section  className='pop' >
             <div>
-                 <label htmlFor="alert">  Download Your Project </label>
+                 <label htmlFor="alert"> - Download Your Project - </label>
                  <div className='choose' >
-                     <button  onClick={()=>{setDownld(false)}}  > <BiX size="25px" /> To Projects </button>
-                    <button > <a target='_blank'  href="http://localhost/doc/WEB-GEN-API/api/v1/download/"> <IoMdDownload size="18px" /> Download </a></button>
+                     <button  onClick={()=>{setDownld(false)}}  >  To Projects </button>
+                    <button > <a target='_blank'  href="http://localhost/doc/WEB-GEN-API/api/v1/download"> <IoMdDownload size="18px" /> Download </a></button>
                  </div>
                  
             </div>

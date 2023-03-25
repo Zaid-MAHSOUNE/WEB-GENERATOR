@@ -41,31 +41,25 @@ const getCode = async(Pid) =>{
     AL = AL.filter(function( element ) {
       return element !== undefined;
    });
-   setCode(AL)
-  })
-}
-// katssift object l api
-const getDocument = async (Pid) =>{
-  setpop(true)
-  await getCode(Pid).then(()=>{
-    const {data} = axios.post('http://localhost/WEB-GEN-API/api/v1/compiler/', {
-      body: JSON.stringify(Code)
-    }, {
-      headers: {
-        'Content-Type': 'application/json'
-      }
-  }).then((res)=>console.log(JSON.stringify(Code)))  
-    
+   console.log(AL)
+   const {data} = axios.post('http://localhost/doc/WEB-GEN-API/api/v1/compiler/', {
+    body: JSON.stringify(AL)
+  }, {
+    headers: {
+      'Content-Type': 'application/json'
+    }
+}).then((res)=>{
+  console.log(res)
   setpop(false)
   setDownld(true)
-    })
+})  
+  })
 }
-
   return (
     <div className="containerr"  >
       <div className="m1">
       {ALL.length > 0  ? (
-          ALL.map((title) => (        
+          ALL.map((title) => (      
             <div className="main"  key={title}  >
             <img src={bg} ></img>
             <div className="down">
@@ -73,7 +67,7 @@ const getDocument = async (Pid) =>{
                         <h3> {title}</h3>
                 </div>  
                 <div className="tools">
-                    <IoMdDownload size="22px" title='download'  values={title} onClick={()=>getDocument(title)}  ></IoMdDownload>
+                    <IoMdDownload size="22px" title='download'  values={title} onClick={()=>getCode(title)}  ></IoMdDownload>
                     <FaCode size="22px" title='view project' values={title}  onClick={(e)=>{setShow(true); getCode(title);   }   }  ></FaCode>
                 </div>
             </div>
@@ -110,7 +104,7 @@ const getDocument = async (Pid) =>{
                  <label htmlFor="alert">  Download Your Project </label>
                  <div className='choose' >
                      <button  onClick={()=>{setDownld(false)}}  > <BiX size="25px" /> To Projects </button>
-                    <button > <a href="http://localhost/WEB-GEN-API/api/v1/download/"> <IoMdDownload size="18px" /> Download </a></button>
+                    <button > <a target='_blank'  href="http://localhost/doc/WEB-GEN-API/api/v1/download/"> <IoMdDownload size="18px" /> Download </a></button>
                  </div>
                  
             </div>

@@ -48,15 +48,17 @@ const getCode = async(Pid) =>{
 const getDocument = async (Pid) =>{
   setpop(true)
   await getCode(Pid).then(()=>{
-    var formData = new FormData()
-    formData.append('jsonFile', JSON.stringify(Code))
-         axios.post('http://localhost/doc/WEB-GEN-API/api/v1/compiler/',formData).then((res)=>{
-        console.log(res.data)
-        setpop(false)
-        setDownld(true)
-    }).catch((error)=>console.log(error))
-  })  
+    const {data} = axios.post('http://localhost/WEB-GEN-API/api/v1/compiler/', {
+      body: JSON.stringify(Code)
+    }, {
+      headers: {
+        'Content-Type': 'application/json'
+      }
+  }).then((res)=>console.log(JSON.stringify(Code)))  
     
+  setpop(false)
+  setDownld(true)
+    })
 }
 
   return (
@@ -108,7 +110,7 @@ const getDocument = async (Pid) =>{
                  <label htmlFor="alert">  Download Your Project </label>
                  <div className='choose' >
                      <button  onClick={()=>{setDownld(false)}}  > <BiX size="25px" /> To Projects </button>
-                    <button > <IoMdDownload size="18px" /> Download</button>
+                    <button > <a href="http://localhost/WEB-GEN-API/api/v1/download/"> <IoMdDownload size="18px" /> Download </a></button>
                  </div>
                  
             </div>

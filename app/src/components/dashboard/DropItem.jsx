@@ -6,7 +6,6 @@ export const DropItem = (props) =>  {
 
     const {itemList, setItemList,setIndex} = useContext(AppContext);
     
-    
     const [{isOver}, drop] = useDrop(()=>({
         accept:"item",
         drop:(item,monitor) => dropHandler(item.tag,monitor),
@@ -94,14 +93,21 @@ export const DropItem = (props) =>  {
         return (
             <props.tag id={props.id} className={props.class + ' text'}  style={props.style} onClick={(e)=>{
                 setIndex(e.target.getAttribute("id"));
-            }}>{ props.value} </props.tag>
+            }}> text </props.tag>
         );
     }
     else{
         return (
-            <props.tag id={props.id} className={props.class}  style={props.style} onClick={(e)=>{
+            <props.tag ref={drop} id={props.id} className={props.class}  style={props.style} onClick={(e)=>{
                 setIndex(e.target.getAttribute("id"));
-            }}>{props.value}</props.tag>
+            }}>
+                {
+                props.value
+                }
+                {
+                    itemList.map((element,index)=> element.parentId === props.id ? <DropItem key={index} tag={element.tag} class={element.class} style={element.style} value={element.value} id={element.id} parentId={element.parentId}/> : null )
+                }
+            </props.tag>
         );
     }
 }

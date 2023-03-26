@@ -25,7 +25,7 @@ export const upload = async(data,Pname,user)=>{
       await addDoc(coll, {
       id: user,
       name: Pname,
-      HTML: JSON.stringify(data),
+      HTML: JSON.stringify(data ),
     });
     return true;
   } catch (error) {

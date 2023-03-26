@@ -3,23 +3,23 @@ import '../../assets/css/ProjectPage.css'
 import { useEffect, useRef, useState } from 'react'
 import { TbDatabaseOff} from "react-icons/tb";
 import { database,coll } from '../../context/firebase/FirebaseConfig';
-import {collection  ,getDocs}  from 'firebase/firestore'
+import {doc,deleteDoc,getDocs}  from 'firebase/firestore'
 import bg from '../../assets/svg/bg.svg'
 import {IoMdDownload } from "react-icons/io";
-import { FaCode } from "react-icons/fa";
-import {BiX} from "react-icons/bi";
+import { GoCloudDownload } from "react-icons/go";
+import {RiDeleteBin5Line} from "react-icons/ri";
 import RiseLoader from 'react-spinners/RiseLoader';
 import axios from 'axios';
 
 
 
 export default function ProjetDashboard() {
-  const  [Show,setShow] = useState(false);
   const [pop, setpop] = useState(false)
+  const [pop2, setpop2] = useState(false)
   const [Downld, setDownld] = useState(false)
   const  [ALL,setALL] = useState([]);
-  const  [Code,setCode] = useState([]);
-  //katjib data mn firebase  ( smiyat dyal ga3 les projet ) 
+
+  //katjib smiyat dyal all projects mn firebase  
   useEffect(()=>{
       const GetData = async (Cid) => {
         const data = await getDocs(coll).then((elm)=>{
@@ -32,16 +32,18 @@ export default function ProjetDashboard() {
         
     }
    GetData(localStorage.getItem('email'))
-  },[])
+  },[pop2])
   //katjib l code html mn fire base
 const getCode = async(Pid) =>{
+  setpop(true)
   const Cid = localStorage.getItem('email')
   const data = await getDocs(coll).then((elm)=>{
     let AL = elm.docs.map((doc) => {if(doc.data().id== Cid && doc.data().name == Pid  ){ return doc.data().HTML}  } );
-   
-   console.log( JSON.parse(AL))
+    AL = AL.filter(function( element ) {
+      return element !== undefined;
+   });
    const {data} = axios.post('http://localhost/doc/WEB-GEN-API/api/v1/compiler/', {
-    body: AL
+    body: JSON.stringify(JSON.parse(AL))
   }, {
     headers: {
       'Content-Type': 'application/json'
@@ -53,6 +55,18 @@ const getCode = async(Pid) =>{
 })  
   })
 }
+//kat delete l code mn firebase
+const deleteCode = async (id)=>{
+  setpop2(true)
+  const Cid = localStorage.getItem('email')
+  const data = await getDocs(coll).then((elm)=>{
+    let AL = elm.docs.map((docu) => {if(docu.data().id== Cid && docu.data().name == id  ){   deleteDoc(doc(database,"User",docu.id))   }  } );
+  }).then((res)=>{
+      setpop2(false)
+  })
+}
+
+
   return (
     <div className="containerr"  >
       <div className="m1">
@@ -66,7 +80,7 @@ const getCode = async(Pid) =>{
                 </div>  
                 <div className="tools">
                     <IoMdDownload size="22px" title='download'  values={title} onClick={()=>getCode(title)}  ></IoMdDownload>
-                    <FaCode size="22px" title='view project' values={title}  onClick={(e)=>{setShow(true); getCode(title);   }   }  ></FaCode>
+                    <RiDeleteBin5Line size="22px" title='Delete'  values={title} onClick={()=>deleteCode(title)}  >  </RiDeleteBin5Line>
                 </div>
             </div>
         </div>
@@ -78,13 +92,6 @@ const getCode = async(Pid) =>{
           </div>
         )}
       </div>
-      {Show &&(
-            <div className="m2" >
-                <iframe  srcDoc={Code} >
-
-                </iframe>
-          </div>
-      )}
       {pop &&(
              <section  className='pop' >
              <div>
@@ -99,15 +106,27 @@ const getCode = async(Pid) =>{
       {Downld && (
             <section  className='pop' >
             <div>
+                  <label> <GoCloudDownload  size="70px" />  </label><br/>
                  <label htmlFor="alert"> - Download Your Project - </label>
                  <div className='choose' >
                      <button  onClick={()=>{setDownld(false)}}  >  To Projects </button>
-                    <button > <a target='_blank'  href="http://localhost/doc/WEB-GEN-API/api/v1/download"> <IoMdDownload size="18px" /> Download </a></button>
+                    <button > <a  href="http://localhost/doc/WEB-GEN-API/api/v1/download"> <IoMdDownload size="18px" /> Download </a></button>
                  </div>
                  
             </div>
            </section>  
         
+      )}
+      {pop2 &&(
+             <section  className='pop' >
+             <div>
+                  <RiseLoader
+                    color="#1CB0F6"
+                    speedMultiplier={0.9}
+                  />
+                  <label htmlFor="alert">  Deleting Project </label>
+             </div>
+         </section>  
       )}
       
     </div>

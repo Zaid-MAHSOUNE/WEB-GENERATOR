@@ -1,6 +1,7 @@
 *{
   margin: 0;
   padding: 0;
+  font-Family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
 }
 nav{
   background-Color : #24252A;
@@ -22,7 +23,7 @@ nav{
   width : 370px;
   margin-Right : 25px;
   list-Style : none;
-  font-Family: Segoe UI, Tahoma, Geneva, Verdana, sans-serif;
+  
   text-Decoration : none;
  
 }

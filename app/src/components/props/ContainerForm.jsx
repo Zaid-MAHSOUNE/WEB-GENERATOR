@@ -19,6 +19,14 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
     const [NList,setNList] = useState(''); 
     useEffect(()=>{
         setName(obj);
+
+      /*  itemList.map((itm)=>{
+            if(itm.class === obj.class ){
+                console.log("identique")
+                obj.style = itm.style
+            }
+            else{}
+    })*/
     },[obj])
     
     const schema = yup.object().shape({
@@ -37,21 +45,33 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
         setChanges((pre)=>!pre);
         //new class
         keys.map((element)=>{
-            if(element.name === "height" || element.name === "width" || element.name === "opacity" || element.name === "marginTop" || element.name === "marginRight" || element.name === "marginLeft" || element.name === "marginBotton" || element.name === "paddingTop" || element.name === "paddingRight" || element.name === "paddingLeft" || element.name === "padding-botton") 
-            style[element.name] = "" + element.value + "%" ;
-           else if(element.name === "borderRadius" || element.name === "borderWidth" )   style[element.name] = "" + element.value + "px" ;
-            else if (element.name ==='value' ||  element.name === 'class' ||  element.name === 'placeholder' ||  element.name === 'submit' ||  element.name === 'delete'  ||  element.name === 'list'){}
-            else
-             style[element.name] = element.value ;
+            if(element.value){
+                if(element.name === "height" || element.name === "width" || element.name === "opacity" || element.name === "marginTop" || element.name === "marginRight" || element.name === "marginLeft" || element.name === "marginBotton" || element.name === "paddingTop" || element.name === "paddingRight" || element.name === "paddingLeft" || element.name === "padding-botton") 
+                style[element.name] = "" + element.value + "%" ;
+               else if(element.name === "borderRadius" || element.name === "borderWidth" )   style[element.name] = "" + element.value + "px" ;
+                else if (element.name ==='value' ||  element.name === 'class' ||  element.name === 'placeholder' ||  element.name === 'submit' ||  element.name === 'delete'  ||  element.name === 'list'){}
+                else
+                 style[element.name] = element.value ;
+            }
+            else {}
+           
         })
+        
         obj.style = style
         itemList.map((itm)=>{
-            if(JSON.stringify(itm.class).slice(1,itm.class.length+1) === cls ){
-                console.log("identique")
-                itm.style = style
+            if(itm.class === obj.class ){
+                itm.style = obj.style
             }
             else{}
     })
+       
+    }
+    const deleteItem = (e) =>{
+        const arr = itemList
+        var index  = arr.indexOf(obj)
+        delete arr[index]
+         setItemList(arr)
+        console.log(itemList)
     }
     const addnewlist = (e) =>{
         e.preventDefault();
@@ -61,12 +81,17 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
     }
     const TypeHandler = (e) =>{
         e.preventDefault();
-        obj.setAttribute('type',e.target.value);
         obj.type = e.taget.value;
     }
     const PlaceHolderHandler = (e) => {
         e.preventDefault();
         obj.value = e.target.value;
+        
+    }
+    const ClassHandler = (e)=>{
+        e.preventDefault()
+        setCls(obj.class = e.target.value)
+        console.log('new class : '+obj.class)
     }
     //const a = itemList.map((elm)=>{<option>{JSON.stringify(elm.class).slice(1,elm.class.length+1)}</option>})
     return (
@@ -75,7 +100,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
              {
             <div className={styles.container_sm}>
             <label className={styles.title_sm}>Class</label>
-            <input key={changes} className={styles.input} type="text"   {...register("class")}   value={obj.class} onChange={(e)=>{ setCls(obj.class = e.target.value) }}  />
+            <input key={changes} className={styles.input} type="text"   {...register("class")}   value={obj.class} onChange={(e)=>{ClassHandler(e) }}  />
             </div>
             }
               {obj.tag == 'input'  && PlaceH ?(
@@ -295,7 +320,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
         </div>
         <div className={styles.submit} >
             <button type='submit'  {...register("submit")}  >   Submit</button>
-            <button  {...register("delete")}  > Delete</button>
+            <button  {...register("delete")} onClick={(e)=>{deleteItem(e)}} > Delete</button>
         </div> 
         </form>
     );

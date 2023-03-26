@@ -2,7 +2,6 @@ import { useContext, useEffect, useState } from 'react';
 import styles from '../../assets/css/palette.module.css';
 import Text from '../../data/Text';
 import Container from '../../data/Container';
-import WebParts from '../../data/WebParts';
 import Media from '../../data/Media';
 import Others from '../../data/Others';
 import Nfile from '../../assets/img/new-document.png';
@@ -52,90 +51,21 @@ export const Palette = () => {
     }
         return(
             <div className={styles.container}>
-                <div className={styles.tools}>
+            
+
+                            <div className={styles.tools}>
                             <section>
                                 {localStorage.length > 0 && (
                                     <>
-                                         <p>- Tools -</p>
-                                         <div  className={styles.Imprt }   >
-                                                     <img src={Nfile} onClick={(e)=>{ window.location.reload()}} draggable='false' title='New File'  ></img>
-                                                     <img src={Efile}  onClick={(e)=>{setDetailPop(true)}}   draggable='false' title='Project Settings' ></img>
-                                                     <img src={Sfile} onClick={(e)=>{setSavePop(true)}} draggable='false'  title='Save Project' ></img>    
-                                         </div> 
+                                        <p>- Tools -</p>
+                                        <div  className={styles.Imprt }   >
+                                                    <img src={Nfile} onClick={(e)=>{ window.location.reload()}} draggable='false' title='New File'  ></img>
+                                                    <img src={Efile}  onClick={(e)=>{ setDetailPop(!DetailPop) ; setSavePop(false) }}   draggable='false' title='Project Settings' ></img>
+                                                    <img src={Sfile} onClick={(e)=>{ setSavePop(!SavePop);setDetailPop(false) }} draggable='false'  title='Save Project' ></img>    
+                                        </div> 
                                     </>
                                 )}
-                           
-                            <p>- Website Parts -</p>
-                            <div  className={styles.Imprt} >
-                                             {
-                                         WebParts.map((element) => <DraggableItem  key={element.tag} tag={element.tag} src={element.src} >  </DraggableItem>)
-                                            }
-                                     </div> 
-                                <button onClick={(e) =>{ setDropped(!Dropped) }} >Container <BiCaretDown size='22' /></button>
-                               {Dropped && (
-                                     
-                                    <div  className={styles.items} >
-                                             {
-                                         Container.map((element) => <DraggableItem  key={element.tag} tag={element.tag} src={element.src} >  </DraggableItem>)
-                                            }
-                                     </div> 
-                                   
-                                )}
-                
-                                <button onClick={(e) => setDropped2(!Dropped2)} >Text   <BiCaretDown size='22' /> </button>
-                               {Dropped2 && (
-                                     
-                                    <div  className={styles.items} >
-                                             {
-                                         Text.map((element) => <DraggableItem  key={element.tag} tag={element.tag} src={element.src} >  </DraggableItem>)
-                                            }
-                                     </div> 
-                                   
-                                )}   
-
-                                <button onClick={(e) => setDropped3(!Dropped3)} >Media <BiCaretDown size='22' /></button>
-                                    {Dropped3 && (
-                                     
-                                    <div  className={styles.items} >
-                                             {
-                                         Media.map((element) => <DraggableItem  key={element.tag} tag={element.tag} src={element.src} >  </DraggableItem>)
-                                            }
-                                     </div> 
-                                   
-                                )}   
-
-                                <button onClick={(e) => setDropped4(!Dropped4)} >Clickable items <BiCaretDown size='22' /></button>
-                               {Dropped4 && (
-                                     
-                                    <div  className={styles.items} >
-                                             {
-                                         Others.map((element) => <DraggableItem  key={element.tag} tag={element.tag} src={element.src} >  </DraggableItem>)
-                                            }
-                                     </div> 
-                                   
-                                )}   
-                            </section>
-                           
-                        
-                </div>
-                {DetailPop && (
-                         <section className={styles.pop}>
-                         <div>
-                         <div className={styles.popTitle} >
-                             <section><BiEditAlt size='50px'   /></section>
-                         </div>
-                         <div>
-                             <label htmlFor='Title' >Project name</label>
-                             <input type='text'  value={Project}  onChange={(e)=>{setProject(e.target.value)}}  ></input>
-                         </div>
-                         <div className={styles.choose} >
-                             <button  onClick={(e)=>{setDetailPop(false)}} >Save</button>
-                         </div>
-                         </div>
-                        </section>
-        
-                )}
-                {SavePop && (
+                                {SavePop && (
                                 <section  className={styles.pop} >
                                     <div>
                                         <h2 className={styles.ttl} >Save Your work</h2>
@@ -150,8 +80,24 @@ export const Palette = () => {
                                 </section>  
                             )
 
-                }
-                {Alert && (
+                                }
+
+                                  {DetailPop && (
+                         <section className={styles.pop}>
+                         <div>
+                         <h2 className={styles.ttl} >Edit Your Project</h2>
+                         <div>
+                             <label htmlFor='Title' >Project name</label>
+                             <input type='text'  value={Project}  onChange={(e)=>{setProject(e.target.value)}}  ></input>
+                         </div>
+                         <div className={styles.choose} >
+                             <button  onClick={(e)=>{setDetailPop(false)}} >Save</button>
+                         </div>
+                         </div>
+                        </section>
+        
+                            )}
+                             {Alert && (
                                 <section  className={styles.pop} >
                                     <div>
                                         <img loading='lazy'  src={Save} ></img>
@@ -160,17 +106,70 @@ export const Palette = () => {
                                 </section>
                             )
 
-                }
-                {Alert2 && (
-                                <section  className={styles.pop} >
-                                    <div>
-                                        <img loading='lazy'  src={Declined} ></img>
-                                        <h1>Error <br></br>Try Agin</h1>
-                                    </div>
-                                </section>
-                            )
+                            }
+                            {Alert2 && (
+                                            <section  className={styles.pop} >
+                                                <div>
+                                                    <img loading='lazy'  src={Declined} ></img>
+                                                    <h1>Error <br></br>Try Agin</h1>
+                                                </div>
+                                            </section>
+                                        )
 
-                }
+                            }
+                                <button onClick={(e) =>{ setDropped(!Dropped) }} >Container <BiCaretDown size='22' /></button>
+                            {Dropped && (
+                                    
+                                    <div  className={styles.items} >
+                                            {
+                                        Container.map((element) => <DraggableItem  key={element.tag} tag={element.tag} src={element.src} >  </DraggableItem>)
+                                            }
+                                    </div> 
+                                
+                                )}
+
+                                <button onClick={(e) => setDropped2(!Dropped2)} >Text   <BiCaretDown size='22' /> </button>
+                            {Dropped2 && (
+                                    
+                                    <div  className={styles.items} >
+                                            {
+                                        Text.map((element) => <DraggableItem  key={element.tag} tag={element.tag} src={element.src} >  </DraggableItem>)
+                                            }
+                                    </div> 
+                                
+                                )}   
+
+                                <button onClick={(e) => setDropped3(!Dropped3)} >Media <BiCaretDown size='22' /></button>
+                                    {Dropped3 && (
+                                    
+                                    <div  className={styles.items} >
+                                            {
+                                        Media.map((element) => <DraggableItem  key={element.tag} tag={element.tag} src={element.src} >  </DraggableItem>)
+                                            }
+                                    </div> 
+                                
+                                )}   
+
+                                <button onClick={(e) => setDropped4(!Dropped4)} >Clickable items <BiCaretDown size='22' /></button>
+                            {Dropped4 && (
+                                    
+                                    <div  className={styles.items} >
+                                            {
+                                        Others.map((element) => <DraggableItem  key={element.tag} tag={element.tag} src={element.src} >  </DraggableItem>)
+                                            }
+                                    </div> 
+                                
+                                )}   
+                            </section>
+
+
+                            </div>
+
+            
+                
+              
+                
+               
                
               
             </div>

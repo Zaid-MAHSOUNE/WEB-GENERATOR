@@ -18,7 +18,7 @@ export const Dashboard = () => {
         })
     }));
     //refresh
-   /* useEffect(() => {
+    useEffect(() => {
         window.addEventListener("beforeunload", handleBeforeUnload);
         return () => {
           window.removeEventListener("beforeunload", handleBeforeUnload);
@@ -31,9 +31,7 @@ export const Dashboard = () => {
           "Are you sure you want to leave? All your work will be lost.";
         e.returnValue = message;
         return message;
-      };*/
-
-      //
+      }
     const dropHandler = (tag,monitor)=>{
         refItems.current = drop.current;
         const didDrop = monitor.didDrop()
@@ -41,7 +39,7 @@ export const Dashboard = () => {
           return
         }
         setItemList((previousState)=>{
-            return [...previousState,{id:previousState.length+1,tag:tag,class:"container",value:"11",style:{},parentId:0}];
+            return [...previousState,{id:previousState.length+1,tag:tag,class:"container",value:"",style:{},parentId:0}];
         });
     }
 

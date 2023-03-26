@@ -37,22 +37,28 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
         setChanges((pre)=>!pre);
         //new class
         keys.map((element)=>{
-            if(element.name === "height" || element.name === "width" || element.name === "opacity" || element.name === "marginTop" || element.name === "marginRight" || element.name === "marginLeft" || element.name === "marginBotton" || element.name === "paddingTop" || element.name === "paddingRight" || element.name === "paddingLeft" || element.name === "padding-botton") 
-            style[element.name] = "" + element.value + "%" ;
-           else if(element.name === "borderRadius" || element.name === "borderWidth" )   style[element.name] = "" + element.value + "px" ;
-            else if (element.name ==='value' ||  element.name === 'class' ||  element.name === 'placeholder' ||  element.name === 'submit' ||  element.name === 'delete'  ||  element.name === 'list'){}
-            else
-             style[element.name] = element.value ;
+            if(element.value){
+                if(element.name === "height" || element.name === "width" || element.name === "opacity" || element.name === "marginTop" || element.name === "marginRight" || element.name === "marginLeft" || element.name === "marginBotton" || element.name === "paddingTop" || element.name === "paddingRight" || element.name === "paddingLeft" || element.name === "padding-botton") 
+                style[element.name] = "" + element.value + "%" ;
+               else if(element.name === "borderRadius" || element.name === "borderWidth" )   style[element.name] = "" + element.value + "px" ;
+                else if (element.name ==='value' ||  element.name === 'class' ||  element.name === 'placeholder' ||  element.name === 'submit' ||  element.name === 'delete'  ||  element.name === 'list'){}
+                else
+                 style[element.name] = element.value ;
+            }
+            else {}
+           
         })
+        
         obj.style = style
         itemList.map((itm)=>{
-            if(JSON.stringify(itm.class).slice(1,itm.class.length+1) === cls ){
+            if(itm.class === obj.class ){
                 console.log("identique")
-                itm.style = style
+                itm.style = obj.style
             }
             else{}
     })
-    }
+}
+
     const addnewlist = (e) =>{
         e.preventDefault();
         var li = document.createElement("li");

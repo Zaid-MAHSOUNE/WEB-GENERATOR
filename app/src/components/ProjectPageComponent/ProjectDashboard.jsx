@@ -38,10 +38,11 @@ const getCode = async(Pid) =>{
   const Cid = localStorage.getItem('email')
   const data = await getDocs(coll).then((elm)=>{
     let AL = elm.docs.map((doc) => {if(doc.data().id== Cid && doc.data().name == Pid  ){ return doc.data().HTML}  } );
-   
-   console.log( JSON.parse(AL))
-   const {data} = axios.post('http://localhost/doc/WEB-GEN-API/api/v1/compiler/', {
-    body: AL
+    AL = AL.filter(function( element ) {
+      return element !== undefined;
+   });
+   const {data} = axios.post('http://localhost/WEB-GEN-API/api/v1/compiler/', {
+    body: JSON.stringify(JSON.parse(AL))
   }, {
     headers: {
       'Content-Type': 'application/json'
@@ -102,7 +103,7 @@ const getCode = async(Pid) =>{
                  <label htmlFor="alert"> - Download Your Project - </label>
                  <div className='choose' >
                      <button  onClick={()=>{setDownld(false)}}  >  To Projects </button>
-                    <button > <a target='_blank'  href="http://localhost/doc/WEB-GEN-API/api/v1/download"> <IoMdDownload size="18px" /> Download </a></button>
+                    <button > <a href="http://localhost/WEB-GEN-API/api/v1/download"> <IoMdDownload size="18px" /> Download </a></button>
                  </div>
                  
             </div>

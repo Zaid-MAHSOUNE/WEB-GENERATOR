@@ -43,13 +43,16 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
         const style = {};
         const keys = Array.from(e.target);
         setChanges((pre)=>!pre);
+        console.log(itemList);
         //new class
         keys.map((element)=>{
             if(element.value){
-                if(element.name === "height" || element.name === "width" || element.name === "opacity" || element.name === "marginTop" || element.name === "marginRight" || element.name === "marginLeft" || element.name === "marginBotton" || element.name === "paddingTop" || element.name === "paddingRight" || element.name === "paddingLeft" || element.name === "padding-botton") 
+                if(element.name === "width" || element.name === "opacity" || element.name === "marginTop" || element.name === "marginRight" || element.name === "marginLeft" || element.name === "marginBotton" || element.name === "paddingTop" || element.name === "paddingRight" || element.name === "paddingLeft" || element.name === "padding-botton") 
                 style[element.name] = "" + element.value + "%" ;
                else if(element.name === "borderRadius" || element.name === "borderWidth" )   style[element.name] = "" + element.value + "px" ;
                 else if (element.name ==='value' ||  element.name === 'class' ||  element.name === 'inputType' ||  element.name === 'placeholder' ||  element.name === 'submit' ||  element.name === 'delete'  ||  element.name === 'list'){}
+                else if(element.name === "height")
+                style[element.name] = "" + element.value + "vh" ;
                 else
                  style[element.name] = element.value ;
             }
@@ -71,12 +74,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
         var index = itemList.indexOf(obj)
         itemList.splice(index,1);    
     }
-    const addnewlist = (e) =>{
-        e.preventDefault();
-        var li = document.createElement("li");
-        li.appendChild(document.createTextNode(NList));
-        obj.appendChild(li);
-    }
+    
     const TypeHandler = (e) =>{
         e.preventDefault();
         obj.type = e.target.value;

@@ -46,7 +46,7 @@ const getCode = async(Pid) =>{
     AL = AL.filter(function( element ) {
       return element !== undefined;
    });
-   const {data} = axios.post('http://localhost/doc/WEB-GEN-API/api/v1/compiler/', {
+   const {data} = axios.post('http://localhost/WEB-GEN-API/api/v1/compiler/', {
     body: JSON.stringify(JSON.parse(AL))
   }, {
     headers: {
@@ -139,7 +139,7 @@ const deleteCode = async (id)=>{
                  <label htmlFor="alert"> - Download Your Project - </label>
                  <div className='choose' >
                      <button  onClick={()=>{setDownld(false)}}  >  To Projects </button>
-                    <button > <a  href="http://localhost/doc/WEB-GEN-API/api/v1/download"> <IoMdDownload size="18px" /> Download </a></button>
+                    <button > <a  href="http://localhost/WEB-GEN-API/api/v1/download"> <IoMdDownload size="18px" /> Download </a></button>
                  </div>
                  
             </div>

@@ -31,7 +31,7 @@ export const DropItem = (props) =>  {
         return (
             <props.tag id={props.id} className={props.class + ' button'} type={props.type}  style={props.style} onClick={(e)=>{
                 setIndex(e.target.getAttribute("id"));
-            }}   placeholder={props.placeholder} />
+            }}   placeholder={props.placeholder} readOnly="readonly"/>
         );
     }
     else if( props.tag !=="div" &&  props.tag === "img" ){
@@ -64,7 +64,7 @@ export const DropItem = (props) =>  {
                 props.value
                 }
                 {
-                    itemList.map((element,index)=> element.parentId === props.id ? <DropItem key={index} tag={element.tag} class={element.class} style={element.style} value={element.value} id={element.id} parentId={element.parentId}/> : null )
+                    itemList.map((element,index)=> element.parentId === props.id ? <DropItem key={index} tag={element.tag} class={element.class} src={element.src} style={element.style} placeholder={element.placeholder} type={element.type} value={element.value} id={element.id} parentId={element.parentId}/> : null )
                 }
             </props.tag>
         );

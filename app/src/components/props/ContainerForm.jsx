@@ -68,11 +68,8 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
        
     }
     const deleteItem = (e) =>{
-        const arr = itemList
-        var index  = arr.indexOf(obj)
-        delete arr[index]
-         setItemList(arr)
-        console.log(itemList)
+        var index = itemList.indexOf(obj)
+        itemList.splice(index,1);    
     }
     const addnewlist = (e) =>{
         e.preventDefault();

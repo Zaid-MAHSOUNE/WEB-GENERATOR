@@ -12,7 +12,9 @@ export const TxtForm = ({obj,class: classes,value,change}) => {
     const {itemList,setItemList,setChanges,changes} = useContext(AppContext);
     const [newClass,setNewClass] = useState();
     const [Brd,setBrd]=useState(false);
+    const [cls,setCls] = useState(obj); 
     const [name,setName] = useState(obj);
+    const [href,sethref] = useState(obj);
     useEffect(()=>{
         setName(obj);
     },[obj])
@@ -28,20 +30,30 @@ export const TxtForm = ({obj,class: classes,value,change}) => {
           const style = {};
         const keys = Array.from(e.target);
        keys.map((element)=>{
+        if(element.value){
             if( element.name === "opacity" || element.name === "marginTop" || element.name === "marginRight" || element.name === "marginLeft" || element.name === "marginBotton" || element.name === "paddingTop" || element.name === "paddingRight" || element.name === "paddingLeft" || element.name === "padding-botton") 
             style[element.name] = "" + element.value + "%" ;
            else if(element.name === "borderRadius" || element.name === "borderWidth" || element.name === "fontSize" || element.name === "letterSpacing" )     style[element.name] = "" + element.value + "px" ;
-            else if (element.name ==='value' || element.name === 'class' ||  element.name === 'submit' ||  element.name === 'delete' ){}
+            else if (element.name ==='value' || element.name === 'class' || element.name === 'href' || element.name === 'submit' ||  element.name === 'delete' ){}
              else
              style[element.name] = element.value ;
-             
+            }
+            else {}
         })
         obj.style = style
-       console.log(style)
-
+        console.log(obj)
+        console.log(obj)
+        itemList.map((itm)=>{
+            if(itm.class === obj.class ){
+                itm.style = obj.style
+            }
+            else{}
+    })
     }
-    const classHandler = (e) => {
-       
+    const ClassHandler = (e)=>{
+        e.preventDefault()
+        setCls(obj.class = e.target.value)
+        console.log('new class : '+obj.class)
     }
     
 
@@ -55,9 +67,16 @@ export const TxtForm = ({obj,class: classes,value,change}) => {
         {
             <div className={styles.container_sm}>
             <label className={styles.title_sm}>Class :</label>
-            <input className={styles.input} type="text" value={classes}  {...register("class")}  onChange={(e)=>classHandler(e)}/>
+            <input className={styles.input} type="text"  {...register("class")}   value={obj.class} onChange={(e)=>{ClassHandler(e) }}  />
             </div>
         }
+        {obj.tag === 'a'  && (
+                <div className={styles.container_sm}>
+                <label className={styles.title_sm} >Href :</label>
+                <input key={changes} className={styles.input} type="text"  {...register("href")}  value={obj.href}  onChange={(e)=>{sethref(obj.href = e.target.value)}}/>
+                </div>
+        )}
+         
         <div className={styles.container_sm}>
             <label className={styles.title_sm}>Color </label>
             <input className={styles.input_color} type="color" {...register("color")}/>

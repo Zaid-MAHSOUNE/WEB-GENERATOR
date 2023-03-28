@@ -2,8 +2,9 @@
 import { initializeApp } from "firebase/app";
 import {getAuth} from "firebase/auth"
 import { getStorage, uploadBytes,ref } from  'firebase/storage'
-import { getFirestore } from "firebase/firestore";
+import { doc, getFirestore, updateDoc } from "firebase/firestore";
 import {collection , addDoc }  from 'firebase/firestore'
+
 const firebaseConfig = {
   apiKey: "AIzaSyAWdVqqODPKfN9fWEDWpdZ79nifOx-68WU",
   authDomain: "webgenerator-bdc94.firebaseapp.com",
@@ -33,17 +34,27 @@ export const upload = async(data,Pname,user)=>{
   }
 
 }
+export const update = async(data,docid)=>{
+  try {
+    const newData = {
+        HTML :JSON.stringify(data )
+    }
+    let docRef = doc(database,"User",docid)
+    await updateDoc(docRef,newData)
+    return true;
+  } catch (error) {
+    console.log(error);
+  }
+
+}
 
 
-/*
+
 export const  storage = getStorage(app)
-export const upload = (data,Pname,User)=>{
+export const uploadPic = async (data,User)=>{
     if(data){
-    const folder = ref(storage,User+'/'+data)    
-    uploadBytes(folder,data,'base64').then((rslt)=>{
-      console.log(rslt)  
-      
-    })
-    return true
-}}
-*/
+    const folder = ref(storage,localStorage.getItem('email')+'/'+`${data.name}`)    
+    await uploadBytes(folder,data)    
+    }
+}
+

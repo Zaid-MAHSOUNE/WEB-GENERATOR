@@ -3,7 +3,6 @@ import styles from '../../assets/css/prop.module.css';
 import { TxtForm } from './TxtForm';
 import { ImgForm } from './ImgForm';
 import { ContainerForm } from './ContainerForm';
-import { PartsForm } from './PartsForm';
 import { AppContext } from '../../context/AppContext';
 import { useState } from 'react';
 export const Properties = () => {
@@ -26,9 +25,6 @@ export const Properties = () => {
             }
             else if( obj.tag == "div" || obj.tag == "button" || obj.tag == "input" || obj.tag == "ul" ){
                 return <ContainerForm obj={obj}/>;
-            }
-            else if( obj.tag == "body" || obj.tag == "header" || obj.tag == "footer" ){
-                return <PartsForm obj={obj}/>;
             }
         }
     }

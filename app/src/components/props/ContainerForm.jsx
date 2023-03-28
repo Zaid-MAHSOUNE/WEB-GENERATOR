@@ -49,7 +49,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
                 if(element.name === "height" || element.name === "width" || element.name === "opacity" || element.name === "marginTop" || element.name === "marginRight" || element.name === "marginLeft" || element.name === "marginBotton" || element.name === "paddingTop" || element.name === "paddingRight" || element.name === "paddingLeft" || element.name === "padding-botton") 
                 style[element.name] = "" + element.value + "%" ;
                else if(element.name === "borderRadius" || element.name === "borderWidth" )   style[element.name] = "" + element.value + "px" ;
-                else if (element.name ==='value' ||  element.name === 'class' ||  element.name === 'placeholder' ||  element.name === 'submit' ||  element.name === 'delete'  ||  element.name === 'list'){}
+                else if (element.name ==='value' ||  element.name === 'class' ||  element.name === 'inputType' ||  element.name === 'placeholder' ||  element.name === 'submit' ||  element.name === 'delete'  ||  element.name === 'list'){}
                 else
                  style[element.name] = element.value ;
             }
@@ -58,6 +58,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
         })
         
         obj.style = style
+        console.log(obj)
         itemList.map((itm)=>{
             if(itm.class === obj.class ){
                 itm.style = obj.style
@@ -81,11 +82,11 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
     }
     const TypeHandler = (e) =>{
         e.preventDefault();
-        obj.type = e.taget.value;
+        obj.type = e.target.value;
     }
     const PlaceHolderHandler = (e) => {
         e.preventDefault();
-        obj.value = e.target.value;
+        obj.placeholder = e.target.value;
         
     }
     const ClassHandler = (e)=>{
@@ -109,25 +110,6 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
                             <input   className={styles.input} type='text'  {...register("placeholder")}  onChange={(e) => PlaceHolderHandler(e)}  ></input>
                         </div>
 
-                ): obj.tag =='ul' ? (
-                    <>
-                     <div className={styles.container_sm}>
-                            <label className={styles.title_sm} >list name :</label>
-                            <input key={changes} className={styles.input} type="text"  {...register("value")}  value={obj.value}  onChange={(e)=>{setName(obj.value = e.target.value)}}/>
-                    </div>
-                    <div className={styles.container_sm}>
-                    <label className={styles.title_sm} >list Type</label>
-                    <select defaultValue='ul'  onChange={(e)=> {obj.replaceChild(obj.tag, e.target.value) }}  >
-                        <option>ul</option>
-                        <option>ol</option>
-                    </select>
-                    </div>
-                     <div className={styles.container_sm}>
-                     <label className={styles.title_sm} >Add a list</label>
-                     <input key={''} className={styles.input} type="text"  onChange={(e) => setNList(e.target.value)} {...register("list")} />
-                     <FiPlusSquare size='30px' onClick={addnewlist}  ></FiPlusSquare>
-                     </div>
-                     </>
                 ):
                 (
                         <div className={styles.container_sm}>
@@ -144,7 +126,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
              <label className={styles.title_sm}>Color </label>
             <input className={styles.input_color} type="color" {...register("color")}/>
             <label className={styles.title_sm}>Background Color </label> 
-            <input className={styles.input_color} type="color" defaultValue ='#FFFFFF' {...register("backgroundColor")}/>
+            <input className={styles.input_color} type="color"  defaultValue ='#FFFFFF' {...register("backgroundColor")}/>
             
         </div>
         
@@ -161,7 +143,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
                     <div>
                     <label htmlFor="Input-Type">Input-Type :</label>
                     <select
-                        onChange={(e) => {e.target.value =="text" || e.target.value =="email" || e.target.value =="tel" || e.target.value =="number" || e.target.value =="password" ? setPlaceH(true):setPlaceH(false) ; TypeHandler(e)} }
+                          {...register("inputType")}  onChange={(e) => {e.target.value =="text" || e.target.value =="email" || e.target.value =="tel" || e.target.value =="number" || e.target.value =="password" ? setPlaceH(true):setPlaceH(false) ; TypeHandler(e)} }
                         >
                         <option value="text">text</option>
                         <option value="button">button</option>

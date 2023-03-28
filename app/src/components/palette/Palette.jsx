@@ -12,13 +12,14 @@ import Declined from '../../assets/img/declined.png';
 import {useNavigate } from "react-router-dom";
 import { BiCaretDown ,BiEditAlt} from "react-icons/bi";
 import { DraggableItem } from './DraggableItem';
-import { upload } from '../../context/firebase/FirebaseConfig';
+import { update, upload } from '../../context/firebase/FirebaseConfig';
 import { AppContext } from '../../context/AppContext';
+import { database,coll } from '../../context/firebase/FirebaseConfig';
+import {doc,deleteDoc,getDocs}  from 'firebase/firestore'
 
 export const Palette = () => {
     const nav = useNavigate();
-    const {itemList,setItemList,setChanges,changes} = useContext(AppContext);
-    const[Project,setProject] = useState('WebProject');  
+    const {itemList,setItemList,Project,setProject} = useContext(AppContext);
     const[Dropped,setDropped] = useState(false);
     const[Dropped2,setDropped2] = useState(false);
     const[Dropped3,setDropped3] = useState(false);
@@ -27,27 +28,54 @@ export const Palette = () => {
     const[SavePop,setSavePop] = useState(false);  
     const[Alert,setAlert] = useState(false);  
     const[Alert2,setAlert2] = useState(false);  
-    const ToProjectPage = ()=>{
-         upload(itemList,Project,localStorage.getItem('email')).then((rst)=>{
-            if(rst == true){
-                setSavePop(false)
-                setAlert(true)
-                setTimeout(()=>{
-                    setAlert(false)
-                    nav('/Projects');  
-                },3000)
+   
+    const ToProjectPage =  async()=>{
+        var docid = null ; 
+        const Cid = localStorage.getItem('email')
+        const data = await getDocs(coll).then((elm)=>{
+         elm.docs.map((doc) => {if(doc.data().id== Cid && doc.data().name == Project  ){ return docid = doc.id }  } );
+            if(docid != null ){
+                update(itemList,docid).then((rst)=>{
+                    if(rst == true){
+                        setSavePop(false)
+                        setAlert(true)
+                        setTimeout(()=>{
+                            setAlert(false)
+                            setItemList([])
+                            nav('/Projects');  
+                        },3000)
+                    }
+                    else{
+                        setAlert2(true)
+                        setTimeout(()=>{
+                            setAlert2(false)
+                        },3000)
+                    }
+                })
+                console.log('allready exist')
             }
             else{
-                setAlert2(true)
-                setTimeout(()=>{
-                    setAlert2(false)
-                },3000)
-            }
-
-         })
+                    upload(itemList,Project,localStorage.getItem('email')).then((rst)=>{
+                        if(rst == true){
+                            setSavePop(false)
+                            setAlert(true)
+                            setTimeout(()=>{
+                                setAlert(false)
+                                setItemList([])
+                                nav('/Projects');  
+                            },3000)
+                        }
+                        else{
+                            setAlert2(true)
+                            setTimeout(()=>{
+                                setAlert2(false)
+                            },3000)
+                        }
             
-           
-              
+                    })
+                
+          }
+         });
     }
         return(
             <div className={styles.container}>
@@ -70,7 +98,7 @@ export const Palette = () => {
                                     <div>
                                         <h2 className={styles.ttl} >Save Your work</h2>
                                         <p>Project name : {Project} </p>
-                                        <p>If you save your project you are not allow <br></br> anymore to make changes</p>
+                                        <p>Do you want to save all your <br></br> Work</p>
                                    
                                     <div className={styles.choose} >
                                         <button  onClick={(e)=>{setSavePop(false)}}  >Cancel</button>

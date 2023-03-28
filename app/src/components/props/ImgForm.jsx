@@ -1,27 +1,37 @@
 import {  useContext, useEffect, useState } from 'react';
-import axios from 'axios';
 import {useForm} from 'react-hook-form';
 import * as yup from "yup";
-import json from "../../data/CSSjson.json";
 import styles from '../../assets/css/prop.module.css';
-import {FiPlusSquare,FiMinusSquare} from "react-icons/fi";
 import {yupResolver} from "@hookform/resolvers/yup";
 import { AppContext } from '../../context/AppContext';
-
+import { uploadPic } from '../../context/firebase/FirebaseConfig'
+import {ref,listAll, getDownloadURL } from  'firebase/storage'
+import { storage } from '../../context/firebase/FirebaseConfig';
+import  spinner from "../../assets/svg/Spinner-1s-200px.svg"
 export const ImgForm = ({obj,class: classes,value,change}) => {
     const {itemList,setItemList,setChanges,changes} = useContext(AppContext);
     const [Flx,setFlx]=useState(false);
     const [Brd,setBrd]=useState(false);
-    const [file, setFile] = useState(null);
     const [name,setName] = useState(obj);
+    const [cls,setCls] = useState(obj); 
     useEffect(()=>{
         setName(obj);
     },[obj])
-    function handleFileInputChange(e) {
+
+    const PicToFirebase =  async (e)=>{
         e.preventDefault()
         setChanges((pre)=>!pre);
-        setFile(URL.createObjectURL(e.target.files[0]));
-        obj.src= URL.createObjectURL(e.target.files[0])
+        obj.src = spinner
+        await uploadPic(e.target.files[0],localStorage.getItem('email')).then((res)=>{
+            const ListRef = ref(storage , localStorage.getItem('email') + '/')
+             listAll(ListRef).then((res)=>{
+              res.items.forEach((itm)=>{
+                    if(itm.name===e.target.files[0].name){
+                        getDownloadURL(itm).then((url)=>{ obj.src = url; setChanges((pre)=>!pre); })
+                    }
+              })
+            })     
+        }) 
         console.log(obj)
     }
     const schema = yup.object().shape({
@@ -40,23 +50,29 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
           const style = {};
         const keys = Array.from(e.target);
        keys.map((element)=>{
+        if(element.value){
             if(element.name === "height" || element.name === "width" || element.name === "opacity" || element.name === "marginTop" || element.name === "marginRight" || element.name === "marginLeft" || element.name === "marginBotton" || element.name === "paddingTop" || element.name === "paddingRight" || element.name === "paddingLeft" || element.name === "padding-botton") 
             style[element.name] = "" + element.value + "%" ;
            else if(element.name === "borderRadius" || element.name === "borderWidth" )   style[element.name] = "" + element.value + "px" ;
             else if (element.name ==='picture' || element.name === 'class'|| element.name === 'submit' ||  element.name === 'delete' ){}
              else
              style[element.name] = element.value ;
-             
+            }
+            else {}
         })
         obj.style = style
-       console.log(style)
-
+        itemList.map((itm)=>{
+            if(itm.class === obj.class ){
+                itm.style = obj.style
+            }
+            else{}
+        })
     }
-
-    const classHandler = (e) => {
-          
+    const ClassHandler = (e)=>{
+        e.preventDefault()
+        setCls(obj.class = e.target.value)
+        console.log('new class : '+obj.class)
     }
-    
 
     return (
         
@@ -64,13 +80,13 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
         {
             <div className={styles.container_sm}>
             <label className={styles.title_sm}>Class :</label>
-            <input className={styles.input} type="text" value={classes}  {...register("class")}  onChange={(e)=>classHandler(e)}/>
+            <input className={styles.input} type="text" {...register("class")} value={obj.class} onChange={(e)=>{ClassHandler(e) }}  /> 
             </div>
         }
         <div className={styles.txtStyle}>
            <div  className={styles.fileArea} >
                     <label htmlFor='Title' >Source :   </label>
-                    <input type="file"   {...register("picture")} onChange={(e)=>{handleFileInputChange(e)}}    ></input>
+                    <input type="file"   {...register("picture")}  onChange={(e)=>{PicToFirebase(e)}}    ></input>
            </div>
            <div>
                     <label htmlFor="BackgroundSize">Background-Size :</label>

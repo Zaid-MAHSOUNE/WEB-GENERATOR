@@ -1,6 +1,6 @@
 import '../../assets/css/ProjectPage.css'
 
-import { useEffect, useRef, useState } from 'react'
+import { useEffect,useContext, useState } from 'react'
 import { TbDatabaseOff} from "react-icons/tb";
 import { database,coll } from '../../context/firebase/FirebaseConfig';
 import {doc,deleteDoc,getDocs}  from 'firebase/firestore'
@@ -8,12 +8,16 @@ import bg from '../../assets/svg/bg.svg'
 import {IoMdDownload } from "react-icons/io";
 import { GoCloudDownload } from "react-icons/go";
 import {RiDeleteBin5Line} from "react-icons/ri";
+import {FiEdit} from 'react-icons/fi'
 import RiseLoader from 'react-spinners/RiseLoader';
 import axios from 'axios';
-
+import {useNavigate } from "react-router-dom";
+import { AppContext } from '../../context/AppContext';
 
 
 export default function ProjetDashboard() {
+  const nav = useNavigate();
+  const {itemList,setItemList,Project,setProject,setLoading} = useContext(AppContext);
   const [pop, setpop] = useState(false)
   const [pop2, setpop2] = useState(false)
   const [Downld, setDownld] = useState(false)
@@ -55,6 +59,30 @@ const getCode = async(Pid) =>{
 })  
   })
 }
+
+//edit project
+const editCode = async(e,Pid) =>{
+  setLoading(true)
+  e.preventDefault()
+  const Cid = localStorage.getItem('email')
+  const data = await getDocs(coll).then((elm)=>{
+    let AL = elm.docs.map((doc) => {if(doc.data().id== Cid && doc.data().name == Pid  ){ setProject(doc.data().name) ; return doc.data().HTML }  } );
+    AL = AL.filter(function( element ) {
+      return element !== undefined;
+   });
+   setTimeout(()=>{
+    setLoading(false)
+    nav('/')
+    setItemList(JSON.parse(AL))
+   },600)
+   console.log(itemList)
+
+   
+  })
+  }
+
+
+
 //kat delete l code mn firebase
 const deleteCode = async (id)=>{
   setpop2(true)
@@ -81,6 +109,7 @@ const deleteCode = async (id)=>{
                 <div className="tools">
                     <IoMdDownload size="22px" title='download'  values={title} onClick={()=>getCode(title)}  ></IoMdDownload>
                     <RiDeleteBin5Line size="22px" title='Delete'  values={title} onClick={()=>deleteCode(title)}  >  </RiDeleteBin5Line>
+                    <FiEdit size="22px" title='edit'  values={title}   onClick={(e)=>editCode(e,title)} >    </FiEdit>
                 </div>
             </div>
         </div>

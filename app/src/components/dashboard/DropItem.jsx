@@ -43,16 +43,16 @@ export const DropItem = (props) =>  {
     }
     else if( props.tag !=="div" &&  props.tag === "a" ){
         return ( 
-            <props.tag id={props.id} className={props.class + ' text'} href={props.href} style={props.style} onClick={(e)=>{
+            <props.tag id={props.id}  target='_blank' className={props.class + ' link'} href={props.href} style={props.style} onClick={(e)=>{
                 setIndex(e.target.getAttribute("id"));
-            }}> {props.value} </props.tag>
+            }}> {props.value}</props.tag>
         );
     }
     else if(props.tag !== "div" && props.tag === "h1" || props.tag === "p" ){
         return (
             <props.tag id={props.id} className={props.class + ' text'}  style={props.style} onClick={(e)=>{
                 setIndex(e.target.getAttribute("id"));
-            }}> {props.value} </props.tag>
+            }}> {props.value}  </props.tag>
         );
     }
     else{
@@ -64,7 +64,7 @@ export const DropItem = (props) =>  {
                 props.value
                 }
                 {
-                    itemList.map((element,index)=> element.parentId === props.id ? <DropItem key={index} tag={element.tag} class={element.class} src={element.src} style={element.style} placeholder={element.placeholder} type={element.type} value={element.value} id={element.id} parentId={element.parentId}/> : null )
+                    itemList.map((element,index)=> element.parentId === props.id ? <DropItem key={index} tag={element.tag} class={element.class} src={element.src} style={element.style} placeholder={element.placeholder} href={element.href}  type={element.type} value={element.value} id={element.id} parentId={element.parentId}/> : null )
                 }
             </props.tag>
         );

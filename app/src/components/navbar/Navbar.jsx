@@ -2,18 +2,29 @@ import "../../assets/css/Navbar.css";
 import  userid from '../../assets/img/userid.png';
 
 import { NavLink ,useNavigate } from "react-router-dom";
-import { getAuth, signOut } from 'firebase/auth';
-import { auth  } from './../../context/firebase/FirebaseConfig'
+import { getAuth, signOut , updateProfile } from 'firebase/auth';
+import {ref,listAll, getDownloadURL } from  'firebase/storage'
+import { auth , uploadPic , storage, update } from './../../context/firebase/FirebaseConfig'
 import { BiLibrary,BiHome ,BiLogOut,BiMessageRounded ,BiCaretDown,BiUserCircle,BiX,BiTrash} from "react-icons/bi";
-import { TiUserDeleteOutline} from 'react-icons/ti'
-import { useState } from "react";
-import { async } from "@firebase/util";
+import { HiOutlineEmojiSad} from 'react-icons/hi'
+import {MdOutlineModeEdit} from 'react-icons/md'
+import {RxUpdate} from 'react-icons/rx'
+import MoonLoader from 'react-spinners/MoonLoader';
+import { useEffect, useState } from "react";
 function Navbar(){
+    const [currentName,setCurrentName]=useState('')
+    const [currentPic,setCurrentPic]=useState('')
     const [opt,setopt]=useState(false);
+    const [picloading,setpicLoading]=useState(false);
     const [Dtl,setDtl]=useState(false);
     const [Conf,setConf]=useState(false);
     const [Alert,setAlert]=useState(false);
     const nav = useNavigate();
+    useEffect(()=>{
+            UpdtUserPic();
+    },[currentPic])
+
+
     const signout = async ()=>{
         try{
         await signOut(auth)
@@ -36,6 +47,44 @@ function Navbar(){
                     signout()    
                 },1000)
             })
+    }
+    const UpdtUserPic = async()=>{
+        setpicLoading(true)
+       
+     await uploadPic(currentPic, localStorage.getItem('email')).then((res)=>{
+        
+            const ListRef = ref(storage , localStorage.getItem('email')+'/')
+             listAll(ListRef).then((res)=>{
+              
+              res.items.forEach((itm)=>{
+                    if(itm.name===currentPic.name){
+                          getDownloadURL(itm).then((url)=>{
+                                localStorage.setItem('pic',url)
+                                updateProfile(auth.currentUser , {
+                                photoURL : url
+                                
+                            }).then(()=>{
+                                console.log('updated')
+                                setCurrentPic(url)
+                              
+                                
+                            })
+
+                         })
+                    }
+                      setpicLoading(false)
+              })
+            })     
+        }) 
+    }
+    const UpdtUser = async ()=>{
+                                updateProfile(auth.currentUser , {
+                                displayName : currentName,    
+                            }).then(()=>{
+                                localStorage.setItem('username',auth.currentUser.displayName)
+                                setDtl(false)
+                                console.log('updated')
+                            })
     }
     return (
         <>
@@ -70,19 +119,26 @@ function Navbar(){
                    <div className="Accountpop"  >
                         <section>
                             <BiX onClick={(e)=>{setDtl(!Dtl)}} size='35px' />
-                            <div>
-                                <img src={localStorage.getItem('pic') ? localStorage.getItem('pic') : userid} />
+                            <div >
+                            {picloading  ? ( <MoonLoader></MoonLoader>  ): (  <img   src={localStorage.getItem('pic') ? localStorage.getItem('pic') : userid} />)}
+                               
+                            </div>
+                            <div className="enter"  >
+                                        
+                                        <MdOutlineModeEdit size='26px'  color="white"  > <input type="file" /> </MdOutlineModeEdit>
+                                        <input type='file'  onChange={(e)=>{setCurrentPic(e.target.files[0])}}  />
                             </div>
                             <div>
                                 <p>Username</p>
-                                <input value={localStorage.getItem('username')} disabled  ></input>
+                                <input defaultValue={localStorage.getItem('username')}   onChange={(e)=>{setCurrentName(e.target.value)}} ></input>
                             </div>
                             <div>
                                 <p>Email</p>
-                                <input value={localStorage.getItem('email')} disabled  ></input>
+                                <input placeholder={localStorage.getItem('email')}  disabled ></input>
                             </div>
-                            <div>
-                                <button onClick={(e)=>{setConf(true)}}  ><BiTrash size='20px'  /> Delete Account </button>
+                            <div >
+                                <button  className="butt1" onClick={(e)=>{UpdtUser()}}  > <RxUpdate size="20px" />  Update Account </button>
+                                <button className="butt2" onClick={(e)=>{setConf(true)}}  ><BiTrash size='20px'  /> Delete Account </button>
                             </div>
                         </section>
                    </div>
@@ -91,10 +147,10 @@ function Navbar(){
                     <section>
                         <BiX onClick={(e)=>{setDtl(!Dtl)}} size='35px' />
                         <div>
-                            <img src={localStorage.getItem('pic') ? localStorage.getItem('pic') : userid} />
+                          <img src={localStorage.getItem('pic') ? localStorage.getItem('pic') : userid} /> 
                             <label>You really want to detate Your Account?<br/> You will loose all your projects </label>
                         </div>
-                        <div>
+                        <div className="supp" >
                             <button onClick={(e)=>{DltUser()}} > <BiTrash size='20px'  /> Yes </button> 
                         </div>
                     </section>
@@ -105,10 +161,10 @@ function Navbar(){
                 <div className="Accountpop" >
                     <section>
                         <div >
-                            <TiUserDeleteOutline  color="lightcoral" size='150px' ></TiUserDeleteOutline>
+                            <HiOutlineEmojiSad  color="lightcoral" size='150px' ></HiOutlineEmojiSad>
                         </div>
                         <div className="ALRT" >
-                            <h1>Account Deleted</h1 >
+                            <h1>Account Deleted <br/>we hope you will come back</h1 >
                         </div>  
                     </section>
                 </div>

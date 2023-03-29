@@ -49,7 +49,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
             if(element.value){
                 if(element.name === "width" || element.name === "opacity" || element.name === "marginTop" || element.name === "marginRight" || element.name === "marginLeft" || element.name === "marginBotton" || element.name === "paddingTop" || element.name === "paddingRight" || element.name === "paddingLeft" || element.name === "padding-botton") 
                 style[element.name] = "" + element.value + "%" ;
-               else if(element.name === "borderRadius" || element.name === "borderWidth" )   style[element.name] = "" + element.value + "px" ;
+               else if(element.name === "borderRadius" || element.name === "borderWidth"  || element.name === "letterSpacing" )   style[element.name] = "" + element.value + "px" ;
                 else if (element.name ==='value' ||  element.name === 'class' ||  element.name === 'inputType' ||  element.name === 'placeholder' ||  element.name === 'submit' ||  element.name === 'delete'  ||  element.name === 'list'){}
                 else if(element.name === "height")
                 style[element.name] = "" + element.value + "vh" ;
@@ -99,7 +99,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
             <input key={changes} className={styles.input} type="text"   {...register("class")}   value={obj.class} onChange={(e)=>{ClassHandler(e) }}  />
             </div>
             }
-              {obj.tag == 'input'  && PlaceH ?(
+              {obj.type  && PlaceH ?(
                         <div className={styles.container_sm} > 
                             <label  className={styles.title_sm} >Place-Holder : </label>
                             <input   className={styles.input} type='text'  {...register("placeholder")}  onChange={(e) => PlaceHolderHandler(e)}  ></input>
@@ -138,7 +138,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
                     <div>
                     <label htmlFor="Input-Type">Input-Type :</label>
                     <select
-                          {...register("inputType")}  onChange={(e) => {e.target.value =="text" || e.target.value =="email" || e.target.value =="tel" || e.target.value =="number" || e.target.value =="password" ? setPlaceH(true):setPlaceH(false) ; TypeHandler(e)} }
+                            {...register("inputType")}  onChange={(e) => {e.target.value =="text" || e.target.value =="email" || e.target.value =="tel" || e.target.value =="number" || e.target.value =="password" ? setPlaceH(true):setPlaceH(false) ; TypeHandler(e)} }
                         >
                         <option value="text">text</option>
                         <option value="button">button</option>
@@ -159,6 +159,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
                     <label>Opacity:   </label>
                     <input type="number" {...register("opacity")}></input>
            </div>
+           
            <div className={styles.MarginArea} >
                     <label>Margin </label>
                     <input type="number" placeholder='top' {...register("marginTop")}></input>
@@ -166,6 +167,65 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
                     <input type="number" placeholder='bottom' {...register("marginBottom")}></input>
                     <input type="number" placeholder='left' {...register("marginLeft")}></input>
            </div>
+           <div className={styles.txtStyle}>
+           <div>
+                    <label>Font-size :   </label>
+                    <input type="number"  {...register("fontSize")}  ></input>
+           </div>
+           <div>
+                    <label>Text-Decoration :</label>
+                    <select  defaultValue=''  {...register("textDecoration")} >
+                        <option value="none">none</option>
+                        <option value="unherit">unherit</option>
+                        <option value="unset">unset</option>
+                        <option value="overline">overline</option>
+                        <option value="line-through">line-through</option>
+                        <option value="overline">overline</option>
+                        <option value="underline">underline</option>
+                    </select>
+                    <label>Text-Decoration-Color :</label>
+                    <input className={styles.colors} type="color" {...register("textDecorationColor")}/>
+           </div>
+           <div>
+                    <label >Font Family :</label>
+                    <select  {...register("fontFamilly")}  >
+                        <option value="Default">Default</option>
+                        <option value="Georgia, serif">Georgia, serif</option>
+                        <option value="Gill Sans', sans-serif"> "Gill Sans", sans-serif</option>
+                        <option value="cursive">cursive</option>
+                        <option value="Arial">Arial</option>
+                        <option value="Helvetica">Helvetica</option>
+                        <option value="Verdana">Verdana</option>
+                        <option value="Times New Roman">'Times New Roman'</option>
+                        <option value="Georgia">Georgian</option>
+                    </select>
+           </div>
+           <div>
+                    <label >Text-Transform :</label>
+                    <select  {...register("textTransform")} >
+                        <option value="none">none</option>
+                        <option value="uppercase">uppercase</option>
+                        <option value="lowercase">lowercase</option>
+                        <option value="capitalize">capitalize</option>
+                    </select>
+           </div>
+           
+           <div>
+                    <label >Font Weight :</label>
+                    <select  {...register("fontWeight")}  >
+                        <option value="Default">Default</option>
+                        <option value="bold">bold</option>
+                        <option value="bolder">bolder</option>
+                        <option value="lighter">lighter</option>
+                        <option value="initial">initial</option>
+                        <option value="inherit">inherit</option>
+                    </select>
+           </div>
+           <div  >
+                    <label>Letter-Spacing :  </label>
+                    <input type="number"  {...register("letterSpacing")}  ></input>
+            </div>
+            </div>
            <div className={styles.MarginArea} >
                     <label>Padding </label>
                     <input type="number" placeholder='top' {...register("paddingTop")}></input>
@@ -201,7 +261,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
            <div>
                     <label htmlFor="Border">Border :</label>
                     <select {...register("borderStyle")} onChange={ (e) => {  e.target.value !="none"?  setBrd(true):setBrd(false)  } } >
-                    <option value="ridge ">solid </option>
+                        <option value="ridge ">solid </option>
                          <option value="none">none</option>
                         <option value="dotted ">dotted </option>
                         <option value="dashed ">dashed </option>

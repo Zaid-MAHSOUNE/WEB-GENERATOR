@@ -18,7 +18,7 @@ export const Dashboard = () => {
         })
     }));
     //refresh
-    useEffect(() => {
+    /*useEffect(() => {
         window.addEventListener("beforeunload", handleBeforeUnload);
         return () => {
           window.removeEventListener("beforeunload", handleBeforeUnload);
@@ -31,7 +31,7 @@ export const Dashboard = () => {
           "Are you sure you want to leave? All your work will be lost.";
         e.returnValue = message;
         return message;
-      }
+      }*/
     const dropHandler = (tag,monitor)=>{
         refItems.current = drop.current;
         const didDrop = monitor.didDrop()
@@ -46,7 +46,7 @@ export const Dashboard = () => {
     return (
         <div ref={drop} className={styles.container}>
             {
-                itemList.map((element,index)=> element.parentId === 0 ? <DropItem key={index} placeholder={element.placeholder} class={element.class} style={element.style} value={element.value} type={element.type} src={element.src}  tag={element.tag} id={element.id} parentId={element.parentId}/> : null )
+                itemList.map((element,index)=> element.parentId === 0 ? <DropItem key={index} placeholder={element.placeholder} href={element.href} class={element.class} style={element.style} value={element.value} type={element.type} src={element.src}  tag={element.tag} id={element.id} parentId={element.parentId}/> : null )
             }
         </div>
     );

@@ -219,7 +219,7 @@ nav{
 .Accountpop section div {
   display: flex;
   text-align: center;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 .Accountpop section div img{
@@ -237,7 +237,7 @@ nav{
 }
 .Accountpop section div input{
   margin-top: 10%;
-  width: 300px;
+  width: 320px;
   height: 30px;
   text-align: center;
 
@@ -249,26 +249,58 @@ nav{
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 300px;
+  width: 152px;
   margin-top: 8%;
   height: 35px;
-  background-color: lightcoral;
   border: none;
   cursor: pointer;
   border-radius: 6px;
   color: white;
+ 
   font-weight: bold;
 }
 .Accountpop section div button:hover{
-  background-color: rgb(238, 145, 145);
-
   transform: scale(1.02);
 }
 .ALRT {
-      font-size: 22px;
-      margin-top: 25px;
+      font-size: 18px;
+      margin-top: 18px;
       margin-bottom: 10px;
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       font-weight: bold;
       color: lightcoral;
+}
+.butt2{
+  background-color: lightcoral;
+}
+.butt1{
+  background-color: rgb(100, 225, 100);
+}
+.supp button{
+  background-color: lightcoral;
+}
+.enter{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.enter input[type="file"]{
+  position: absolute;
+  width: 2%;
+  padding: 5px;
+  border-radius: 50%;
+  margin-top: -38px;
+  margin-left: 5%;
+  opacity: 0;
+}
+.enter svg {
+  position: absolute;
+  cursor: pointer;
+  position: relative;
+  margin-top: -40px;
+  margin-left: 80px;
+  background-color: #1CB0F6;
+  box-shadow: rgba(0, 0, 0, 0.15) 1.95px 1.95px 2.6px;
+  padding: 5px;
+  border-radius: 50%;
 }

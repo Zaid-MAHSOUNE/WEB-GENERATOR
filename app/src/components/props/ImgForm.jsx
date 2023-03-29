@@ -9,7 +9,7 @@ import {ref,listAll, getDownloadURL } from  'firebase/storage'
 import { storage } from '../../context/firebase/FirebaseConfig';
 import  spinner from "../../assets/svg/Spinner-1s-200px.svg"
 export const ImgForm = ({obj,class: classes,value,change}) => {
-    const {itemList,setItemList,setChanges,changes} = useContext(AppContext);
+    const {itemList,setItemList,setChanges,changes,Project,setProject} = useContext(AppContext);
     const [Flx,setFlx]=useState(false);
     const [Brd,setBrd]=useState(false);
     const [name,setName] = useState(obj);
@@ -85,11 +85,11 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
         }
         <div className={styles.txtStyle}>
            <div  className={styles.fileArea} >
-                    <label htmlFor='Title' >Source :   </label>
+                    <label  >Source :   </label>
                     <input type="file"   {...register("picture")}  onChange={(e)=>{PicToFirebase(e)}}    ></input>
            </div>
            <div>
-                    <label htmlFor="BackgroundSize">Background-Size :</label>
+                    <label >Background-Size :</label>
                     <select  {...register("backgroundSize")}  >
                         <option value="auto">auto</option>
                         <option value="cover">cover</option>
@@ -100,16 +100,16 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
                     </select>
            </div>
            <div className={styles.sizeArea} >
-                    <label htmlFor='titl' >Size :   </label>
+                    <label  >Size :   </label>
                     <input  placeholder='width' {...register("width")} ></input>
                     <input placeholder='Height' {...register("height")} ></input>
             </div>
             <div>
-                    <label  htmlFor='title' >Opacity:   </label>
+                    <label >Opacity:   </label>
                     <input type="number" {...register("opacity")} ></input>
            </div>
            <div>
-                    <label htmlFor="Display">Display :</label>
+                    <label>Display :</label>
                     <select {...register("display")} onChange={ (e) => {  e.target.value==="flex"?  setFlx(true):setFlx(false)  } }  >
                         <option value="block">block</option>
                         <option value="none">none</option>
@@ -122,7 +122,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
                     {Flx && (
                         <>
                          <div>
-                         <label htmlFor="Justify-Content">Justify-Content :</label>
+                         <label >Justify-Content :</label>
                          <select {...register("justifyContent")}>
                              <option value="baseline">baseline</option>
                              <option value="center">center</option>
@@ -135,7 +135,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
                          </select>
                         </div>
                          <div>
-                         <label htmlFor="align-items">align-items :</label>
+                         <label >align-items :</label>
                          <select {...register("alignItems")}>
                              <option value="normal" >normal</option>
                              <option value="baseline">baseline</option>
@@ -148,7 +148,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
                          </select>
                         </div>
                         <div>
-                         <label htmlFor="flex-wrap">flex-wrap:</label>
+                         <label >flex-wrap:</label>
                          <select {...register("flexWrap")}>
                              <option value="nowrap" >nowrap</option>
                              <option value="wrap">wrap</option>
@@ -162,7 +162,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
                     )}
             
            <div>
-                    <label htmlFor="Position">Position :</label>
+                    <label >Position :</label>
                     <select  {...register("position")} >
                         <option value="relative">relative</option>
                         <option value="static">static</option>
@@ -186,7 +186,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
                     <input type="number" placeholder='left' {...register("paddingLeft")}></input>
            </div>
            <div>
-                    <label htmlFor="Border">Border :</label>
+                    <label >Border :</label>
                     <select {...register("borderStyle")} onChange={ (e) => {  e.target.value !="none"?  setBrd(true):setBrd(false)  } } >
                     <option value="ridge ">solid </option>
                          <option value="none">none</option>
@@ -202,7 +202,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
                 {Brd && (
                         <>
                          <div>
-                         <label htmlFor="Border">Border-Color :</label>
+                         <label>Border-Color :</label>
                           <input className={styles.colors} type="color" {...register("borderColor")}/>
                           </div>
                           <div>
@@ -217,7 +217,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
 
                 )}
            <div>
-                    <label htmlFor="Cursor">Cursor :</label>
+                    <label >Cursor :</label>
                     <select {...register("cursor")}>
                         <option value="default">default</option>
                         <option value="crosshair">crosshair</option>

@@ -89,7 +89,7 @@ export const TxtForm = ({obj,class: classes,value,change}) => {
                     <input type="number"  {...register("fontSize")}  ></input>
            </div>
            <div>
-                    <label for="TextDecoration">Text-Decoration :</label>
+                    <label>Text-Decoration :</label>
                     <select  {...register("textDecoration")} >
                         <option value="none">none</option>
                         <option value="unherit">unherit</option>
@@ -103,7 +103,7 @@ export const TxtForm = ({obj,class: classes,value,change}) => {
                     <input className={styles.colors} type="color" {...register("textDecorationColor")}/>
            </div>
            <div>
-                    <label for="FontFamily">Font Family :</label>
+                    <label >Font Family :</label>
                     <select  {...register("fontFamilly")}  >
                         <option value="Default">Default</option>
                         <option value="Georgia, serif">Georgia, serif</option>
@@ -117,7 +117,7 @@ export const TxtForm = ({obj,class: classes,value,change}) => {
                     </select>
            </div>
            <div>
-                    <label for="TextTransform">Text-Transform :</label>
+                    <label >Text-Transform :</label>
                     <select  {...register("textTransform")} >
                         <option value="none">none</option>
                         <option value="uppercase">uppercase</option>
@@ -127,7 +127,7 @@ export const TxtForm = ({obj,class: classes,value,change}) => {
            </div>
            
            <div>
-                    <label for="FontWeight">Font Weight :</label>
+                    <label >Font Weight :</label>
                     <select  {...register("fontWeight")}  >
                         <option value="Default">Default</option>
                         <option value="bold">bold</option>
@@ -188,7 +188,7 @@ export const TxtForm = ({obj,class: classes,value,change}) => {
                 {Brd && (
                         <>
                          <div>
-                         <label for="Border">Border-Color :</label>
+                         <label >Border-Color :</label>
                           <input className={styles.colors} type="color" {...register("borderColor")}/>
                           </div>
                           <div>
@@ -203,7 +203,7 @@ export const TxtForm = ({obj,class: classes,value,change}) => {
 
                 )}
            <div>
-                    <label for="Position">Position :</label>
+                    <label >Position :</label>
                     <select {...register("position")}  >
                         <option value="relative">relative</option>
                         <option value="static">static</option>

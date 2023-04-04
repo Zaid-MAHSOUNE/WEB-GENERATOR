@@ -47,7 +47,7 @@ nav{
 }
 .pages > img{
   cursor: pointer;
-  width: 25px;
+  width: 27px;
   border-radius: 8px;
   margin-right: 8px;
 }
@@ -202,6 +202,7 @@ nav{
   height: 100%;
   backdrop-filter: blur(2px);
   width: 100%;
+  z-index: 1;
 }
 .Accountpop section{
   text-align: center;
@@ -210,6 +211,7 @@ nav{
   border-radius: 10px;
   background-color: white;
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  
 }
 .Accountpop section > svg{
   position: absolute;

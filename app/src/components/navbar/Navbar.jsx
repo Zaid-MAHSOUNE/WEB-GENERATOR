@@ -4,7 +4,8 @@ import  userid from '../../assets/img/userid.png';
 import { NavLink ,useNavigate } from "react-router-dom";
 import { getAuth, signOut , updateProfile } from 'firebase/auth';
 import {ref,listAll, getDownloadURL } from  'firebase/storage'
-import { auth , uploadPic , storage, update } from './../../context/firebase/FirebaseConfig'
+import { auth , uploadPic , storage, update ,database,coll} from './../../context/firebase/FirebaseConfig'
+import {doc,deleteDoc,getDocs}  from 'firebase/firestore'
 import { BiLibrary,BiHome ,BiLogOut,BiMessageRounded ,BiCaretDown,BiUserCircle,BiX,BiTrash} from "react-icons/bi";
 import { HiOutlineEmojiSad} from 'react-icons/hi'
 import {MdOutlineModeEdit} from 'react-icons/md'
@@ -47,6 +48,10 @@ function Navbar(){
                     signout()    
                 },1000)
             })
+            const Cid = localStorage.getItem('email')
+            const data = await getDocs(coll).then((elm)=>{
+              let AL = elm.docs.map((docu) => {if(docu.data().id== Cid ){   deleteDoc(doc(database,"User",docu.id))   }  } );
+            })
     }
     const UpdtUserPic = async()=>{
         setpicLoading(true)
@@ -55,7 +60,7 @@ function Navbar(){
         
             const ListRef = ref(storage , localStorage.getItem('email')+'/')
              listAll(ListRef).then((res)=>{
-              
+                setpicLoading(false)
               res.items.forEach((itm)=>{
                     if(itm.name===currentPic.name){
                           getDownloadURL(itm).then((url)=>{
@@ -72,7 +77,7 @@ function Navbar(){
 
                          })
                     }
-                      setpicLoading(false)
+                      
               })
             })     
         }) 

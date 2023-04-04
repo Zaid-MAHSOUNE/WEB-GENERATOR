@@ -31,7 +31,7 @@ export const DropItem = (props) =>  {
         return (
             <props.tag id={props.id} className={props.class + ' button'} type={props.type}  style={props.style} onClick={(e)=>{
                 setIndex(e.target.getAttribute("id"));
-            }}   placeholder={props.placeholder} readOnly="readonly"/>
+            }}   placeholder={props.placeholder} />
         );
     }
     else if( props.tag !=="div" &&  props.tag === "img" ){
@@ -48,7 +48,7 @@ export const DropItem = (props) =>  {
             }}> {props.value}</props.tag>
         );
     }
-    else if(props.tag !== "div" && props.tag === "h1" || props.tag === "p" ){
+    else if(props.tag !== "div" && props.tag === "h1" || props.tag === "h2" || props.tag === "h3" || props.tag === "p" || props.tag === "b" || props.tag === "label"  || props.tag === "i"  ){
         return (
             <props.tag id={props.id} className={props.class + ' text'}  style={props.style} onClick={(e)=>{
                 setIndex(e.target.getAttribute("id"));

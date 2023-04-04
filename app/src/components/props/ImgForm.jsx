@@ -23,6 +23,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
         setChanges((pre)=>!pre);
         obj.src = spinner
         await uploadPic(e.target.files[0],localStorage.getItem('email')).then((res)=>{
+            console.log("uploading ...")
             const ListRef = ref(storage , localStorage.getItem('email') + '/')
              listAll(ListRef).then((res)=>{
               res.items.forEach((itm)=>{
@@ -43,6 +44,10 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
     const {register,handleSubmit} = useForm({
         resolver: yupResolver(schema),
     });
+    const deleteItem = (e) =>{
+        var index = itemList.indexOf(obj)
+        itemList.splice(index,1);    
+    }
 
    const onSubmit = (e) => {
         e.preventDefault();
@@ -91,6 +96,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
            <div>
                     <label >Background-Size :</label>
                     <select  {...register("backgroundSize")}  >
+                        <option value=""></option>
                         <option value="auto">auto</option>
                         <option value="cover">cover</option>
                         <option value="contain">contain</option>
@@ -124,6 +130,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
                          <div>
                          <label >Justify-Content :</label>
                          <select {...register("justifyContent")}>
+                         <option value=""></option>
                              <option value="baseline">baseline</option>
                              <option value="center">center</option>
                              <option value="end">end</option>
@@ -137,6 +144,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
                          <div>
                          <label >align-items :</label>
                          <select {...register("alignItems")}>
+                         <option value=""></option>
                              <option value="normal" >normal</option>
                              <option value="baseline">baseline</option>
                              <option value="center">center</option>
@@ -150,6 +158,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
                         <div>
                          <label >flex-wrap:</label>
                          <select {...register("flexWrap")}>
+                         <option value=""></option>
                              <option value="nowrap" >nowrap</option>
                              <option value="wrap">wrap</option>
                              <option value="wrap-reverse">wrap-reverse</option>
@@ -187,15 +196,15 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
            </div>
            <div>
                     <label >Border :</label>
-                    <select {...register("borderStyle")} onChange={ (e) => {  e.target.value !="none"?  setBrd(true):setBrd(false)  } } >
-                    <option value="ridge ">solid </option>
+                    <select {...register("borderStyle")} onChange={ (e) => {  e.target.value !="none" && e.target.value !="" ?  setBrd(true):setBrd(false)  } } >
+                     <option > </option>
+                         <option value="solid ">solid </option>
                          <option value="none">none</option>
                         <option value="dotted ">dotted </option>
                         <option value="dashed ">dashed </option>
                         <option value="double ">double </option>
                         <option value="groove ">groove </option>
                         <option value="hidden ">hidden </option>
-                        
                         <option value="ridge ">ridge </option>
                     </select> 
             </div>
@@ -231,7 +240,7 @@ export const ImgForm = ({obj,class: classes,value,change}) => {
         </div>
         <div className={styles.submit} >
             <button type='submit'  {...register("submit")}  >   Submit</button>
-            <button  {...register("delete")}  > Delete</button>
+            <button  {...register("delete")} onClick={(e)=>{deleteItem(e)}} > Delete</button>
         </div> 
         
         

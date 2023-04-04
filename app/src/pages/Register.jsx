@@ -54,7 +54,7 @@ return(
 
                     <div className="email">
                         <p>Email</p>
-                         <input type='email' ref={Email}  autoComplete='none' ></input>
+                         <input type='email' ref={Email} required autoComplete='none' ></input>
                     </div>
                     <div className="password">
                         <p>Create Password</p>

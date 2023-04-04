@@ -50,6 +50,10 @@ export const TxtForm = ({obj,class: classes,value,change}) => {
             else{}
     })
     }
+    const deleteItem = (e) =>{
+        var index = itemList.indexOf(obj)
+        itemList.splice(index,1);    
+    }
     const ClassHandler = (e)=>{
         e.preventDefault()
         setCls(obj.class = e.target.value)
@@ -104,15 +108,16 @@ export const TxtForm = ({obj,class: classes,value,change}) => {
            </div>
            <div>
                     <label >Font Family :</label>
-                    <select  {...register("fontFamilly")}  >
+                    <select  {...register("fontFamily")}  >
+                        <option value=""></option>
                         <option value="Default">Default</option>
                         <option value="Georgia, serif">Georgia, serif</option>
-                        <option value="Gill Sans', sans-serif"> "Gill Sans", sans-serif</option>
+                        <option value="Gill Sans, sans-serif"> Gill Sans, sans-serif</option>
                         <option value="cursive">cursive</option>
                         <option value="Arial">Arial</option>
                         <option value="Helvetica">Helvetica</option>
                         <option value="Verdana">Verdana</option>
-                        <option value="Times New Roman">'Times New Roman'</option>
+                        <option value="Times New Roman">Times New Roman</option>
                         <option value="Georgia">Georgian</option>
                     </select>
            </div>
@@ -129,6 +134,7 @@ export const TxtForm = ({obj,class: classes,value,change}) => {
            <div>
                     <label >Font Weight :</label>
                     <select  {...register("fontWeight")}  >
+                        <option value=""></option>
                         <option value="Default">Default</option>
                         <option value="bold">bold</option>
                         <option value="bolder">bolder</option>
@@ -173,8 +179,9 @@ export const TxtForm = ({obj,class: classes,value,change}) => {
            </div>
            <div>
                     <label for="Border">Border :</label>
-                    <select {...register("borderStyle")} onChange={ (e) => {  e.target.value !="none"?  setBrd(true):setBrd(false)  } } >
-                    <option value="ridge ">solid </option>
+                    <select    {...register("borderStyle")} onChange={ (e) => {  e.target.value !="none" && e.target.value !=""?  setBrd(true):setBrd(false)  } } >
+                    <option value=" "> </option>
+                         <option value="solid ">solid </option>
                         <option value="none">none</option>
                         <option value="dotted ">dotted </option>
                         <option value="dashed ">dashed </option>
@@ -215,7 +222,7 @@ export const TxtForm = ({obj,class: classes,value,change}) => {
         </div>
         <div className={styles.submit} >
             <button type='submit'  {...register("submit")}  >   Submit</button>
-            <button  {...register("delete")}  > Delete</button>
+            <button  {...register("delete")} onClick={(e)=>{deleteItem(e)}} > Delete</button>
         </div> 
         </form>
     );

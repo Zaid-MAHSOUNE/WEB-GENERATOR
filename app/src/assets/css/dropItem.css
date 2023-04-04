@@ -7,9 +7,10 @@
 .text{
     border: 1px solid black;
     width: fit-content;
-    min-width: 20%;
+    min-width: 15%;
     height: fit-content;
-    min-height: 8%;
+    min-height: 3%;
+    padding: 8px;
 }
 .link{
     border: 1px solid black;
@@ -26,8 +27,6 @@
 }
 .button{
     border: 1px solid black;
-    width: fit-content;
-    min-width: 13%;
-    height: fit-content;
-    min-height: 7%;
+    width: 7%;
+    height: 5%;
 }

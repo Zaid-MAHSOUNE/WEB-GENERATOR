@@ -17,13 +17,13 @@ export const Properties = () => {
             return ;
         }
         else{
-            if( obj.tag == "h1" || obj.tag == "p" || obj.tag == "a" ){
+            if( obj.tag == "h1" ||obj.tag == "h2" ||obj.tag == "h3" || obj.tag == "p" || obj.tag == "a" || obj.tag == "label" || obj.tag == "b" || obj.tag == "i"){
                 return <TxtForm obj={obj} />
             }
-            else if(obj.tag == "img"){
+            else if(obj.tag == "img" ){
                 return <ImgForm obj={obj}/>
             }
-            else if( obj.tag == "div" || obj.tag == "button" || obj.tag == "input" || obj.tag == "ul" ){
+            else if( obj.tag == "div" || obj.tag == "button" || obj.tag == "input" || obj.tag == "section"|| obj.tag == "form" ){
                 return <ContainerForm obj={obj}/>;
             }
         }

@@ -107,7 +107,7 @@ function Navbar(){
                     {localStorage.length < 1 ?
                          ( <button className="button-log" role="button"> <NavLink to='/Login' > Login</NavLink></button> )
                     : 
-                    localStorage.getItem("pic") ? <img src={localStorage.getItem("pic")} ></img> : <img src={userid} ></img> }   {localStorage.getItem("username") != null  ? <><p>{localStorage.getItem("username")}  </p><BiCaretDown size='24'   onClick={(e)=>setopt(!opt)} /></> : null    
+                    localStorage.getItem("pic")!=null ? <img src={localStorage.getItem("pic")} ></img> : <img src={userid} ></img> }   {localStorage.getItem("username") != null  ? <><p>{localStorage.getItem("username")}  </p><BiCaretDown size='24'   onClick={(e)=>setopt(!opt)} /></> : null    
                    }
                    
                 </div>

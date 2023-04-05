@@ -100,7 +100,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
             <input key={changes} className={styles.input} type="text"   {...register("class")}   value={obj.class} onChange={(e)=>{ClassHandler(e) }}  />
             </div>
             }
-              {obj.type  && PlaceH ?(
+              {obj.tag == 'input'  && PlaceH ?(
                         <div className={styles.container_sm} > 
                             <label  className={styles.title_sm} >Place-Holder : </label>
                             <input   className={styles.input} type='text'  {...register("placeholder")}  onChange={(e) => PlaceHolderHandler(e)}  ></input>
@@ -191,8 +191,7 @@ export const ContainerForm = ({obj,class: classes,value,change}) => {
                         <option value="overline">overline</option>
                         <option value="underline">underline</option>
                     </select>
-                    <label>Text-Decoration-Color :</label>
-                    <input className={styles.colors} type="color" {...register("textDecorationColor")}/>
+                   
            </div>
            <div>
                     <label >Font Family :</label>

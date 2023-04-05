@@ -15,6 +15,7 @@ import { signInWithEmailAndPassword ,GoogleAuthProvider,signInWithPopup, Faceboo
 import { auth } from './../context/firebase/FirebaseConfig'
 import LoadingPage from '../components/Loading/LoadingPage';
 import { translationFirebaseErrorsEN } from 'react-translation-firebase-errors';
+import userid from '../assets/img/userid.png'
 export const Login = () => {
         const nav = useNavigate();
         let user;
@@ -34,8 +35,19 @@ export const Login = () => {
                          user = await signInWithEmailAndPassword(auth,Email.current.value,Password.current.value);
                         if(user){
                                 setLoading(false);
-                                localStorage.setItem("username",user.user.email)
+                                if(user.user.displayName){
+                                        localStorage.setItem("username",user.user.displayName)
+                                }
+                                else{
+                                        localStorage.setItem("username","Account")
+                                }
                                 localStorage.setItem("email",user.user.email)
+                                if(user.user.photoURL){
+                                        localStorage.setItem("pic",user.user.photoURL)
+                                }
+                                else{
+                                        localStorage.setItem("pic",userid)
+                                }
                                 setTimeout(()=>{
                                         setLoading(true)
                                 },5000)

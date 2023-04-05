@@ -31,7 +31,7 @@ export const DropItem = (props) =>  {
         return (
             <props.tag id={props.id} className={props.class + ' button'} type={props.type}  style={props.style} onClick={(e)=>{
                 setIndex(e.target.getAttribute("id"));
-            }}   placeholder={props.placeholder} />
+            }}   placeholder={props.placeholder}  readOnly='readonly'  />
         );
     }
     else if( props.tag !=="div" &&  props.tag === "img" ){

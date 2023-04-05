@@ -103,8 +103,7 @@ export const TxtForm = ({obj,class: classes,value,change}) => {
                         <option value="overline">overline</option>
                         <option value="underline">underline</option>
                     </select>
-                    <label>Text-Decoration-Color :</label>
-                    <input className={styles.colors} type="color" {...register("textDecorationColor")}/>
+                    
            </div>
            <div>
                     <label >Font Family :</label>
